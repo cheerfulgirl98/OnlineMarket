@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<item android:id="@+id/nav1" android:title="تست یک" />
+    <item android:id="@+id/nav2" android:title="تست دو" />
+    <item android:id="@+id/nav3" android:title="تست سه" />
+    <item android:id="@+id/nav4" android:title="تست چهار" />
+
+
+</menu>

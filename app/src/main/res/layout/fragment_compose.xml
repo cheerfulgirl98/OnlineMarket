@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray200"
+    android:id="@+id/cor_compose"
+    android:layoutDirection="rtl">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include layout="@layout/second_toolbar"/>
+
+        <TextView
+            android:id="@+id/addC_comment_title"
+            style="@style/normal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rel_toolbar_main"
+            android:padding="12dp"
+            android:text="به این محصول چه امتیازی می دهید؟" />
+
+        <com.iarcuschin.simpleratingbar.SimpleRatingBar
+            android:id="@+id/star_compose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/addC_comment_title"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_toLeftOf="@id/txv_detail_commentT"
+            app:srb_borderColor="@color/orangeStar"
+            app:srb_drawBorderEnabled="true"
+            app:srb_fillColor="@color/orangeStar"
+            app:srb_numberOfStars="5"
+            app:srb_starSize="40dp"
+            app:srb_stepSize="1"
+
+            />
+
+        <EditText
+            android:id="@+id/edt_compose_comment"
+            style="@style/normal"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_below="@id/star_compose"
+            android:layout_margin="12dp"
+            android:background="@drawable/etx_write"
+            android:hint="@string/plz_write_comment"
+            android:minLines="3"
+            android:padding="4dp" />
+
+        <Button
+            android:id="@+id/btn_compose_send"
+            style="@style/whiteTitle"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:background="@color/greenButton"
+            android:gravity="center"
+            android:text="@string/addComment" />
+
+    </RelativeLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

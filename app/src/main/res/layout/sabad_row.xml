@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp"
+    android:layoutDirection="rtl"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="4dp">
+
+    <RelativeLayout
+        android:id="@+id/rel_row_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="4dp">
+
+        <ImageView
+            android:id="@+id/img_sabad_pic"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_centerVertical="true"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="2dp"
+            android:layout_toLeftOf="@id/img_sabad_pic"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txv_sabad_name"
+                style="@style/normal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/titleColor"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txv_sabad_brand"
+                style="@style/normal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+
+                />
+
+            <TextView
+                android:id="@+id/txv_sabad_model"
+                style="@style/normal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textSize="10sp"
+                android:visibility="gone"
+
+                />
+
+            <LinearLayout
+                android:id="@+id/lin_sabad_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/number"
+                    style="@style/normal"/>
+
+                <Button
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:id="@+id/btn_sabad_minus"
+                    android:text="-"
+                    android:layout_marginRight="8dp"
+                    android:textColor="@color/white"
+                    android:background="@color/gray400"
+                    />
+                <TextView
+                    android:layout_width="30dp"
+                    android:layout_height="16dp"
+                    android:id="@+id/txv_sabad_num"
+                    android:gravity="center"
+                    />
+                <Button
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:id="@+id/btn_sabad_plus"
+                    android:gravity="center"
+                    android:text="+"
+                    android:textColor="@color/white"
+                    android:background="@color/gray400"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp">
+            <TextView
+                android:id="@+id/txv_sabad_price"
+                style="@style/normal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="10sp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/txv_sabad_discount"
+                style="@style/normal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="2dp"
+                android:textColor="@color/green" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/txv_sabad_delete"
+                style="@style/normal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginTop="12dp"
+                android:layout_marginLeft="8dp"
+                android:text="@string/delete"
+                android:textColor="@color/red"
+                android:textSize="10sp" />
+        </LinearLayout>
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

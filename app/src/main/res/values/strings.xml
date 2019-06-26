@@ -1,0 +1,78 @@
+<resources>
+    <string name="app_name">Online Market</string>
+    <string name="bottom_home">خانه</string>
+    <string name="bottom_favorits">علاقه مندی ها</string>
+    <string name="categories">دسته بندی ها</string>
+    <string name="search">جستجو</string>
+    <string name="comment_getstar">به این محصول چه امتیازی می دهید :</string>
+    <string name="comments">نظرات کاربران</string>
+    <string name="detail_go_features">مشخصات</string>
+    <string name="toman">تومان</string>
+    <string name="commentTitle">نظرات کاربران درباره کالا</string>
+    <string name="title_activity_test">TestActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="login">ورود به حساب کاربری</string>
+    <string name="register">ثبت نام</string>
+    <string name="receiverInfo">درج مشخصات گیرنده</string>
+    <string name="username">نام کاربری</string>
+    <string name="phone">شماره تلفن همراه </string>
+    <string name="password">رمز عبور</string>
+    <string name="receiver">نام و نام خانوادگی گیرنده</string>
+    <string name="receiver_mobile">شماره تلفن همراه گیرنده</string>
+    <string name="receiver_address">نشانی پستی </string>
+
+    <string name="usernameError"> نام کاربری نمی تواند خالی باشد .</string>
+    <string name="phoneNumberError">شماره همراه نمی تواند خالی باشد .</string>
+    <string name="validNumberError">لطفا شماره همراه معتبر وارد نمایید .</string>
+    <string name="passwordError"> رمز عبور نمی تواند خالی باشد .</string>
+    <string name="codeError">لطفا کد اعتباری را وارد نمایید .</string>
+    <string name="validationError">کد وارد شده نامعتبر می باشد.</string>
+    <string name="nullStarError">لطفا به محصول ستاره دهید.</string>
+    <string name="nullCommentError">لطفا نظر خود را بنویسید .</string>
+    <string name="voteBeforeError">شما قبلا به این نظر رای داده اید.</string>
+    <string name="conectionError">خطا در برقراری اینترنت</string>
+    <string name="loginError">برای رای دادن باید وارد حساب کاربری خود شوید .</string>
+    <string name="receiverNameError">نام و نام خانوادگی گیرنده را وارد نمایید .</string>
+    <string name="receiverMobileError"> تلفن همراه گیرنده را وارد نمایید .</string>
+    <string name="receiverAddressError"> نشانی پستی گیرنده را وارد نمایید .</string>
+
+    <string name="registerUserInfoTag">registerUserInfo</string>
+    <string name="loginUserInfoTag">loginUserInfo</string>
+    <string name="rewritePhone">تصحیح شماره تلفن</string>
+    <string name="sendCode">ارسال کد</string>
+    <string name="validationCode">کد تایید</string>
+    <string name="productIdTag">productId</string>
+
+
+    <string name="writeComment">ثبت نظر</string>
+    <string name="addComment">افزودن نظر</string>
+    <string name="plz_write_comment">لطفا نظر خود را بنویسید</string>
+    <string name="successful_compose">نظر شما با موفقیت ثبت شد .</string>
+    <string name="commented_before">شما قبلا برای این محصول نظر داده اید .</string>
+    <string name="men">مردانه</string>
+    <string name="women">زنانه</string>
+    <string name="boys">پسرانه</string>
+    <string name="girls">دخترانه</string>
+    <string name="noCommentYet">هنوز برای این محصول نظری ثبت نشده است.</string>
+
+
+    <string name="Hawk_selected_product">selected_product_hawk</string>
+    <string name="Hawk_sabad_size">sabad_size</string>
+
+    <string name="delete">حذف</string>
+    <string name="your_basket">سبد خرید شما</string>
+    <string name="number">تعداد :</string>
+    <string name="brand">برند : </string>
+    <string name="model">مدل :</string>
+    <string name="product_features">مشخصات محصول</string>
+    <string name="empty_sabad_alarm">سبد خرید شما خالی است!</string>
+    <string name="empty_favorit_alarm">لیست علاقه مندی های شما خالی است!</string>
+    <string name="title_activity_map">Map</string>
+    <string name="title_activity_maps">Map</string>
+
+
+</resources>

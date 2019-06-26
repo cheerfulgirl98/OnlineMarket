@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="4dp"
+    android:layout_margin="8dp"
+   app:cardBackgroundColor="@color/gray200">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="4dp"
+        android:layoutDirection="rtl"
+
+        android:padding="8dp">
+
+        <TextView
+            android:id="@+id/txv_comments_username"
+            style="@style/normal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="حمید"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txv_comments_date"
+            style="@style/normal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:layout_toLeftOf="@+id/txv_comments_username" />
+
+
+        <com.iarcuschin.simpleratingbar.SimpleRatingBar
+            android:id="@+id/star_comments"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txv_comments_username"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="4dp"
+            android:layout_toLeftOf="@id/txv_detail_commentT"
+            app:srb_fillColor="@color/orangeStar"
+            app:srb_drawBorderEnabled="true"
+            app:srb_isIndicator="true"
+            app:srb_numberOfStars="5"
+            app:srb_starBorderWidth="2"
+
+            app:srb_starSize="12dp"
+            app:srb_stepSize="1"
+
+            />
+
+
+        <TextView
+            android:id="@+id/txv_comments_description"
+            style="@style/normal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/star_comments"
+            android:layout_marginTop="4dp" />
+
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

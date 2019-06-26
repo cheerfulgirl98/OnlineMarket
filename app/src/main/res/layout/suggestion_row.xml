@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="130dp"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rel_row_parent"
+    android:layout_margin="4dp"
+    android:padding="4dp"
+    android:background="@color/white"
+    android:layoutDirection="rtl"
+
+    >
+    <ImageView
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:id="@+id/img_product"
+        android:scaleType="fitXY"/>
+
+    <TextView
+        style="@style/normal"
+        android:textColor="@color/titleColor"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txv_name"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:layout_below="@id/img_product"
+        tools:text="نام محصول"
+        android:layout_marginTop="4dp"/>
+    <TextView
+        style="@style/normal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txv_brand"
+        android:layout_below="@id/txv_name"
+        tools:text="برند محصول"
+        android:layout_marginTop="4dp"
+        android:textStyle="bold"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="4dp"
+        android:id="@+id/seprator"
+        android:background="@color/colorSeprator"
+        android:layout_below="@id/txv_brand"/>
+    <TextView
+        style="@style/normal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txv_price"
+        android:visibility="gone"
+        android:textSize="10sp"
+        android:textColor="@color/red"
+        android:layout_below="@id/seprator"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="8dp"/>
+    <TextView
+        style="@style/normal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+
+        android:textColor="@color/green"
+        android:id="@+id/txv_discount"
+        android:visibility="invisible"
+        android:layout_below="@id/txv_price"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="8dp"/>
+
+
+</RelativeLayout>

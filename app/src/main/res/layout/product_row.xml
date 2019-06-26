@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rel_row_parent"
+    android:layout_width="130dp"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp"
+    android:background="@color/white"
+    android:layoutDirection="rtl"
+    android:padding="4dp"
+
+    >
+
+    <ImageView
+        android:id="@+id/img_product"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:scaleType="fitXY" />
+
+    <TextView
+        android:id="@+id/txv_name"
+        style="@style/normal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/img_product"
+        android:layout_marginTop="4dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/titleColor"
+        android:textStyle="bold"
+        tools:text="نام محصول" />
+
+    <TextView
+        android:id="@+id/txv_brand"
+        style="@style/normal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txv_name"
+        android:layout_marginTop="4dp"
+        android:textStyle="bold"
+        tools:text="برند محصول" />
+
+    <TextView
+        android:id="@+id/seprator"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/txv_brand"
+        android:layout_marginTop="4dp"
+        android:background="@color/colorSeprator" />
+
+    <TextView
+        android:id="@+id/txv_discount"
+        style="@style/normal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/seprator"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="8dp"
+        android:textColor="@color/green" />
+
+
+</RelativeLayout>

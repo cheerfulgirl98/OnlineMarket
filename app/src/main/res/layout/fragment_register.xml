@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layoutDirection="rtl">
+
+    <RelativeLayout
+        android:id="@+id/rel_register_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary">
+
+        <TextView
+            style="@style/whiteTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:layout_centerVertical="true"
+            android:text="@string/register" />
+
+        <ImageView
+            android:id="@+id/img_register_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="16dp"
+            app:srcCompat="@drawable/ic_close" />
+
+
+    </RelativeLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputLayout_userName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rel_register_toolbar"
+        android:layout_marginTop="16dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:textDirection="rtl"
+        app:errorEnabled="true"
+        app:errorTextAppearance="@style/emptyError"
+        app:hintTextAppearance="@style/myInputLayout">
+
+        <EditText
+            android:id="@+id/edt_register_userName"
+            style="@style/normal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/rel_main_toolbar"
+            android:backgroundTint="@color/colorPrimary"
+            android:hint="@string/username" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputLayout_phoneNumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/inputLayout_userName"
+        android:layout_marginTop="8dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:textDirection="rtl"
+        app:errorEnabled="true"
+        app:errorTextAppearance="@style/emptyError"
+        app:hintTextAppearance="@style/myInputLayout">
+        <EditText
+            android:id="@+id/edt_register_phoneNumber"
+            style="@style/normal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/rel_main_toolbar"
+            android:backgroundTint="@color/colorPrimary"
+            android:hint="@string/phone" />
+
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputLayout_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/inputLayout_phoneNumber"
+        android:layout_marginTop="8dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        app:errorEnabled="true"
+        app:errorTextAppearance="@style/emptyError"
+        app:hintTextAppearance="@style/myInputLayout"
+        app:passwordToggleEnabled="true">
+
+        <EditText
+            android:id="@+id/edt_register_password"
+            style="@style/normal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/rel_main_toolbar"
+            android:backgroundTint="@color/colorPrimary"
+            android:hint="@string/password"
+            android:inputType="textPassword" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <Button
+        android:id="@+id/btn_register_send"
+        style="@style/whiteTitle"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/inputLayout_password"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/button_shape"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="@string/register" />
+
+
+</RelativeLayout>

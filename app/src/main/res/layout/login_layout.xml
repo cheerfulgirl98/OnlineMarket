@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layoutDirection="rtl"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/loginT"
+        style="@style/blackBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/login" />
+
+    <ImageView
+        android:id="@+id/img_login_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_alignParentLeft="true"
+        app:srcCompat="@drawable/ic_close" />
+
+    <EditText
+        android:id="@+id/edt_login_phoneNumber"
+        style="@style/normal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/loginT"
+        android:layout_marginTop="12dp"
+        android:hint="شماره تلفن همراه"
+        android:padding="8dp" />
+
+    <TextView
+        android:id="@+id/txv_login_phoneNumberError"
+        style="@style/emptyError"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/edt_login_phoneNumber"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="4dp"
+        android:paddingRight="8dp"
+        android:text="@string/phoneNumberError"
+        android:visibility="gone" />
+
+    <EditText
+        android:id="@+id/edt_login_password"
+        style="@style/normal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txv_login_phoneNumberError"
+        android:layout_marginTop="8dp"
+        android:gravity="right"
+        android:hint="رمز عبور"
+        android:inputType="textPassword"
+        android:padding="8dp" />
+
+    <TextView
+        android:id="@+id/txv_login_passwordError"
+        style="@style/emptyError"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/edt_login_password"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="4dp"
+        android:paddingRight="8dp"
+        android:text="@string/passwordError"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/txv_login_forgot"
+        style="@style/normal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txv_login_passwordError"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp"
+        android:text="فراموشی رمز عبور"
+        android:textColor="@color/colorPrimary"
+        android:textSize="10sp" />
+
+    <Button
+        android:id="@+id/btn_login_send"
+        style="@style/whiteTitle"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txv_login_forgot"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/button_shape"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="@string/login" />
+
+    <Button
+        android:id="@+id/btn_login_goRegister"
+        style="@style/normal"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btn_login_send"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/button_shape_gray"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="@string/register" />
+
+</RelativeLayout>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layoutDirection="rtl"
+    android:padding="8dp">
+
+    <TextView
+        android:id="@+id/txv_validation_validationT"
+        style="@style/normal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp" />
+
+    <EditText
+        android:id="@+id/edt_validation_code"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/normal"
+        android:padding="8dp"
+        android:layout_below="@id/txv_validation_validationT"
+        android:layout_marginLeft="36dp"
+        android:layout_marginRight="36dp"
+        android:layout_marginTop="12dp"
+        android:gravity="center"
+        android:hint="@string/validationCode"
+        android:inputType="number"
+        android:maxLength="4" />
+    <TextView
+        android:id="@+id/edt_validation_codeError"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/emptyError"
+        android:padding="8dp"
+        android:layout_below="@+id/edt_validation_code"
+        android:layout_marginLeft="36dp"
+        android:layout_marginRight="36dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:hint="@string/codeError"
+        android:visibility="gone"
+     />
+
+    <TextView
+        android:id="@+id/txv_validation_rewrite"
+        style="@style/normal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/edt_validation_codeError"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="12dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/rewritePhone"
+        android:textColor="@color/colorPrimary"
+        android:textSize="10sp" />
+
+    <Button
+        android:id="@+id/btn_validation_send"
+        style="@style/whiteTitle"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txv_validation_rewrite"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="8dp"
+        android:background="@drawable/button_shape"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="@string/sendCode" />
+
+</RelativeLayout>

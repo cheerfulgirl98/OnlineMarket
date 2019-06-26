@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cor_detail_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray200"
+    android:layoutDirection="rtl">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="60dp"
+
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <include layout="@layout/second_toolbar"/>
+            <com.daimajia.slider.library.SliderLayout
+                android:id="@+id/slider_detail"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_below="@id/rel_toolbar_main"
+                android:background="@color/white"/>
+
+            <RelativeLayout
+                android:id="@+id/rel-detail_icons"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/slider_detail"
+                android:layout_marginTop="4dp"
+                android:layout_alignParentLeft="true"
+                >
+
+                <ImageView
+                    android:id="@+id/img_detail_share"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="4dp"
+                    app:srcCompat="@drawable/ic_share" />
+
+                <ImageView
+                    android:id="@+id/img_detail_favorit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="4dp"
+                    android:layout_toRightOf="@id/img_detail_share"
+                    app:srcCompat="@drawable/ic_favorite" />
+            </RelativeLayout>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/crd_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rel-detail_icons"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="4dp"
+                android:background="@color/white">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="6dp">
+
+                    <TextView
+                        android:id="@+id/txv_detail_name"
+                        style="@style/blackBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/txv_detail_brand"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/txv_detail_name"
+                        android:layout_marginTop="8dp"
+                        style="@style/normal"
+                        android:textStyle="bold"
+                        />
+
+
+                    <TextView
+                        android:id="@+id/txv_detail_materialT"
+                        style="@style/normal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/txv_detail_brand"
+                        android:layout_marginTop="4dp"
+                        android:text="جنس : " />
+
+                    <TextView
+                        android:id="@+id/txv_detail_materail"
+                        style="@style/normal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/txv_detail_brand"
+                        android:layout_marginTop="4dp"
+                        android:layout_toLeftOf="@id/txv_detail_materialT" />
+
+
+                    <TextView
+                        android:id="@+id/txv_detail_sizeT"
+                        style="@style/normal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/txv_detail_materail"
+                        android:layout_marginTop="4dp"
+                        android:text="سایز : " />
+
+
+                    <TextView
+                        android:id="@+id/txv_detail_size"
+                        style="@style/normal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        android:layout_below="@id/txv_detail_materail"
+                        android:layout_marginRight="4dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_toLeftOf="@id/txv_detail_sizeT" />
+
+
+                    <TextView
+                        android:id="@+id/txv_detail_seprator"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@id/txv_detail_size"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@color/colorSeprator" />
+
+                    <TextView
+                        android:id="@+id/txv_detail_discount"
+                        style="@style/normal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_below="@id/txv_detail_seprator"
+                        android:layout_marginTop="8dp"
+                        android:textColor="@color/green"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/txv_detail_price"
+                        style="@style/normal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/txv_detail_seprator"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_toRightOf="@id/txv_detail_discount"
+                        android:textColor="@color/red"
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
+
+
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/crd_detail_comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/crd_detail"
+                android:layout_margin="8dp"
+                android:background="@color/white">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                <TextView
+                    android:id="@+id/txv_detail_commenttitle"
+                    style="@style/normal"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/crd_detail"
+                    android:layout_marginRight="12dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/commentTitle" />
+
+                <RelativeLayout
+                    android:id="@+id/rel_detail_noCommentBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="6dp"
+                    android:visibility="gone"
+                    >
+
+                    <TextView
+                        android:id="@+id/txv_detail_noComments"
+                        style="@style/normal"
+                        android:textSize="10sp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="6dp"
+                        android:layout_marginRight="6dp"
+                        android:text="@string/noCommentYet" />
+
+                    <TextView
+                        android:id="@+id/txv_detail_compose"
+                        style="@style/normal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_below="@id/txv_detail_noComments"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:text="@string/writeComment"
+                        android:textStyle="bold"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="10sp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rel_detail_commentBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="6dp">
+
+                    <LinearLayout
+                        android:id="@+id/lin_detail_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:gravity="center">
+
+                        <TextView
+                            android:id="@+id/txv_detail_commentT"
+                            style="@style/normal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="4dp"
+                            android:textSize="10sp" />
+
+                        <com.iarcuschin.simpleratingbar.SimpleRatingBar
+                            android:id="@+id/star_detail"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toLeftOf="@id/txv_detail_commentT"
+                            app:srb_drawBorderEnabled="false"
+                            app:srb_fillColor="@color/orangeStar"
+                            app:srb_isIndicator="true"
+                            app:srb_numberOfStars="5"
+                            app:srb_starBackgroundColor="@color/gray400"
+                            app:srb_starSize="20dp"
+                            app:srb_stepSize="1"
+
+                            />
+                    </LinearLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rec_detail_comments"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/lin_detail_container"
+                        android:layout_marginTop="8dp" />
+
+                    <TextView
+                        android:id="@+id/txv_detail_allcomments"
+                        style="@style/normal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_below="@id/rec_detail_comments"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:text="همه نظرات"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="10sp" />
+                </RelativeLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+    <Button
+        android:id="@+id/btn_detail_addToSabad"
+        style="@style/whiteTitle"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/greenButton"
+        android:text="افزودن به سبد خرید"
+        app:layout_behavior="@string/bottom_sheet_behavior" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
