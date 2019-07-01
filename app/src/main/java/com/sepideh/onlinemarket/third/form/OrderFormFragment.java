@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.sepideh.onlinemarket.R;
 import com.sepideh.onlinemarket.base.BaseFragment;
-import com.sepideh.onlinemarket.third.map.MapsActivity;
+import com.sepideh.onlinemarket.map.MapsActivity;
 
 import java.util.ArrayList;
 
