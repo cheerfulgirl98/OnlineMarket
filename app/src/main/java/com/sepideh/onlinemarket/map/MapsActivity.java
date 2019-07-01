@@ -1,4 +1,4 @@
-package com.sepideh.onlinemarket.third.map;
+package com.sepideh.onlinemarket.map;
 
 import androidx.fragment.app.FragmentActivity;
 import android.os.Bundle;
