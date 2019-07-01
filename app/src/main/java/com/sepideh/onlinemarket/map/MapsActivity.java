@@ -2,6 +2,7 @@ package com.sepideh.onlinemarket.map;
 
 import androidx.fragment.app.FragmentActivity;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -40,8 +41,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        LatLng tehran = new LatLng(35.733668, 51.422566);
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(tehran));
+        mMap.getUiSettings().setZoomControlsEnabled(true);
+        mMap.getUiSettings().setCompassEnabled(true);
+        mMap.setOnCameraIdleListener(new GoogleMap.OnCameraIdleListener() {
+            @Override
+            public void onCameraIdle() {
+                double lat=mMap.getCameraPosition().target.latitude;
+                double lng=mMap.getCameraPosition().target.longitude;
+
+                Toast.makeText(MapsActivity.this, "map :" +lat + " " +lng, Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 }
