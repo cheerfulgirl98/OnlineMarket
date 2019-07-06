@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".userInfo.UserInfoActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layoutDirection="rtl">
+
+        <include layout="@layout/second_toolbar" />
+
+        <TextView
+            style="@style/blackBold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:gravity="center"
+            android:text="لطفا اطلاعات کاربری خود را تکمیل نمایید ." />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/inputLayout_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            app:errorEnabled="true"
+            app:hintTextAppearance="@style/myInputLayout"
+            >
+
+            <EditText
+                android:id="@+id/edt_info_name"
+                style="@style/normal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/rel_main_toolbar"
+                android:theme="@style/EditTextTheme"
+                android:hint="@string/name" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/inputLayout_family"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            app:errorEnabled="true"
+            app:errorTextAppearance="@style/emptyError"
+            app:hintTextAppearance="@style/myInputLayout"
+
+            >
+
+            <EditText
+                android:id="@+id/edt_info_family"
+                style="@style/normal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/rel_main_toolbar"
+                android:theme="@style/EditTextTheme"
+                android:hint="@string/family" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/inputLayout_tell"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:textDirection="rtl"
+            app:errorEnabled="true"
+            app:errorTextAppearance="@style/emptyError"
+            app:hintTextAppearance="@style/myInputLayout">
+
+            <EditText
+                android:id="@+id/edt_info_tell"
+                style="@style/normal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/rel_main_toolbar"
+                android:hint="@string/tell"
+                android:theme="@style/EditTextTheme"
+                android:inputType="phone"
+                android:maxLength="8"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/inputLayout_mobile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:textDirection="rtl"
+            app:errorEnabled="true"
+            app:errorTextAppearance="@style/emptyError"
+            app:hintTextAppearance="@style/myInputLayout">
+
+            <EditText
+                android:id="@+id/edt_info_mobile"
+                style="@style/normal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:theme="@style/EditTextTheme"
+                android:layout_below="@id/rel_main_toolbar"
+                android:hint="@string/mobile"
+                android:inputType="phone" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:gravity="right">
+
+            <TextView
+                android:id="@+id/txv_jensiat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_centerVertical="true"
+                android:text="@string/info_form_jensiat" />
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/radioG_info_jensiat"
+                android:layout_marginRight="24dp"
+                android:layout_toLeftOf="@id/txv_jensiat"
+                android:gravity="right"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="24dp"
+                    android:id="@+id/radio_info_man"
+                    android:text="@string/info_form_man" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/radio_info_woman"
+                    android:text="@string/info_form_woman" />
+            </RadioGroup>
+        </RelativeLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/txv_error_jensiat"
+            android:text="لطفا جنسیت را انتخاب کنید ."
+            android:layout_margin="12dp"
+            style="@style/emptyError"
+            android:visibility="gone"/>
+
+
+    </LinearLayout>
+
+    <include layout="@layout/buttom_greenbutton" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

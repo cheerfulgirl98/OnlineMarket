@@ -29,6 +29,7 @@
         android:layout_below="@id/loginT"
         android:layout_marginTop="12dp"
         android:hint="شماره تلفن همراه"
+        android:backgroundTint="@color/greenButton"
         android:padding="8dp" />
 
     <TextView

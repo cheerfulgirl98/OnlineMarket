@@ -50,7 +50,7 @@ public class BasketFragment extends BaseFragment implements SabadContract.MyView
 
 
         recyclerView = rootView.findViewById(R.id.rec_sbad);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getViewContext(), RecyclerView.VERTICAL, false));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getViewContext(), RecyclerView .VERTICAL, false));
 
         emptyText = rootView.findViewById(R.id.txv_sabad_emptyText);
 

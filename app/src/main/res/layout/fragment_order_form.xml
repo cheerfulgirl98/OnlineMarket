@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -83,15 +83,7 @@
         android:layout_marginTop="24dp"/>
 </LinearLayout>
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="@color/greenButton"
-        style="@style/whiteTitle"
-        android:text="ثبت اطلاعات"
-        android:layout_alignParentBottom="true"
-        android:id="@+id/btn_form_sendInfo"
-        />
+   <include layout="@layout/buttom_greenbutton"/>
 
 
-</RelativeLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

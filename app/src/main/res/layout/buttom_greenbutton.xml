@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Button xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/btn_buttom"
+    style="@style/whiteTitle"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:background="@color/greenButton"
+    app:layout_behavior="@string/bottom_sheet_behavior" />
+

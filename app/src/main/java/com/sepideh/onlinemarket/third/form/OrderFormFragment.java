@@ -57,7 +57,9 @@ public class OrderFormFragment extends BaseFragment implements View.OnClickListe
         name = rootView.findViewById(R.id.edt_form_name);
         mobile = rootView.findViewById(R.id.edt_form_mobile);
         address = rootView.findViewById(R.id.edt_form_address);
-        sendInfo = rootView.findViewById(R.id.btn_form_sendInfo);
+
+        sendInfo = rootView.findViewById(R.id.btn_buttom);
+        sendInfo.setText(R.string.btn_send_info);
         sendInfo.setOnClickListener(this);
     }
 
@@ -75,7 +77,7 @@ public class OrderFormFragment extends BaseFragment implements View.OnClickListe
             } else {
                 getActivity().onBackPressed();
             }
-        } else if (view.getId() == R.id.btn_form_sendInfo) {
+        } else if (view.getId() == R.id.btn_buttom) {
             ArrayList<EditText> editTexts = new ArrayList<>();
             editTexts.add(name);
             editTexts.add(mobile);

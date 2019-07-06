@@ -146,7 +146,8 @@ public class DetailFragment extends BaseFragment implements DetailContract.MyVie
         compose = rootView.findViewById(R.id.txv_detail_compose);
         compose.setOnClickListener(this);
 
-        addSabad = rootView.findViewById(R.id.btn_detail_addToSabad);
+        addSabad = rootView.findViewById(R.id.btn_buttom);
+        addSabad.setText(R.string.btn_add_to_sabad);
         addSabad.setOnClickListener(this);
 
     }
