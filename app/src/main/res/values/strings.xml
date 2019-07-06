@@ -18,8 +18,12 @@
     <string name="login">ورود به حساب کاربری</string>
     <string name="register">ثبت نام</string>
     <string name="receiverInfo">درج مشخصات گیرنده</string>
+    <string name="name">نام</string>
+    <string name="family">نام خانوادگی</string>
+    <string name="codeMeli">کد ملی</string>
+    <string name="tell">شماره تلفن ثابت</string>
     <string name="username">نام کاربری</string>
-    <string name="phone">شماره تلفن همراه </string>
+    <string name="mobile">شماره تلفن همراه </string>
     <string name="password">رمز عبور</string>
     <string name="receiver">نام و نام خانوادگی گیرنده</string>
     <string name="receiver_mobile">شماره تلفن همراه گیرنده</string>
@@ -74,6 +78,16 @@
     <string name="title_activity_map">Map</string>
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_maps2">Map</string>
+    <string name="info_form_man">مرد</string>
+    <string name="info_form_woman">زن</string>
+    <string name="info_form_jensiat">جنسیت :</string>
+
+    <string name="btn_add_to_sabad">افزودن به سبد خرید </string>
+    <string name="btn_send_info">ثبت اطلاعات</string>
+    <string name="error_info_name">نام را وارد نمایید .</string>
+    <string name="error_info_family">نام خانوادگی را وارد نمایید .</string>
+    <string name="error_info_tell">شماره تلفن ثابت را وارد نمایید .</string>
+    <string name="error_info_mobile">شماره تلفن همراه را وارد نمایید .</string>
 
 
 </resources>

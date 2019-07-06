@@ -14,43 +14,101 @@ public class UserInfo implements Serializable{
     @SerializedName("user_name")
     @Expose
     private String userName;
+
+    @SerializedName("name")
+    @Expose
+    private String name;
+
+    @SerializedName("family")
+    @Expose
+    private String family;
+
+    @SerializedName("tell")
+    @Expose
+    private String tell;
+
     @SerializedName("phone_number")
     @Expose
     private String phoneNumber;
+
+    @SerializedName("jesiat")
+    @Expose
+    private String jesiat;
+
     @SerializedName("password")
     @Expose
     private String password;
+
 
     public String getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public UserInfo setId(String id) {
         this.id = id;
+        return this;
     }
 
     public String getUserName() {
         return userName;
     }
 
-    public void setUserName(String userName) {
+    public UserInfo setUserName(String userName) {
         this.userName = userName;
+        return this;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public UserInfo setName(String name) {
+        this.name = name;
+        return this;
+    }
+
+    public String getFamily() {
+        return family;
+    }
+
+    public UserInfo setFamily(String family) {
+        this.family = family;
+        return this;
+    }
+
+    public String getTell() {
+        return tell;
+    }
+
+    public UserInfo setTell(String tell) {
+        this.tell = tell;
+        return this;
     }
 
     public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
+    public UserInfo setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+        return this;
+    }
+
+    public String getJesiat() {
+        return jesiat;
+    }
+
+    public UserInfo setJesiat(String jesiat) {
+        this.jesiat = jesiat;
+        return this;
     }
 
     public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
+    public UserInfo setPassword(String password) {
         this.password = password;
+        return this;
     }
-
 }

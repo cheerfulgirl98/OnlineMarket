@@ -287,13 +287,5 @@
 
     </ScrollView>
 
-    <Button
-        android:id="@+id/btn_detail_addToSabad"
-        style="@style/whiteTitle"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="@color/greenButton"
-        android:text="افزودن به سبد خرید"
-        app:layout_behavior="@string/bottom_sheet_behavior" />
-
+   <include layout="@layout/buttom_greenbutton"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

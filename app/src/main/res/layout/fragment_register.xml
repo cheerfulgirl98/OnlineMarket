@@ -40,7 +40,6 @@
         android:layout_marginTop="16dp"
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
-        android:textDirection="rtl"
         app:errorEnabled="true"
         app:errorTextAppearance="@style/emptyError"
         app:hintTextAppearance="@style/myInputLayout">
@@ -51,7 +50,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/rel_main_toolbar"
-            android:backgroundTint="@color/colorPrimary"
             android:hint="@string/username" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -63,7 +61,6 @@
         android:layout_marginTop="8dp"
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
-        android:textDirection="rtl"
         app:errorEnabled="true"
         app:errorTextAppearance="@style/emptyError"
         app:hintTextAppearance="@style/myInputLayout">
@@ -74,7 +71,7 @@
             android:layout_height="match_parent"
             android:layout_below="@id/rel_main_toolbar"
             android:backgroundTint="@color/colorPrimary"
-            android:hint="@string/phone" />
+            android:hint="@string/mobile" />
 
 
     </com.google.android.material.textfield.TextInputLayout>

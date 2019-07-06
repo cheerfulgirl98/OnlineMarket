@@ -35,6 +35,7 @@ import com.sepideh.onlinemarket.main.home.HomeFragment;
 import com.sepideh.onlinemarket.register.RegisterActivity;
 import com.sepideh.onlinemarket.second.compose.ComposeFragment;
 import com.sepideh.onlinemarket.third.activity.ThirdActivity;
+import com.sepideh.onlinemarket.userInfo.UserInfoActivity;
 import com.sepideh.onlinemarket.utils.PublicMethods;
 
 public class MainActivity extends AppCompatActivity implements MainContract.MyView, BaseFragment.OpenLogin, View.OnClickListener,NavigationView.OnNavigationItemSelectedListener {
@@ -274,6 +275,16 @@ public class MainActivity extends AppCompatActivity implements MainContract.MyVi
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         int id=menuItem.getItemId();
         switch (id){
+            case R.id.nav_edit_info:
+                Intent intent=new Intent(this, UserInfoActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.nav_user_orders:
+
+                break;
+            case R.id.nav_messages:
+
+                break;
             case R.id.nav_logout:
                 Hawk.put(getString(R.string.loginUserInfoTag),null);
                 break;

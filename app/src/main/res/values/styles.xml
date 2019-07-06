@@ -50,9 +50,13 @@
 
 
     <style name="myInputLayout" parent="TextAppearance.AppCompat">
-        <item name="android:textColor">?attr/colorPrimary</item>
+        <item name="android:textColor">@color/colorPrimary</item>
 
     </style>
 
+    <style name="EditTextTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+
+        <item name="colorControlActivated">@color/colorPrimary</item>
+    </style>
 
 </resources>
