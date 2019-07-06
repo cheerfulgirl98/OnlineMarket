@@ -105,7 +105,7 @@ public class RegisterFragment extends BaseFragment implements RegisterContract.M
     }
 
 
-    boolean checkFields(ArrayList<EditText> editTexts) {
+    private boolean checkFields(ArrayList<EditText> editTexts) {
 
         usernameV = userName.getText().toString();
         phoneNumberV = phoneNumber.getText().toString();
@@ -121,14 +121,14 @@ public class RegisterFragment extends BaseFragment implements RegisterContract.M
         return true;
     }
 
-    void sendRequest() {
+    private void sendRequest() {
         Random random = new Random();
         String generatedCode = String.valueOf(random.nextInt(10000));
         Hawk.put("generatedCode", generatedCode);
         myPresentr.sendCode(Constant.TEMPLATE, phoneNumberV, generatedCode);
     }
 
-    void setError(ArrayList<EditText> editTexts) {
+    private void setError(ArrayList<EditText> editTexts) {
         for (EditText editText : editTexts) {
             if (editText.getText().toString().equals("")) {
                 switch (editText.getId()) {

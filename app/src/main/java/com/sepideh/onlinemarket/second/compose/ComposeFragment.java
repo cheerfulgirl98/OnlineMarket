@@ -109,16 +109,13 @@ public class ComposeFragment extends BaseFragment implements ComposeContract.MyV
         } else if (view.getId() == button.getId()) {
             String comment = editText.getText().toString();
             if (star != null && !comment.equals("")) {
-                try {
-                    myPresenter.sendComment(productId, userInfo.getId(), star, comment);
-                } catch (NullPointerException e) {
-                    openLogin.openLoginButtomsheet();
-                }
+
+                myPresenter.sendComment(productId, userInfo.getId(), star, comment);
+
             } else if (star == null)
                 PublicMethods.setSnackbar(coordinatorLayout, getString(R.string.nullStarError), getViewContext().getResources().getColor(R.color.red));
 
-            else if (comment.equals(""))
-                PublicMethods.setSnackbar(coordinatorLayout, getString(R.string.nullCommentError), getViewContext().getResources().getColor(R.color.red));
+            else PublicMethods.setSnackbar(coordinatorLayout, getString(R.string.nullCommentError), getViewContext().getResources().getColor(R.color.red));
 
         }
     }

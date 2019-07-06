@@ -70,7 +70,7 @@ public class CommentsFragment extends BaseFragment implements CommentsContract.M
         toolbarTitle=rootView.findViewById(R.id.txv_toolbar_title);
         toolbarTitle.setText(getString(R.string.comments));
         recyclerView = rootView.findViewById(R.id.rec_comments_all);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getViewContext(), LinearLayoutManager.VERTICAL, false));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getViewContext(), RecyclerView.VERTICAL, false));
 
         fab = rootView.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -117,6 +117,11 @@ public class CommentsFragment extends BaseFragment implements CommentsContract.M
         myPresenter.detachView();
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        openLogin=(OpenLogin)context;
+    }
 
     @Override
     public void showAllComments(List<Comment> comments) {

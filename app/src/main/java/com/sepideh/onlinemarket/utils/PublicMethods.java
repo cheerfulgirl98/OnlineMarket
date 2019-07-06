@@ -66,7 +66,6 @@ public class PublicMethods {
     }
 
     public static void goNewFragment(Context context,int viewId, Fragment fragment) {
-        Log.d("fff", "goNewFragment:");
         FragmentTransaction fragmentTransaction;
         fragmentTransaction =((AppCompatActivity)context).getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(viewId, fragment);

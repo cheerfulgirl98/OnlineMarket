@@ -59,7 +59,6 @@ public class SecondPresenter implements SecondContract.MyPresentr {
                     public void onSuccess(UserInfo userInfo) {
                         myView.successfulLogin(userInfo);
 
-
                     }
 
                     @Override

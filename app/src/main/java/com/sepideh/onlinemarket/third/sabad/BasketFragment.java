@@ -50,7 +50,7 @@ public class BasketFragment extends BaseFragment implements SabadContract.MyView
 
 
         recyclerView = rootView.findViewById(R.id.rec_sbad);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getViewContext(), LinearLayoutManager.VERTICAL, false));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getViewContext(), RecyclerView.VERTICAL, false));
 
         emptyText = rootView.findViewById(R.id.txv_sabad_emptyText);
 
@@ -70,10 +70,9 @@ public class BasketFragment extends BaseFragment implements SabadContract.MyView
 
 
     }
-    void manageSabad(){
+    private void manageSabad(){
 
         sabadSize=Hawk.get(getString(R.string.Hawk_sabad_size), 0);
-        Log.d("rrr", "manageSabad: "+ sabadSize);
         if (sabadSize >= 1)
         {
             badgeNotif.setVisibility(View.VISIBLE);
@@ -132,7 +131,7 @@ public class BasketFragment extends BaseFragment implements SabadContract.MyView
 
     }
 
-    void setFinalCost(List<Sabad> sabads){
+    private void setFinalCost(List<Sabad> sabads){
        finalCost=0;
             for (Sabad sabad : sabads) {
 
@@ -143,7 +142,7 @@ public class BasketFragment extends BaseFragment implements SabadContract.MyView
 
 
     }
-    public void sabadIsEmpty() {
+    private void sabadIsEmpty() {
 
         badgeNotif.setVisibility(View.GONE);
         recyclerView.setVisibility(View.INVISIBLE);

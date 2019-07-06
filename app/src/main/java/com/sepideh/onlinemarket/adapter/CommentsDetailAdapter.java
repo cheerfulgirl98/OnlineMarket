@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.iarcuschin.simpleratingbar.SimpleRatingBar;
 import com.orhanobut.hawk.Hawk;
 import com.sepideh.onlinemarket.R;
+import com.sepideh.onlinemarket.data.UserInfo;
 import com.sepideh.onlinemarket.second.comments.CommentsContract;
 import com.sepideh.onlinemarket.data.Comment;
 
@@ -24,22 +25,24 @@ import java.util.List;
 
 public class CommentsDetailAdapter extends RecyclerView.Adapter<CommentsDetailAdapter.MyHolder> implements CommentsContract.MyRowView {
 
-    CommentsContract.MyPresenter myPresenter;
-    List<Comment> comments;
-    Context mContext;
+    private CommentsContract.MyPresenter myPresenter;
+    private List<Comment> comments;
+    private Context mContext;
 
-    String userId;
-    Comment clickedComment;
-    int clickedPosition;
+    private String userId;
+    private Comment clickedComment;
+    private int clickedPosition;
 
-    String voteTag;
+    private String voteTag;
 
 
     public CommentsDetailAdapter(CommentsContract.MyPresenter myPresenter,List<Comment> comments, Context mContext) {
         this.myPresenter = myPresenter;
         this.comments = comments;
         this.mContext = mContext;
-        userId= Hawk.get(mContext.getString(R.string.loginUserInfoTag));
+        UserInfo userInfo=Hawk.get(mContext.getString(R.string.loginUserInfoTag));
+        if(userInfo!=null)
+        userId= userInfo.getId();
         myPresenter.attachRow(this);
     }
 
@@ -53,8 +56,6 @@ public class CommentsDetailAdapter extends RecyclerView.Adapter<CommentsDetailAd
     @Override
     public void onBindViewHolder(@NonNull MyHolder holder, final int position) {
 
-
-        Log.d("myuse", "MyHolder: userid"+userId);
         holder.username.setText(comments.get(position).getUserName());
         holder.date.setText(comments.get(position).getDate());
         holder.description.setText(comments.get(position).getDescription());
@@ -67,9 +68,7 @@ public class CommentsDetailAdapter extends RecyclerView.Adapter<CommentsDetailAd
                 clickedComment=comments.get(position);
                 clickedPosition=position;
                 String commentId=clickedComment.getId();
-
                 voteTag="like";
-
                 myPresenter.vote(voteTag,commentId,userId);
 //                int like= Integer.parseInt(comments.get(position).getLike())+1;
 //                comments.get(position).setLike(String.valueOf(like));

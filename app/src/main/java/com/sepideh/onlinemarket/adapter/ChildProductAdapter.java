@@ -119,7 +119,9 @@ public class ChildProductAdapter extends RecyclerView.Adapter<ChildProductAdapte
             proPrice = itemView.findViewById(R.id.txv_show_price);
             proDiscount = itemView.findViewById(R.id.txv_show_discount);
 
-
         }
     }
+
+
+
 }

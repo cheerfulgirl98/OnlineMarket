@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-<item android:id="@+id/nav1" android:title="تست یک" />
-    <item android:id="@+id/nav2" android:title="تست دو" />
-    <item android:id="@+id/nav3" android:title="تست سه" />
-    <item android:id="@+id/nav4" android:title="تست چهار" />
-
-
+    <group android:checkableBehavior="single" android:id="@+id/group_nav_menu">
+<item android:id="@+id/nav_edit_info" android:title="ویرایش اطلاعات" android:icon="@drawable/ic_edit" />
+    <item android:id="@+id/nav_user_orders" android:title="سفارشات من" android:icon="@drawable/ic_list"/>
+    <item android:id="@+id/nav_messages" android:title="پیام ها" android:icon="@drawable/ic_message"/>
+    <item android:id="@+id/nav_logout" android:title="خروج" android:icon="@drawable/ic_logout"/>
+    </group>
 </menu>
