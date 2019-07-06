@@ -3,13 +3,17 @@ package com.sepideh.onlinemarket.main.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,6 +24,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.navigation.NavigationView;
 import com.orhanobut.hawk.Hawk;
 import com.sepideh.onlinemarket.R;
 import com.sepideh.onlinemarket.base.BaseFragment;
@@ -28,20 +33,21 @@ import com.sepideh.onlinemarket.main.categories.CategoryFragment;
 import com.sepideh.onlinemarket.main.favorit.FavoritFragment;
 import com.sepideh.onlinemarket.main.home.HomeFragment;
 import com.sepideh.onlinemarket.register.RegisterActivity;
+import com.sepideh.onlinemarket.second.compose.ComposeFragment;
 import com.sepideh.onlinemarket.third.activity.ThirdActivity;
 import com.sepideh.onlinemarket.utils.PublicMethods;
 
-public class MainActivity extends AppCompatActivity implements MainContract.MyView, BaseFragment.OpenLogin,View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements MainContract.MyView, BaseFragment.OpenLogin, View.OnClickListener,NavigationView.OnNavigationItemSelectedListener {
 
     MainContract.MyPresentr myPresenter;
     CoordinatorLayout coordinatorLayout;
     RelativeLayout sabad;
     DrawerLayout drawerLayout;
+    NavigationView navigationView;
     ImageView burgerMenu, back;
-    TextView toolbarTitle,badgeNotif;
+    TextView toolbarTitle, badgeNotif;
     BottomNavigationView bottomNavigationView;
     FragmentTransaction fragmentTransaction;
-
 
     BottomSheetDialog bottomSheetDialog;
     View view1;
@@ -56,8 +62,6 @@ public class MainActivity extends AppCompatActivity implements MainContract.MyVi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setUpViews();
-
-
 
         Intent intent = getIntent();
         if (intent != null) {
@@ -87,17 +91,20 @@ public class MainActivity extends AppCompatActivity implements MainContract.MyVi
     public void setUpViews() {
         myPresenter = new MainPresenter(new MainModel());
         coordinatorLayout = findViewById(R.id.cor_main);
-        sabad=findViewById(R.id.rel_detail_sabad);
+        sabad = findViewById(R.id.rel_detail_sabad);
         sabad.setOnClickListener(this);
-        badgeNotif =findViewById(R.id.badge_notif);
+        badgeNotif = findViewById(R.id.badge_notif);
         drawerLayout = findViewById(R.id.drawer);
         burgerMenu = findViewById(R.id.img_toolbar_burgerMenu);
-        back = findViewById(R.id.img_toolbar_back);
-        toolbarTitle = findViewById(R.id.txv_toolbar_title);
-
         burgerMenu.setOnClickListener(this);
 
+        back = findViewById(R.id.img_toolbar_back);
         back.setOnClickListener(this);
+
+        toolbarTitle = findViewById(R.id.txv_toolbar_title);
+
+        navigationView=findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
 
         bottomNavigationView = findViewById(R.id.bottm_main_navigate);
         bottomNavigationView.setSelectedItemId(R.id.bottom_home);
@@ -114,7 +121,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.MyVi
                         back.setVisibility(View.GONE);
                         toolbarTitle.setVisibility(View.GONE);
                         PublicMethods.goNewFragment(mContext, R.id.frame_main_container, new HomeFragment());
-                        return true;
+                        break;
 
                     case R.id.bottom_categories:
                         burgerMenu.setVisibility(View.GONE);
@@ -122,7 +129,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.MyVi
                         toolbarTitle.setVisibility(View.VISIBLE);
                         toolbarTitle.setText("دسته بندی محصولات");
                         PublicMethods.goNewFragment(mContext, R.id.frame_main_container, new CategoryFragment());
-                        return true;
+                        break;
 
                     case R.id.bottom_favorit:
                         burgerMenu.setVisibility(View.GONE);
@@ -130,28 +137,25 @@ public class MainActivity extends AppCompatActivity implements MainContract.MyVi
                         toolbarTitle.setVisibility(View.VISIBLE);
                         toolbarTitle.setText("محصولات مورد علاقه");
                         PublicMethods.goNewFragment(mContext, R.id.frame_main_container, new FavoritFragment());
-                        return true;
+                        break;
 
                 }
 
-                return false;
+                return true;
 
             }
         });
     }
 
 
-
     @Override
     public void onClick(View view) {
-        if(view.getId()==sabad.getId()){
-            Intent intent=new Intent(MainActivity.this, ThirdActivity.class);
+        if (view.getId() == sabad.getId()) {
+            Intent intent = new Intent(MainActivity.this, ThirdActivity.class);
             startActivity(intent);
-        }
-
-        else if (view.getId() == burgerMenu.getId()) {
+        } else if (view.getId() == burgerMenu.getId()) {
             if (view.getId() == burgerMenu.getId()) {
-                if (PublicMethods.checkLogin())
+                if (!PublicMethods.checkLogin())
                     openLoginButtomsheet();
 
                 else {
@@ -160,16 +164,16 @@ public class MainActivity extends AppCompatActivity implements MainContract.MyVi
                     }
                 }
             }
-        }
-        else if (view.getId() == back.getId())
+        } else if (view.getId() == back.getId())
             onBackPressed();
     }
 
     @Override
     public void successfulLogin(UserInfo userInfo) {
 
+        Hawk.put(getString(R.string.loginUserInfoTag),userInfo);
         bottomSheetDialog.dismiss();
-        Toast.makeText(this, "به آنلاین مارکت خوش آمدید.", Toast.LENGTH_SHORT).show();
+        drawerLayout.openDrawer(Gravity.RIGHT);
     }
 
     @Override
@@ -186,11 +190,11 @@ public class MainActivity extends AppCompatActivity implements MainContract.MyVi
     }
 
     public void setBadgeNotif() {
-        int sabadsize= Hawk.get(getString(R.string.Hawk_sabad_size),0);
-        if(sabadsize>0){
+        int sabadsize = Hawk.get(getString(R.string.Hawk_sabad_size), 0);
+        if (sabadsize > 0) {
             badgeNotif.setVisibility(View.VISIBLE);
-            badgeNotif.setText(String.valueOf(sabadsize));}
-        else badgeNotif.setVisibility(View.GONE);
+            badgeNotif.setText(String.valueOf(sabadsize));
+        } else badgeNotif.setVisibility(View.GONE);
     }
 
 
@@ -236,7 +240,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.MyVi
                 else {
                     phoneNumberError.setVisibility(View.GONE);
                     passwordError.setVisibility(View.GONE);
-                     myPresenter.loginToApp(phoneNumberV, passwordV);
+                    myPresenter.loginToApp(phoneNumberV, passwordV);
                 }
             }
         });
@@ -247,22 +251,35 @@ public class MainActivity extends AppCompatActivity implements MainContract.MyVi
     public void onBackPressed() {
 
 
+        if (bottomNavigationView.getSelectedItemId() == R.id.bottom_home) {
 
-            if (bottomNavigationView.getSelectedItemId() == R.id.bottom_home) {
-
-                finish();
-            } else {
+            finish();
+        } else {
 
 //            PublicMethods.goNewFragment(mContext, R.id.frame_main_container, new HomeFragment());
 //            bottomNavigationView.getMenu().getItem(2).setChecked(true);
-                bottomNavigationView.setSelectedItemId(R.id.bottom_home);
+            bottomNavigationView.setSelectedItemId(R.id.bottom_home);
 
-            }
         }
+    }
 
     @Override
     protected void onResume() {
         super.onResume();
         setBadgeNotif();
+    }
+
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        int id=menuItem.getItemId();
+        switch (id){
+            case R.id.nav_logout:
+                Hawk.put(getString(R.string.loginUserInfoTag),null);
+                break;
+        }
+       // navigationView.setCheckedItem(id);
+        drawerLayout.closeDrawers();
+        return false;
     }
 }

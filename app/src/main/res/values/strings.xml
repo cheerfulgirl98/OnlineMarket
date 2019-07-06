@@ -73,6 +73,7 @@
     <string name="empty_favorit_alarm">لیست علاقه مندی های شما خالی است!</string>
     <string name="title_activity_map">Map</string>
     <string name="title_activity_maps">Map</string>
+    <string name="title_activity_maps2">Map</string>
 
 
 </resources>

@@ -3,9 +3,13 @@ package com.sepideh.onlinemarket.main.home;
 import android.content.Context;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
@@ -28,6 +32,7 @@ import java.util.List;
 public class HomeFragment extends BaseFragment implements HomeContract.MyView, BaseSliderView.OnSliderClickListener {
 
 
+
     HomeContract.MyPresenter myPresenter;
     SliderLayout sliderLayout;
     ArrayList<String> sliderArrayList = new ArrayList<>();
@@ -35,7 +40,6 @@ public class HomeFragment extends BaseFragment implements HomeContract.MyView, B
     SuggestionAdapter suggestionAdapter;
     ProductAdapter productAdapter;
 
-    UserInfo userInfo;
 
 
     @Override
@@ -49,6 +53,8 @@ public class HomeFragment extends BaseFragment implements HomeContract.MyView, B
 
     @Override
     public void setUpViews() {
+
+
         sliderLayout = rootView.findViewById(R.id.slider_home);
         sugRecycler = rootView.findViewById(R.id.rec_home_suggestions);
         sugRecycler.setLayoutManager(new LinearLayoutManager(getViewContext(), LinearLayoutManager.HORIZONTAL, false));

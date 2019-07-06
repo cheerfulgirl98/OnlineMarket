@@ -137,7 +137,7 @@ public class DetailFragment extends BaseFragment implements DetailContract.MyVie
         ratingBar = rootView.findViewById(R.id.star_detail);
         commentT = rootView.findViewById(R.id.txv_detail_commentT);
         recyclerView = rootView.findViewById(R.id.rec_detail_comments);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getViewContext(), LinearLayoutManager.VERTICAL, false));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getViewContext(), RecyclerView.VERTICAL, false));
         allComents = rootView.findViewById(R.id.txv_detail_allcomments);
         allComents.setOnClickListener(this);
 
@@ -233,7 +233,7 @@ public class DetailFragment extends BaseFragment implements DetailContract.MyVie
     }
 
 
-    void manageSabad() {
+    private void manageSabad() {
         sabadSizeV = Hawk.get(getString(R.string.Hawk_sabad_size), -1);
         if (sabadSizeV > 0) {
             //when come back from basketfragment and change sth there, set size from hawk
@@ -249,14 +249,14 @@ public class DetailFragment extends BaseFragment implements DetailContract.MyVie
     }
 
 
-    public void setSabadSizeOnBadge(int sabadSize) {
+    private void setSabadSizeOnBadge(int sabadSize) {
         badgeNotif.setVisibility(View.VISIBLE);
         badgeNotif.setText(String.valueOf(sabadSize));
         Hawk.put(getString(R.string.Hawk_sabad_size), sabadSize);
     }
 
 
-    public void sabadIsEmpty() {
+    private void sabadIsEmpty() {
         badgeNotif.setVisibility(View.GONE);
     }
 
@@ -292,7 +292,7 @@ public class DetailFragment extends BaseFragment implements DetailContract.MyVie
             PublicMethods.goNewFragment(getViewContext(), R.id.frame_second_container, new CommentsFragment());
 
         } else if (view.getId() == R.id.txv_detail_compose) {
-            if (PublicMethods.checkLogin()) {
+            if (!PublicMethods.checkLogin()) {
                 openLogin.openLoginButtomsheet();
 
             } else {
@@ -327,9 +327,9 @@ public class DetailFragment extends BaseFragment implements DetailContract.MyVie
 //        void openLoginButtomsheet();
 //    }
 //
-//    @Override
-//    public void onAttach(Context context) {
-//        super.onAttach(context);
-//        openLogin=(OpenLogin) context;
-//    }
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        openLogin=(OpenLogin) context;
+    }
 }

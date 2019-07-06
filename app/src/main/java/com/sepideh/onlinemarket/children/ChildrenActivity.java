@@ -88,10 +88,10 @@ public class ChildrenActivity extends AppCompatActivity implements ChildrenContr
         toolbarTitle=findViewById(R.id.txv_toolbar_title);
         toolbarTitle.setText(catChild + " " + catHeaderV);
         badgeNotif=findViewById(R.id.badge_notif);
-        sabad=findViewById(R.id.rel_detail_sabad);
+        sabad=findViewById(R.id.rel_toolbar_sabad);
         sabad.setOnClickListener(this);
         recyclerView = findViewById(R.id.rec_children);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
 
     }
 
