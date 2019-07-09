@@ -32,7 +32,7 @@ public class RegisterPresenter implements RegisterContract.MyPresentr {
 
     @Override
     public void detachView() {
-        Log.d("mytag", "detachView: ");
+
         this.myView=null;
         if(compositeDisposable!=null & compositeDisposable.size()>0){
             compositeDisposable.clear();
@@ -71,19 +71,18 @@ public class RegisterPresenter implements RegisterContract.MyPresentr {
 
     @Override
     public void registerUser(String userName, String phoneNumber, String password) {
-        Log.d("mytag", "registerUser: presenter");
+
         myModel.registerUser(userName,phoneNumber,password).subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<UserInfo>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-                        Log.d("mytag", "onSubscribe: register");
+
                         compositeDisposable.add(d);
                     }
 
                     @Override
                     public void onSuccess(UserInfo userInfo) {
-                        Log.d("mytag", "onSuccess: register");
                         myView.successfulRegistration(userInfo);
 
                     }

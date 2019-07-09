@@ -5,13 +5,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/coor_updateUserInfo"
     tools:context=".userInfo.UserInfoActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layoutDirection="rtl">
+        android:layoutDirection="rtl"
+        android:orientation="vertical">
 
         <include layout="@layout/second_toolbar" />
 
@@ -19,9 +20,9 @@
             style="@style/blackBold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="36dp"
             android:gravity="center"
-            android:text="لطفا اطلاعات کاربری خود را تکمیل نمایید ." />
+            android:text="@string/pls_complete_info" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/inputLayout_name"
@@ -29,8 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             app:errorEnabled="true"
-            app:hintTextAppearance="@style/myInputLayout"
-            >
+            app:hintTextAppearance="@style/myInputLayout">
 
             <EditText
                 android:id="@+id/edt_info_name"
@@ -38,8 +38,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@id/rel_main_toolbar"
-                android:theme="@style/EditTextTheme"
-                android:hint="@string/name" />
+                android:hint="@string/name"
+                android:theme="@style/EditTextTheme" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -59,8 +59,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@id/rel_main_toolbar"
-                android:theme="@style/EditTextTheme"
-                android:hint="@string/family" />
+                android:hint="@string/family"
+                android:theme="@style/EditTextTheme" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -80,9 +80,9 @@
                 android:layout_height="match_parent"
                 android:layout_below="@id/rel_main_toolbar"
                 android:hint="@string/tell"
-                android:theme="@style/EditTextTheme"
                 android:inputType="phone"
-                android:maxLength="8"/>
+                android:maxLength="8"
+                android:theme="@style/EditTextTheme" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -100,10 +100,10 @@
                 style="@style/normal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:theme="@style/EditTextTheme"
                 android:layout_below="@id/rel_main_toolbar"
+                android:enabled="false"
                 android:hint="@string/mobile"
-                android:inputType="phone" />
+                android:theme="@style/EditTextTheme" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <RelativeLayout
@@ -121,36 +121,38 @@
                 android:text="@string/info_form_jensiat" />
 
             <RadioGroup
+                android:id="@+id/radioG_info_jensiat"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/radioG_info_jensiat"
                 android:layout_marginRight="24dp"
                 android:layout_toLeftOf="@id/txv_jensiat"
                 android:gravity="right"
                 android:orientation="horizontal">
 
                 <RadioButton
+                    android:id="@+id/radio_info_man"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="24dp"
-                    android:id="@+id/radio_info_man"
                     android:text="@string/info_form_man" />
 
                 <RadioButton
+                    android:id="@+id/radio_info_woman"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/radio_info_woman"
+                    android:layout_marginRight="24dp"
                     android:text="@string/info_form_woman" />
             </RadioGroup>
         </RelativeLayout>
+
         <TextView
+            android:id="@+id/txv_error_jensiat"
+            style="@style/emptyError"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/txv_error_jensiat"
-            android:text="لطفا جنسیت را انتخاب کنید ."
             android:layout_margin="12dp"
-            style="@style/emptyError"
-            android:visibility="gone"/>
+            android:text="لطفا جنسیت را انتخاب کنید ."
+            android:visibility="gone" />
 
 
     </LinearLayout>

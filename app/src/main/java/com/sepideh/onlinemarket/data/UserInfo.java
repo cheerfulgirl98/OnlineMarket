@@ -31,9 +31,9 @@ public class UserInfo implements Serializable{
     @Expose
     private String phoneNumber;
 
-    @SerializedName("jesiat")
+    @SerializedName("jensiat")
     @Expose
-    private String jesiat;
+    private String jensiat;
 
     @SerializedName("password")
     @Expose
@@ -94,12 +94,12 @@ public class UserInfo implements Serializable{
         return this;
     }
 
-    public String getJesiat() {
-        return jesiat;
+    public String getJensiat() {
+        return jensiat;
     }
 
-    public UserInfo setJesiat(String jesiat) {
-        this.jesiat = jesiat;
+    public UserInfo setJensiat(String jensiat) {
+        this.jensiat = jensiat;
         return this;
     }
 
@@ -110,5 +110,20 @@ public class UserInfo implements Serializable{
     public UserInfo setPassword(String password) {
         this.password = password;
         return this;
+    }
+
+
+    @Override
+    public String toString() {
+        return "UserInfo{" +
+                "id='" + id + '\'' +
+                ", userName='" + userName + '\'' +
+                ", name='" + name + '\'' +
+                ", family='" + family + '\'' +
+                ", tell='" + tell + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", jensiat='" + jensiat + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 }

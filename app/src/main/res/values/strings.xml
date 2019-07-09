@@ -88,6 +88,8 @@
     <string name="error_info_family">نام خانوادگی را وارد نمایید .</string>
     <string name="error_info_tell">شماره تلفن ثابت را وارد نمایید .</string>
     <string name="error_info_mobile">شماره تلفن همراه را وارد نمایید .</string>
+    <string name="pls_complete_info">لطفا اطلاعات کاربری خود را تکمیل نمایید .</string>
+    <string name="snack_update_info">اطلاعات با موفقیت به روز رسانی شد .</string>
 
 
 </resources>
