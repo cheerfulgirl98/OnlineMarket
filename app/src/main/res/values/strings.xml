@@ -76,6 +76,7 @@
     <string name="empty_sabad_alarm">سبد خرید شما خالی است!</string>
     <string name="empty_orders_alarm">تاکنون سفارشی برای شما ثبت نشده است .</string>
     <string name="empty_favorit_alarm">لیست علاقه مندی های شما خالی است!</string>
+    <string name="empty_messages_alarm">لیست پیام های شما خالی است!</string>
     <string name="title_activity_map">Map</string>
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_maps2">Map</string>

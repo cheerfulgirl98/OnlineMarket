@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "952644160908",
+    "firebase_url": "https://onlinemarket-2adff.firebaseio.com",
+    "project_id": "onlinemarket-2adff",
+    "storage_bucket": "onlinemarket-2adff.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:952644160908:android:60c2c0bd99555de5",
+        "android_client_info": {
+          "package_name": "com.sepideh.onlinemarket"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "952644160908-pi0j3pr6b74k4br2353fhuoac6kd2t8u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sepideh.onlinemarket",
+            "certificate_hash": "b2d7d755874de2e76ba1d7385976e2ad79458bfc"
+          }
+        },
+        {
+          "client_id": "952644160908-ap0chjgemiu2o97gmp02rphrgfm4chdj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAp_t9_IKWNHtW8NlZTvh8z1rvzGR0fFeY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "952644160908-ap0chjgemiu2o97gmp02rphrgfm4chdj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

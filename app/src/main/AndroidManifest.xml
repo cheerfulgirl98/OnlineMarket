@@ -18,7 +18,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".navigationview.NavigationActivity"></activity>
+        <activity android:name=".base.MyBaseActivity"></activity>
+
+        <service
+            android:name=".fcm.MyFirebaseMessagingService"
+            android:enabled="true"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <activity android:name=".navigationview.NavigationActivity" />
         <activity android:name=".userInfo.UserInfoActivity" />
         <activity android:name=".testActivity" />
         <!--
