@@ -18,7 +18,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".userInfo.UserInfoActivity"></activity>
+        <activity android:name=".navigationview.NavigationActivity"></activity>
+        <activity android:name=".userInfo.UserInfoActivity" />
         <activity android:name=".testActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
