@@ -18,4 +18,6 @@ public class Constant {
     public static String TEMPLATE="sendcode";
     public static ApiService apiService= ApiClient.createService(ApiService.class);
     public static ApiServiceSms apiServiceSms= SmsClient.createService(ApiServiceSms.class);
+
+
 }
