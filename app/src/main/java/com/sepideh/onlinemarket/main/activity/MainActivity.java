@@ -32,6 +32,7 @@ import com.sepideh.onlinemarket.data.UserInfo;
 import com.sepideh.onlinemarket.main.categories.CategoryFragment;
 import com.sepideh.onlinemarket.main.favorit.FavoritFragment;
 import com.sepideh.onlinemarket.main.home.HomeFragment;
+import com.sepideh.onlinemarket.navigationview.NavigationActivity;
 import com.sepideh.onlinemarket.register.RegisterActivity;
 import com.sepideh.onlinemarket.second.compose.ComposeFragment;
 import com.sepideh.onlinemarket.third.activity.ThirdActivity;
@@ -57,6 +58,8 @@ public class MainActivity extends AppCompatActivity implements MainContract.MyVi
     String phoneNumberV, passwordV;
     ImageView closeLogin;
     Context mContext = this;
+
+    Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -276,11 +279,13 @@ public class MainActivity extends AppCompatActivity implements MainContract.MyVi
         int id=menuItem.getItemId();
         switch (id){
             case R.id.nav_edit_info:
-                Intent intent=new Intent(this, UserInfoActivity.class);
+               intent=new Intent(this, UserInfoActivity.class);
                 startActivity(intent);
                 break;
             case R.id.nav_user_orders:
 
+                intent=new Intent(this, NavigationActivity.class);
+                startActivity(intent);
                 break;
             case R.id.nav_messages:
 

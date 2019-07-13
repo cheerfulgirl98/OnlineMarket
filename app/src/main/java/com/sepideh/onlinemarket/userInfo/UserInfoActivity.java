@@ -8,8 +8,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 
@@ -26,8 +28,13 @@ public class UserInfoActivity extends AppCompatActivity implements UserInfoContr
 
     CoordinatorLayout coordinatorLayout;
     UserInfoContract.MyPresenter myPresenter;
-    TextInputLayout nameInput, familyInput, codeMeliInput, tellInput, mobileInput;
-    EditText name, family, codeMeli, tell, mobile;
+
+    RelativeLayout sabad;
+    ImageView back;
+    TextView toolbartitle;
+
+    TextInputLayout nameInput, familyInput, tellInput, mobileInput;
+    EditText name, family, tell, mobile;
     RadioGroup jensiatGroup;
     RadioButton manRadio,womanRadio;
     TextView errorJensiat;
@@ -68,6 +75,15 @@ public class UserInfoActivity extends AppCompatActivity implements UserInfoContr
     public void setUpViews() {
 
         coordinatorLayout=findViewById(R.id.coor_updateUserInfo);
+
+        sabad=findViewById(R.id.rel_toolbar_sabad);
+        sabad.setVisibility(View.GONE);
+
+        back=findViewById(R.id.img_toolbar_back);
+        back.setOnClickListener(this);
+
+        toolbartitle=findViewById(R.id.txv_toolbar_title);
+        toolbartitle.setText(getString(R.string.title_usernfo));
 
         name = findViewById(R.id.edt_info_name);
         editTexts.add(name);
@@ -162,6 +178,8 @@ public class UserInfoActivity extends AppCompatActivity implements UserInfoContr
 
 
         }
+        else if(v.getId()==back.getId())
+            onBackPressed();
 
 
     }
