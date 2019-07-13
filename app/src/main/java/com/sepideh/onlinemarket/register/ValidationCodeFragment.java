@@ -91,8 +91,9 @@ public class ValidationCodeFragment extends BaseFragment implements RegisterCont
             } else if (!typedCode.equals(generatedCode)) {
                 codeError.setVisibility(View.VISIBLE);
                 codeError.setText(getString(R.string.validationError));}
-             else if (typedCode.equals(generatedCode)){
+             else {
 
+                 //typedCode equals generatedCode
                    myPresentr.registerUser(userInfoRegister.getUserName(),userInfoRegister.getPhoneNumber(),userInfoRegister.getPassword());}
 
         }

@@ -69,5 +69,9 @@ public interface ApiService {
     @POST("getChildrenProducts.php")
     Single<List<ProductInfo>> getChildrenProducts(@Field("cat_child") String catChild,@Field("cat_header") int catHeader);
 
+    @FormUrlEncoded
+    @POST("completeUserInfo.php")
+    Single<UserInfo> updateUserInfo(@Field("phone_num") String phone_num,@Field("name") String name,@Field("family") String family,@Field("tell") String tell,@Field("jensiat") String jensiat);
+
 }
 

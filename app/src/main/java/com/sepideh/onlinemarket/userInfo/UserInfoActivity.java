@@ -1,6 +1,7 @@
 package com.sepideh.onlinemarket.userInfo;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -11,36 +12,43 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import com.google.android.material.textfield.TextInputEditText;
+
 import com.google.android.material.textfield.TextInputLayout;
+import com.orhanobut.hawk.Hawk;
 import com.sepideh.onlinemarket.R;
 import com.sepideh.onlinemarket.data.UserInfo;
+import com.sepideh.onlinemarket.utils.PublicMethods;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserInfoActivity extends AppCompatActivity implements UserInfoContract.MyView, View.OnClickListener {
 
+    CoordinatorLayout coordinatorLayout;
     UserInfoContract.MyPresenter myPresenter;
     TextInputLayout nameInput, familyInput, codeMeliInput, tellInput, mobileInput;
     EditText name, family, codeMeli, tell, mobile;
-    RadioGroup jensiat;
+    RadioGroup jensiatGroup;
+    RadioButton manRadio,womanRadio;
     TextView errorJensiat;
     Button sendInfo;
 
     List<EditText> editTexts = new ArrayList<>();
-    UserInfo userInfo = new UserInfo();
     String jensiatV;
     boolean tellB, mobileB, validationB;
 
     TextInputLayout errorInputLayout;
+
+    UserInfo logedinUserInfo;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_info);
+        myPresenter=new UserInfoPresenter(new UserInfoModel() );
         setUpViews();
+        setSavedInfo();
 
     }
 
@@ -58,7 +66,8 @@ public class UserInfoActivity extends AppCompatActivity implements UserInfoContr
 
     @Override
     public void setUpViews() {
-        myPresenter = new UserInfoPresenter();
+
+        coordinatorLayout=findViewById(R.id.coor_updateUserInfo);
 
         name = findViewById(R.id.edt_info_name);
         editTexts.add(name);
@@ -77,23 +86,26 @@ public class UserInfoActivity extends AppCompatActivity implements UserInfoContr
 
         errorInputLayout = nameInput;
 
-        jensiat = findViewById(R.id.radioG_info_jensiat);
-        jensiat.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        jensiatGroup = findViewById(R.id.radioG_info_jensiat);
+        jensiatGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
                     case R.id.radio_info_man:
-                        jensiatV = "man";
+                        jensiatV = "0";
                         errorJensiat.setVisibility(View.GONE);
                         break;
                     case R.id.radio_info_woman:
-                        jensiatV = "woman";
+                        jensiatV = "1";
                         errorJensiat.setVisibility(View.GONE);
                         break;
 
                 }
             }
         });
+
+        manRadio=findViewById(R.id.radio_info_man);
+        womanRadio=findViewById(R.id.radio_info_woman);
         errorJensiat = findViewById(R.id.txv_error_jensiat);
 
         sendInfo = findViewById(R.id.btn_buttom);
@@ -122,7 +134,7 @@ public class UserInfoActivity extends AppCompatActivity implements UserInfoContr
         if (v.getId() == R.id.btn_buttom) {
             if (checkInfoLength()) {
                 if (checkValidation() && checkRadioValidation())
-                    myPresenter.sendInfo(userInfo);
+                    myPresenter.updateUserInfo(logedinUserInfo);
             } else {
                 //checkEditTextEmptyness();
 
@@ -168,7 +180,8 @@ public class UserInfoActivity extends AppCompatActivity implements UserInfoContr
             }
         }
 
-        userInfo.setName(name.getText().toString()).setFamily(family.getText().toString());
+        logedinUserInfo.setName(name.getText().toString()).setFamily(family.getText().toString());
+
         return true;
 
     }
@@ -176,7 +189,7 @@ public class UserInfoActivity extends AppCompatActivity implements UserInfoContr
     private boolean checkValidation() {
 
         if (tell.getText().length() == 8) {
-            userInfo.setTell(tell.getText().toString());
+            logedinUserInfo.setTell(tell.getText().toString());
             tellInput.setError("");
             tellB = true;
         } else tellInput.setError("طول شماره تلفن ثابت نباید کمتر از هشت رقم باشد .");
@@ -187,27 +200,25 @@ public class UserInfoActivity extends AppCompatActivity implements UserInfoContr
             if (!mobileV.matches("(\\+98|0)?9\\d{9}"))
                 mobileInput.setError(getString(R.string.validNumberError));
             else {
-                Log.d("vvvv", "checkValidation: else");
+
                 mobileInput.setError("");
-                userInfo.setPhoneNumber(mobileV);
+                logedinUserInfo.setPhoneNumber(mobileV);
                 mobileB = true;
             }
         }
 
         validationB = tellB & mobileB;
-        Log.d("vvvv", "checkValidation: " + validationB + " tell: " + tellB + "  mobile " + mobileB);
 
         return validationB;
     }
 
     private boolean checkRadioValidation() {
-        Log.d("vvvv", "checkRadioValidation: ");
-        if (jensiat.getCheckedRadioButtonId() == -1) {
+        if (jensiatGroup.getCheckedRadioButtonId() == -1) {
             errorJensiat.setVisibility(View.VISIBLE);
             return false;
         } else {
             errorJensiat.setVisibility(View.GONE);
-            userInfo.setJesiat(jensiatV);
+            logedinUserInfo.setJensiat(jensiatV);
         }
         return true;
     }
@@ -239,15 +250,15 @@ public class UserInfoActivity extends AppCompatActivity implements UserInfoContr
                 switch (editText.getId()) {
                     case R.id.edt_info_name:
                         nameInput.setError("");
-                        userInfo.setName(name.getText().toString());
+                        logedinUserInfo.setName(name.getText().toString());
                         break;
                     case R.id.edt_info_family:
                         nameInput.setError("");
-                        userInfo.setFamily(family.getText().toString());
+                        logedinUserInfo.setFamily(family.getText().toString());
                         break;
                     case R.id.edt_info_tell:
                         nameInput.setError("");
-                        userInfo.setTell(tell.getText().toString());
+                        logedinUserInfo.setTell(tell.getText().toString());
                         break;
                     case R.id.edt_info_mobile:
                         mobileInput.setError("");
@@ -257,5 +268,25 @@ public class UserInfoActivity extends AppCompatActivity implements UserInfoContr
         }
     }
 
+    private void setSavedInfo(){
+        logedinUserInfo= Hawk.get(getString(R.string.loginUserInfoTag));
+        mobile.setText(logedinUserInfo.getPhoneNumber());
+        name.setText(logedinUserInfo.getName());
+        family.setText(logedinUserInfo.getFamily());
+        tell.setText(logedinUserInfo.getTell());
+        String jensiatV=logedinUserInfo.getJensiat();
+        if(jensiatV.equals("0"))
+            manRadio.setChecked(true);
+        else if(jensiatV.equals("1"))
+            womanRadio.setChecked(true);
 
+
+    }
+
+
+    @Override
+    public void userInfoUpdated(UserInfo refreshedUserInfo) {
+        Hawk.put(getString(R.string.loginUserInfoTag),refreshedUserInfo);
+        PublicMethods.setSnackbar(coordinatorLayout,getString(R.string.snack_update_info),getResources().getColor(R.color.green));
+    }
 }
