@@ -37,7 +37,6 @@
                 style="@style/normal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@id/rel_main_toolbar"
                 android:hint="@string/name"
                 android:theme="@style/EditTextTheme" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -58,7 +57,6 @@
                 style="@style/normal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@id/rel_main_toolbar"
                 android:hint="@string/family"
                 android:theme="@style/EditTextTheme" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -78,7 +76,6 @@
                 style="@style/normal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@id/rel_main_toolbar"
                 android:hint="@string/tell"
                 android:inputType="phone"
                 android:maxLength="8"
@@ -100,7 +97,6 @@
                 style="@style/normal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@id/rel_main_toolbar"
                 android:enabled="false"
                 android:hint="@string/mobile"
                 android:theme="@style/EditTextTheme" />

@@ -11,6 +11,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.sepideh.onlinemarket.R;
+import com.sepideh.onlinemarket.navigationview.messages.MessageActivity;
 import com.sepideh.onlinemarket.utils.NotifConstant;
 
 public class MyBaseActivity extends AppCompatActivity {
@@ -28,7 +29,10 @@ public class MyBaseActivity extends AppCompatActivity {
                 if(intent.getAction().equals(NotifConstant.PUSH_NOTIFICATION))
                 {
                     String notifMsg=intent.getStringExtra("pushMessage");
-                    Log.d("mynotif", "onReceive: "+ notifMsg);
+
+                    Intent intent1=new Intent(getApplicationContext(),MessageActivity.class);
+                    intent1.putExtra("notifMsg",notifMsg);
+                    startActivity(intent1);
                 }
             }
         };

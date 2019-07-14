@@ -1,20 +1,27 @@
 package com.sepideh.onlinemarket.fcm;
 
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.IBinder;
 import android.text.TextUtils;
 import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.sepideh.onlinemarket.R;
 import com.sepideh.onlinemarket.main.activity.MainActivity;
+import com.sepideh.onlinemarket.navigationview.messages.MessageActivity;
+import com.sepideh.onlinemarket.userInfo.UserInfoActivity;
 import com.sepideh.onlinemarket.utils.NotifConstant;
 import com.sepideh.onlinemarket.utils.NotificationUtils;
 
@@ -32,9 +39,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         // Check if message contains a notification payload.
         if (remoteMessage.getNotification() != null) {
-            Log.d("mynotif", "onMessageReceived: " + remoteMessage.getNotification().getBody());
 
-            handleNotification(remoteMessage.getNotification().getBody());
+            Log.d("mynotif", "onMessageReceived: notif ");
+            handleNotification(remoteMessage);
         }
 
         // Check if message contains a data payload.
@@ -51,22 +58,42 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     }
 
-    void handleNotification(String message) {
-        Log.d("mynotif", "handleNotification: ");
-        if (!NotificationUtils.isAppIsInBackground(getApplicationContext())) {
+    void handleNotification(RemoteMessage remoteMessage) {
 
-            // app is in foreground, broadcast the push message
-            Log.d("mynotif", "foreground: ");
+        Intent pushnotifBr = new Intent(NotifConstant.PUSH_NOTIFICATION);
+        pushnotifBr.putExtra("pushMessage", remoteMessage.getNotification().getBody());
+        PendingIntent pendingIntent=PendingIntent.getBroadcast(this,0,pushnotifBr,0);
 
 
-            Intent pushnotifBr = new Intent(NotifConstant.PUSH_NOTIFICATION);
-            pushnotifBr.putExtra("pushMessage", message);
-            LocalBroadcastManager.getInstance(this).sendBroadcast(pushnotifBr);
+        Intent intent=new Intent(this, MessageActivity.class);
+        PendingIntent pi=PendingIntent.getActivity(this,0,intent,0);
 
-        } else {
-            Log.d("mynotif", "background: ");
-            // If the app is in background, firebase itself handles the notification
+
+        NotificationManager notificationManager =(NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel notificationChannel = new NotificationChannel("default", "message Notifications", NotificationManager.IMPORTANCE_DEFAULT);
+            // Configure the notification channel.
+            notificationChannel.setDescription("message Channel description");
+            notificationChannel.enableLights(true);
+            notificationChannel.setLightColor(Color.RED);
+            notificationChannel.setVibrationPattern(new long[]{0, 1000, 500, 1000});
+            notificationChannel.enableVibration(true);
+            notificationManager.createNotificationChannel(notificationChannel);
         }
+
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "default")
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentTitle(remoteMessage.getNotification().getTitle())
+                .setContentText(remoteMessage.getNotification().getBody())
+                .setContentIntent(pi)
+                .setAutoCancel(true)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+
+
+        notificationManager.notify((int) System.currentTimeMillis(), builder.build());
 
     }
 

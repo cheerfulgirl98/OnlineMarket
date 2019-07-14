@@ -49,7 +49,6 @@
             style="@style/normal"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/rel_main_toolbar"
             android:hint="@string/username" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -69,7 +68,6 @@
             style="@style/normal"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/rel_main_toolbar"
             android:backgroundTint="@color/colorPrimary"
             android:hint="@string/mobile" />
 
@@ -94,7 +92,6 @@
             style="@style/normal"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/rel_main_toolbar"
             android:backgroundTint="@color/colorPrimary"
             android:hint="@string/password"
             android:inputType="textPassword" />
