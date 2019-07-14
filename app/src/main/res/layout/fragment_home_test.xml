@@ -23,7 +23,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_above="@id/bottm_main_navigate"
-                android:layout_below="@id/rel_main_toolbar" />
+                android:layout_below="@id/rel_toolbar_main" />
 
             <com.google.android.material.bottomnavigation.BottomNavigationView
                 android:id="@+id/bottm_main_navigate"
