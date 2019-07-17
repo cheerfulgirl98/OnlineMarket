@@ -2,6 +2,7 @@ package com.sepideh.onlinemarket.main.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,6 +15,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,7 +24,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 import com.orhanobut.hawk.Hawk;
@@ -33,13 +34,15 @@ import com.sepideh.onlinemarket.main.categories.CategoryFragment;
 import com.sepideh.onlinemarket.main.favorit.FavoritFragment;
 import com.sepideh.onlinemarket.main.home.HomeFragment;
 import com.sepideh.onlinemarket.navigationview.NavigationActivity;
+import com.sepideh.onlinemarket.navigationview.messages.MessageActivity;
 import com.sepideh.onlinemarket.register.RegisterActivity;
-import com.sepideh.onlinemarket.second.compose.ComposeFragment;
 import com.sepideh.onlinemarket.third.activity.ThirdActivity;
 import com.sepideh.onlinemarket.userInfo.UserInfoActivity;
 import com.sepideh.onlinemarket.utils.PublicMethods;
 
-public class MainActivity extends AppCompatActivity implements MainContract.MyView, BaseFragment.OpenLogin, View.OnClickListener,NavigationView.OnNavigationItemSelectedListener {
+import java.util.ArrayList;
+
+public class MainActivity extends AppCompatActivity implements MainContract.MyView, BaseFragment.OpenLogin, View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
 
     MainContract.MyPresentr myPresenter;
     CoordinatorLayout coordinatorLayout;
@@ -54,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.MyVi
     BottomSheetDialog bottomSheetDialog;
     View view1;
     EditText phoneNumber, password;
-    TextView phoneNumberError, passwordError;
+    TextView phoneNumberError, passwordError,forgetPassword;
     String phoneNumberV, passwordV;
     ImageView closeLogin;
     Context mContext = this;
@@ -99,6 +102,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.MyVi
         sabad.setOnClickListener(this);
         badgeNotif = findViewById(R.id.badge_notif);
         drawerLayout = findViewById(R.id.drawer);
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         burgerMenu = findViewById(R.id.img_toolbar_burgerMenu);
         burgerMenu.setOnClickListener(this);
 
@@ -107,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.MyVi
 
         toolbarTitle = findViewById(R.id.txv_toolbar_title);
 
-        navigationView=findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         bottomNavigationView = findViewById(R.id.bottm_main_navigate);
@@ -175,7 +179,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.MyVi
     @Override
     public void successfulLogin(UserInfo userInfo) {
 
-        Hawk.put(getString(R.string.loginUserInfoTag),userInfo);
+        Hawk.put(getString(R.string.loginUserInfoTag), userInfo);
         bottomSheetDialog.dismiss();
         drawerLayout.openDrawer(Gravity.RIGHT);
     }
@@ -188,7 +192,6 @@ public class MainActivity extends AppCompatActivity implements MainContract.MyVi
 
     @Override
     public void passwordIsWrong() {
-
         passwordError.setVisibility(View.VISIBLE);
         passwordError.setText("رمز عبور وارد شده صحیح نمی باشد.");
     }
@@ -211,6 +214,9 @@ public class MainActivity extends AppCompatActivity implements MainContract.MyVi
         password = view1.findViewById(R.id.edt_login_password);
         phoneNumberError = view1.findViewById(R.id.txv_login_phoneNumberError);
         passwordError = view1.findViewById(R.id.txv_login_passwordError);
+        forgetPassword=view1.findViewById(R.id.txv_login_forgot);
+        forgetPassword.setPaintFlags(forgetPassword.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+
         closeLogin = view1.findViewById(R.id.img_login_close);
         closeLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -235,21 +241,75 @@ public class MainActivity extends AppCompatActivity implements MainContract.MyVi
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 phoneNumberV = phoneNumber.getText().toString();
                 passwordV = password.getText().toString();
-                if (phoneNumberV.equals(""))
-                    phoneNumberError.setVisibility(View.VISIBLE);
-                if (passwordV.equals(""))
-                    passwordError.setVisibility(View.VISIBLE);
-                else {
-                    phoneNumberError.setVisibility(View.GONE);
-                    passwordError.setVisibility(View.GONE);
-                    myPresenter.loginToApp(phoneNumberV, passwordV);
-                }
+                ArrayList<EditText> editTexts = new ArrayList<>();
+                editTexts.add(phoneNumber);
+                editTexts.add(password);
+
+                if (checkFields(editTexts) & checkValidation(editTexts)) {
+                    sendLoginRequest();
+
+                } else setError(editTexts);
             }
         });
     }
 
+    private boolean checkFields(ArrayList<EditText> editTexts) {
+
+        for (EditText editText : editTexts) {
+            if (editText.getText().length() <= 0) {
+                return false;
+
+            } else {
+                switch (editText.getId()) {
+                    case R.id.edt_login_phoneNumber:
+                        phoneNumberError.setText("");
+                    case R.id.edt_login_password:
+                        passwordError.setText("");
+                }
+            }
+        }
+
+        return true;
+
+    }
+
+
+    private boolean checkValidation(ArrayList<EditText> editTexts) {
+        if (!phoneNumberV.matches("(\\+98|0)?9\\d{9}")) {
+            phoneNumberError.setText(getString(R.string.validNumberError));
+            return false;
+        }
+        return true;
+    }
+
+    private void setError(ArrayList<EditText> editTexts) {
+        for (EditText editText : editTexts) {
+            if (editText.getText().toString().equals("")) {
+                switch (editText.getId()) {
+                    case R.id.edt_login_phoneNumber:
+                        phoneNumberError.setVisibility(View.VISIBLE);
+                        phoneNumberError.setText(getString(R.string.phoneNumberError));
+                        break;
+                    case R.id.edt_login_password:
+                        passwordError.setVisibility(View.VISIBLE);
+                        passwordError.setText(getString(R.string.passwordError));
+                        break;
+                }
+            }
+        }
+
+    }
+
+    private void sendLoginRequest() {
+        phoneNumberError.setVisibility(View.GONE);
+        passwordError.setVisibility(View.GONE);
+
+        myPresenter.loginToApp(phoneNumberV, passwordV);
+
+    }
 
     @Override
     public void onBackPressed() {
@@ -276,26 +336,35 @@ public class MainActivity extends AppCompatActivity implements MainContract.MyVi
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        int id=menuItem.getItemId();
-        switch (id){
+        int id = menuItem.getItemId();
+        switch (id) {
             case R.id.nav_edit_info:
-               intent=new Intent(this, UserInfoActivity.class);
+                intent = new Intent(this, UserInfoActivity.class);
                 startActivity(intent);
                 break;
             case R.id.nav_user_orders:
 
-                intent=new Intent(this, NavigationActivity.class);
+                intent = new Intent(this, NavigationActivity.class);
                 startActivity(intent);
                 break;
             case R.id.nav_messages:
 
+                intent = new Intent(this, MessageActivity.class);
+                startActivity(intent);
                 break;
             case R.id.nav_logout:
-                Hawk.put(getString(R.string.loginUserInfoTag),null);
+                Hawk.put(getString(R.string.loginUserInfoTag), null);
                 break;
         }
-       // navigationView.setCheckedItem(id);
+        // navigationView.setCheckedItem(id);
         drawerLayout.closeDrawers();
         return false;
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+    }
+
 }

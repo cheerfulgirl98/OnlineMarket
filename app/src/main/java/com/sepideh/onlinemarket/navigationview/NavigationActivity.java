@@ -1,14 +1,16 @@
 package com.sepideh.onlinemarket.navigationview;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import com.sepideh.onlinemarket.R;
 import com.sepideh.onlinemarket.base.MyBaseActivity;
 import com.sepideh.onlinemarket.navigationview.orderslist.OrdersListFragment;
 
-public class NavigationActivity extends MyBaseActivity {
+public class NavigationActivity extends AppCompatActivity {
 
     FragmentTransaction fm;
 
@@ -24,4 +26,7 @@ public class NavigationActivity extends MyBaseActivity {
         fm.replace(R.id.frame_navigation_container,new OrdersListFragment());
         fm.commit();
     }
+
+
+
 }

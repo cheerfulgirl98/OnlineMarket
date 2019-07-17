@@ -18,7 +18,9 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+import com.orhanobut.hawk.Hawk;
 import com.sepideh.onlinemarket.R;
+import com.sepideh.onlinemarket.data.NotifItem;
 import com.sepideh.onlinemarket.main.activity.MainActivity;
 import com.sepideh.onlinemarket.navigationview.messages.MessageActivity;
 import com.sepideh.onlinemarket.userInfo.UserInfoActivity;
@@ -31,11 +33,10 @@ import org.json.JSONObject;
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
     NotificationUtils notificationUtils;
 
+    Intent intent;
+
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-
-        Log.d("mynotif", "onMessageReceived: ");
-
 
         // Check if message contains a notification payload.
         if (remoteMessage.getNotification() != null) {
@@ -59,13 +60,18 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     }
 
     void handleNotification(RemoteMessage remoteMessage) {
+        Log.d("mynotif", "handleNotification: "+remoteMessage.getNotification().getBody());
 
-        Intent pushnotifBr = new Intent(NotifConstant.PUSH_NOTIFICATION);
-        pushnotifBr.putExtra("pushMessage", remoteMessage.getNotification().getBody());
-        PendingIntent pendingIntent=PendingIntent.getBroadcast(this,0,pushnotifBr,0);
+        NotifItem notifItem=new NotifItem(remoteMessage.getNotification().getTitle(),remoteMessage.getNotification().getBody());
+
+//        pushnotifBr = new Intent(NotifConstant.PUSH_NOTIFICATION);
+//        pushnotifBr.putExtra("notiItem", notifItem);
+//
+//        PendingIntent pendingIntent=PendingIntent.getBroadcast(this,0,pushnotifBr,0);
 
 
-        Intent intent=new Intent(this, MessageActivity.class);
+        intent=new Intent(this, MessageActivity.class);
+        Hawk.put("remoteMessageH",notifItem);
         PendingIntent pi=PendingIntent.getActivity(this,0,intent,0);
 
 

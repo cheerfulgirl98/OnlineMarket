@@ -40,7 +40,7 @@
             android:layout_centerVertical="true"
             android:layout_marginTop="4dp"
             android:layout_toLeftOf="@id/txv_detail_commentT"
-            app:srb_fillColor="@color/orangeStar"
+            app:srb_fillColor="@color/colorAccent"
             app:srb_drawBorderEnabled="true"
             app:srb_isIndicator="true"
             app:srb_numberOfStars="5"

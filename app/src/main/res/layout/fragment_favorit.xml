@@ -5,7 +5,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/rec_children"
+        android:id="@+id/rec_favorit"
         android:layout_margin="4dp"
         android:visibility="gone"/>
     <TextView

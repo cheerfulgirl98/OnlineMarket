@@ -55,7 +55,7 @@ public class FavoritFragment extends BaseFragment implements FavoritContract.MyV
 
         emptyFavorit=rootView.findViewById(R.id.txv_sabad_emptyText);
         sqliteHelper=new SqliteHelper(getViewContext());
-        recyclerView = rootView.findViewById(R.id.rec_children);
+        recyclerView = rootView.findViewById(R.id.rec_favorit);
         recyclerView.setLayoutManager(new LinearLayoutManager(getViewContext(), LinearLayoutManager.VERTICAL, false));
 
     }

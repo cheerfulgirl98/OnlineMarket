@@ -29,7 +29,7 @@
         android:layout_below="@id/loginT"
         android:layout_marginTop="12dp"
         android:hint="شماره تلفن همراه"
-        android:backgroundTint="@color/greenButton"
+        android:inputType="phone"
         android:padding="8dp" />
 
     <TextView
@@ -42,7 +42,6 @@
         android:layout_marginRight="8dp"
         android:layout_marginTop="4dp"
         android:paddingRight="8dp"
-        android:text="@string/phoneNumberError"
         android:visibility="gone" />
 
     <EditText
@@ -67,7 +66,6 @@
         android:layout_marginRight="8dp"
         android:layout_marginTop="4dp"
         android:paddingRight="8dp"
-        android:text="@string/passwordError"
         android:visibility="gone" />
 
     <TextView

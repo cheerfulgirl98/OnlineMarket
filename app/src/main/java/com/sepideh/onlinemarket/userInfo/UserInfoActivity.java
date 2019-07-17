@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -241,50 +240,50 @@ public class UserInfoActivity extends AppCompatActivity implements UserInfoContr
         return true;
     }
 
-    private void checkEditTextEmptyness() {
-
-
-        for (EditText editText : editTexts) {
-
-            if (editText.getText().toString().equals("")) {
-                switch (editText.getId()) {
-                    case R.id.edt_info_name:
-                        nameInput.setError(getString(R.string.error_info_name));
-                        break;
-                    case R.id.edt_info_family:
-                        familyInput.setError(getString(R.string.error_info_family));
-                        break;
-                    case R.id.edt_info_tell:
-                        tellInput.setError(getString(R.string.error_info_tell));
-                        break;
-                    case R.id.edt_info_mobile:
-                        mobileInput.setError(getString(R.string.error_info_mobile));
-                        break;
-
-                }
-
-
-            } else {
-                switch (editText.getId()) {
-                    case R.id.edt_info_name:
-                        nameInput.setError("");
-                        logedinUserInfo.setName(name.getText().toString());
-                        break;
-                    case R.id.edt_info_family:
-                        nameInput.setError("");
-                        logedinUserInfo.setFamily(family.getText().toString());
-                        break;
-                    case R.id.edt_info_tell:
-                        nameInput.setError("");
-                        logedinUserInfo.setTell(tell.getText().toString());
-                        break;
-                    case R.id.edt_info_mobile:
-                        mobileInput.setError("");
-                        break;
-                }
-            }
-        }
-    }
+//    private void checkEditTextEmptyness() {
+//
+//
+//        for (EditText editText : editTexts) {
+//
+//            if (editText.getText().toString().equals("")) {
+//                switch (editText.getId()) {
+//                    case R.id.edt_info_name:
+//                        nameInput.setError(getString(R.string.error_info_name));
+//                        break;
+//                    case R.id.edt_info_family:
+//                        familyInput.setError(getString(R.string.error_info_family));
+//                        break;
+//                    case R.id.edt_info_tell:
+//                        tellInput.setError(getString(R.string.error_info_tell));
+//                        break;
+//                    case R.id.edt_info_mobile:
+//                        mobileInput.setError(getString(R.string.error_info_mobile));
+//                        break;
+//
+//                }
+//
+//
+//            } else {
+//                switch (editText.getId()) {
+//                    case R.id.edt_info_name:
+//                        nameInput.setError("");
+//                        logedinUserInfo.setName(name.getText().toString());
+//                        break;
+//                    case R.id.edt_info_family:
+//                        nameInput.setError("");
+//                        logedinUserInfo.setFamily(family.getText().toString());
+//                        break;
+//                    case R.id.edt_info_tell:
+//                        nameInput.setError("");
+//                        logedinUserInfo.setTell(tell.getText().toString());
+//                        break;
+//                    case R.id.edt_info_mobile:
+//                        mobileInput.setError("");
+//                        break;
+//                }
+//            }
+//        }
+//    }
 
     private void setSavedInfo(){
         logedinUserInfo= Hawk.get(getString(R.string.loginUserInfoTag));
