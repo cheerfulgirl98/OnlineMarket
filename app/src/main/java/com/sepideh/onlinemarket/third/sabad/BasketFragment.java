@@ -25,29 +25,21 @@ import java.util.List;
  */
 
 public class BasketFragment extends BaseFragment implements SabadContract.MyView, View.OnClickListener, SabadAdapter.MyClicked {
-    SabadContract.MyPresenter myPresenter;
-    ImageView back;
-    BottomSheetBehavior bottomSheetBehavior;
-    TextView toolbarTitle, badgeNotif, buy, totalCost, emptyText;
-    RelativeLayout costBtmSheet;
+    private SabadContract.MyPresenter myPresenter;
+    private BottomSheetBehavior bottomSheetBehavior;
+    private TextView buy, totalCost, emptyText;
+    private RelativeLayout costBtmSheet;
 
-    RecyclerView recyclerView;
-    SabadAdapter adapter;
+    private RecyclerView recyclerView;
+    private SabadAdapter adapter;
 
-    int sabadSize;
-    int finalCost;
+    private int sabadSize;
+    private int finalCost;
 
     @Override
     public void setUpViews() {
 
         myPresenter = new SabadPresenter(new SabadModel());
-        toolbarTitle = rootView.findViewById(R.id.txv_toolbar_title);
-        toolbarTitle.setText(getString(R.string.your_basket));
-
-        back = rootView.findViewById(R.id.img_toolbar_back);
-        back.setOnClickListener(this);
-        badgeNotif = rootView.findViewById(R.id.badge_notif);
-
 
         recyclerView = rootView.findViewById(R.id.rec_sbad);
         recyclerView.setLayoutManager(new LinearLayoutManager(getViewContext(), RecyclerView .VERTICAL, false));
@@ -66,25 +58,25 @@ public class BasketFragment extends BaseFragment implements SabadContract.MyView
     public void onStart() {
         super.onStart();
         myPresenter.attachView(this);
-        manageSabad();
+        setSabadList();
+
 
 
     }
-    private void manageSabad(){
+    private void setSabadList(){
 
         sabadSize=Hawk.get(getString(R.string.Hawk_sabad_size), 0);
-        if (sabadSize >= 1)
+        if (sabadSize >0)
         {
-            badgeNotif.setVisibility(View.VISIBLE);
-            badgeNotif.setText(String.valueOf(sabadSize));
             myPresenter.getSabadList();
             costBtmSheet.setVisibility(View.VISIBLE);
-        } else {
-
-            sabadIsEmpty();
-        }
+        }else sabadIsEmpty();
     }
 
+    private ManageSabadI manageSabadI;
+    public interface ManageSabadI{
+         void proDelete();
+    }
     @Override
     public void onStop() {
         super.onStop();
@@ -96,13 +88,10 @@ public class BasketFragment extends BaseFragment implements SabadContract.MyView
 
         if (view.getId() == buy.getId()) {
             if (!PublicMethods.checkLogin()) {
-
                 openLogin.openLoginButtomsheet();
             } else
-                PublicMethods.goNewFragment(getViewContext(),R.id.frame_third_container,new OrderFormFragment());
+                PublicMethods.goNewFragment(getViewContext(),R.id.frame_third_container,new OrderFormFragment(),getViewContext().getString(R.string.orderFormFragTag));
 
-        } else if (view.getId() == back.getId()) {
-            getActivity().onBackPressed();
         }
 
     }
@@ -125,10 +114,10 @@ public class BasketFragment extends BaseFragment implements SabadContract.MyView
 
     @Override
     public void proIsDeleted() {
-
         sabadSize=sabadSize-1;
         Hawk.put(getString(R.string.Hawk_sabad_size),sabadSize);
-        manageSabad();
+        manageSabadI.proDelete();
+
 
     }
 
@@ -145,7 +134,6 @@ public class BasketFragment extends BaseFragment implements SabadContract.MyView
     }
     private void sabadIsEmpty() {
 
-        badgeNotif.setVisibility(View.GONE);
         recyclerView.setVisibility(View.INVISIBLE);
         emptyText.setVisibility(View.VISIBLE);
         costBtmSheet.setVisibility(View.GONE);
@@ -187,5 +175,6 @@ public class BasketFragment extends BaseFragment implements SabadContract.MyView
     public void onAttach(Context context) {
         super.onAttach(context);
         openLogin=(OpenLogin)context;
+        manageSabadI=(ManageSabadI) context;
     }
 }

@@ -14,8 +14,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <include layout="@layout/second_toolbar" />
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rec_sbad"
             android:layout_width="match_parent"
@@ -96,7 +94,7 @@
             android:layout_height="40dp"
             android:id="@+id/txv_sabad_buy"
             android:layout_below="@id/rel_sabad_cost"
-            android:background="@color/green"
+            android:background="@color/greenButton"
             android:gravity="center"
             android:text="تکمیل فرایند خرید"
             android:textColor="@color/white" />

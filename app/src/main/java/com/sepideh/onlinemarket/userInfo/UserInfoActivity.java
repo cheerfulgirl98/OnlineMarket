@@ -41,7 +41,6 @@ public class UserInfoActivity extends AppCompatActivity implements UserInfoContr
 
     List<EditText> editTexts = new ArrayList<>();
     String jensiatV;
-    boolean tellB, mobileB, validationB;
 
     TextInputLayout errorInputLayout;
 

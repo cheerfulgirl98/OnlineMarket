@@ -16,6 +16,7 @@ import com.sepideh.onlinemarket.R;
 import com.sepideh.onlinemarket.adapter.ChildProductAdapter;
 import com.sepideh.onlinemarket.data.ProductInfo;
 import com.sepideh.onlinemarket.third.activity.ThirdActivity;
+import com.sepideh.onlinemarket.utils.PublicMethods;
 
 import java.util.List;
 
@@ -49,15 +50,15 @@ public class ChildrenActivity extends AppCompatActivity implements ChildrenContr
                     catHeaderV=getString(R.string.women);
                     break;
                 case 3:
-                    catHeaderV=getString(R.string.boys);
+                    catHeaderV=getString(R.string.girls);
                     break;
                 case 4:
-                    catHeaderV=getString(R.string.girls);
+                    catHeaderV=getString(R.string.boys);
                     break;
             }
         }
         setUpViews();
-        setBadgeNotif();
+        PublicMethods.setBadgeNotif(this,badgeNotif);
 
     }
 
@@ -71,8 +72,7 @@ public class ChildrenActivity extends AppCompatActivity implements ChildrenContr
     @Override
     protected void onResume() {
         super.onResume();
-        setBadgeNotif();
-    }
+        PublicMethods.setBadgeNotif(this,badgeNotif);    }
 
     @Override
     public void onStop() {
@@ -96,13 +96,6 @@ public class ChildrenActivity extends AppCompatActivity implements ChildrenContr
     }
 
 
-    public void setBadgeNotif() {
-        int sabadsize= Hawk.get(getString(R.string.Hawk_sabad_size),0);
-        if(sabadsize>0){
-            badgeNotif.setVisibility(View.VISIBLE);
-            badgeNotif.setText(String.valueOf(sabadsize));}
-        else badgeNotif.setVisibility(View.GONE);
-    }
     @Override
     public void showChildrenProducts(List<ProductInfo> productInfos) {
 

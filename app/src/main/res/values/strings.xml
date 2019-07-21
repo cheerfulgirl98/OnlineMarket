@@ -25,7 +25,8 @@
     <string name="username">نام کاربری</string>
     <string name="mobile">شماره تلفن همراه </string>
     <string name="password">رمز عبور</string>
-    <string name="receiver">نام و نام خانوادگی گیرنده</string>
+    <string name="receiver_name">نام گیرنده</string>
+    <string name="receiver_family">نام خانوادگی گیرنده</string>
     <string name="receiver_mobile">شماره تلفن همراه گیرنده</string>
     <string name="receiver_address">نشانی پستی </string>
 
@@ -40,7 +41,8 @@
     <string name="voteBeforeError">شما قبلا به این نظر رای داده اید.</string>
     <string name="conectionError">خطا در برقراری اینترنت</string>
     <string name="loginError">برای رای دادن باید وارد حساب کاربری خود شوید .</string>
-    <string name="receiverNameError">نام و نام خانوادگی گیرنده را وارد نمایید .</string>
+    <string name="receiverNameError">نام گیرنده را وارد نمایید .</string>
+    <string name="receiverFamilyError">نام خانوادگی گیرنده را وارد نمایید .</string>
     <string name="receiverMobileError"> تلفن همراه گیرنده را وارد نمایید .</string>
     <string name="receiverAddressError"> نشانی پستی گیرنده را وارد نمایید .</string>
 
@@ -95,7 +97,8 @@
     <string name="title_ordersList">سوابق سفارش</string>
     <string name="title_usernfo">ویرایش اطلاعات</string>
     <string name="title_messages">پیام ها</string>
-
+    <string name="orderFormFragTag">orderFormFragmentTag</string>
+    <string name="basketfragTag">BasketFragmentTag</string>
 
 
 </resources>

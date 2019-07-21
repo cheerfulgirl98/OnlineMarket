@@ -43,7 +43,7 @@ public class CategoryPresenter implements CategoryContract.MyPresenter {
 
     @Override
     public void getChildern() {
-        Log.d("myyy", "getChildern: ");
+
         myModel.getChildern().subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<List<Category>>() {

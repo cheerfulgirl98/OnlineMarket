@@ -2,18 +2,33 @@ package com.sepideh.onlinemarket.utils;
 
 
 import androidx.fragment.app.FragmentTransaction;
+
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Build;
+
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.snackbar.Snackbar;
+
 import androidx.fragment.app.Fragment;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+
 import com.orhanobut.hawk.Hawk;
 import com.sepideh.onlinemarket.R;
 import com.sepideh.onlinemarket.data.UserInfo;
+import com.sepideh.onlinemarket.main.activity.MainActivity;
+import com.sepideh.onlinemarket.register.RegisterActivity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by pc on 4/27/2019.
@@ -22,14 +37,13 @@ import com.sepideh.onlinemarket.data.UserInfo;
 public class PublicMethods {
 
 
-
     public static String changeToPersianNumber(String number) {
         String tmp = "";
         for (char mChar : number.toCharArray()) {
 
             if (mChar >= '0' && mChar <= '9') {
                 tmp += new String(Character.toChars(mChar + 0x06f1 - 49));
-            }else {
+            } else {
                 tmp += mChar;
             }
         }
@@ -38,11 +52,11 @@ public class PublicMethods {
 
     }
 
-    public static void setSnackbar(View viewId, String msg, int colorId){
-        Snackbar snackbar = Snackbar.make(viewId,msg , Snackbar.LENGTH_LONG);
+    public static void setSnackbar(View viewId, String msg, int colorId) {
+        Snackbar snackbar = Snackbar.make(viewId, msg, Snackbar.LENGTH_LONG);
         snackbar.show();
         View snackView = snackbar.getView();
-        TextView snackTextview=snackView.findViewById(R.id.snackbar_text);
+        TextView snackTextview = snackView.findViewById(R.id.snackbar_text);
         snackView.setBackgroundColor(colorId);
         snackTextview.setTextSize(12);
         snackView.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_END);
@@ -55,7 +69,7 @@ public class PublicMethods {
     }
 
 
-   public static boolean checkLogin() {
+    public static boolean checkLogin() {
 
         UserInfo userInfo;
         userInfo = Hawk.get(MyApplication.appInstance.getString(R.string.loginUserInfoTag));
@@ -65,24 +79,32 @@ public class PublicMethods {
         return true;
     }
 
-    public static void goNewFragment(Context context,int viewId, Fragment fragment) {
+    public static void goNewFragment(Context context, int viewId, Fragment fragment) {
         FragmentTransaction fragmentTransaction;
-        fragmentTransaction =((AppCompatActivity)context).getSupportFragmentManager().beginTransaction();
+        fragmentTransaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(viewId, fragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
 
-    public static void setBadgeNotif(Context mContext,TextView badgeNotif) {
+    public static void goNewFragment(Context context, int viewId, Fragment fragment, String fragmentTag) {
+        FragmentTransaction fragmentTransaction;
+        fragmentTransaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(viewId, fragment, fragmentTag);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }
+
+    public static void setBadgeNotif(Context mContext, TextView badgeNotif) {
         int sabadsize = Hawk.get(mContext.getString(R.string.Hawk_sabad_size), 0);
         if (sabadsize > 0) {
             badgeNotif.setVisibility(View.VISIBLE);
             badgeNotif.setText(String.valueOf(sabadsize));
-        } else badgeNotif.setVisibility(View.GONE);
+
+        }else
+        badgeNotif.setVisibility(View.GONE);
+
     }
-
-
-
 
 
 }

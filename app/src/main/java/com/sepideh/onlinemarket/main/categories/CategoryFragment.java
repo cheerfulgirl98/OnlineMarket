@@ -23,15 +23,15 @@ import java.util.List;
 
 public class CategoryFragment extends BaseFragment implements CategoryContract.MyView {
 
-    CategoryContract.MyPresenter myPresenter;
-    ExpandableListView listView;
-    ExpandableCategoryAdapter adapter;
+    private CategoryContract.MyPresenter myPresenter;
+    private ExpandableListView listView;
+    private ExpandableCategoryAdapter adapter;
 
 
-    List<String> categoryHeaders;
-    HashMap<String, List<String>> categoryChildren;
-    List<String> men, women, boys, girls;
-    int previousItem = -1;
+    private List<String> categoryHeaders;
+    private HashMap<String, List<String>> categoryChildren;
+    private List<String> men, women, boys, girls;
+    private int previousItem = -1;
 
 
     @Override
@@ -56,8 +56,8 @@ public class CategoryFragment extends BaseFragment implements CategoryContract.M
     public void setUpViews() {
 
         prepareListData();
-        listView = rootView.findViewById(R.id.lsv_category);
 
+        listView = rootView.findViewById(R.id.lsv_category);
         listView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
             @Override
             public boolean onGroupClick(ExpandableListView expandableListView, View view, int groupPosition, long l) {
@@ -105,8 +105,8 @@ public class CategoryFragment extends BaseFragment implements CategoryContract.M
 
         categoryHeaders.add(getString(R.string.men));
         categoryHeaders.add(getString(R.string.women));
-        categoryHeaders.add(getString(R.string.boys));
         categoryHeaders.add(getString(R.string.girls));
+        categoryHeaders.add(getString(R.string.boys));
 
         myPresenter.getChildern();
 
@@ -136,10 +136,10 @@ public class CategoryFragment extends BaseFragment implements CategoryContract.M
                     women.add(category.getCatChild());
                     break;
                 case 3:
-                    boys.add(category.getCatChild());
+                    girls.add(category.getCatChild());
                     break;
                 case 4:
-                    girls.add(category.getCatChild());
+                    boys.add(category.getCatChild());
                     break;
 
             }
@@ -148,8 +148,8 @@ public class CategoryFragment extends BaseFragment implements CategoryContract.M
 
         categoryChildren.put(categoryHeaders.get(0), men);
         categoryChildren.put(categoryHeaders.get(1), women);
-        categoryChildren.put(categoryHeaders.get(2), boys);
-        categoryChildren.put(categoryHeaders.get(3), girls);
+        categoryChildren.put(categoryHeaders.get(2), girls);
+        categoryChildren.put(categoryHeaders.get(3), boys);
 
         //set adapter here because become shure the children list is ready before setAdapter
         adapter = new ExpandableCategoryAdapter(getViewContext(), categoryHeaders, categoryChildren);

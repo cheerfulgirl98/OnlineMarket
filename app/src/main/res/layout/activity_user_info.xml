@@ -30,6 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             app:errorEnabled="true"
+            app:errorTextAppearance="@style/emptyError"
             app:hintTextAppearance="@style/myInputLayout">
 
             <EditText

@@ -15,7 +15,6 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,7 +27,6 @@ import android.widget.TextView;
 import com.google.android.material.navigation.NavigationView;
 import com.orhanobut.hawk.Hawk;
 import com.sepideh.onlinemarket.R;
-import com.sepideh.onlinemarket.base.BaseFragment;
 import com.sepideh.onlinemarket.data.UserInfo;
 import com.sepideh.onlinemarket.main.categories.CategoryFragment;
 import com.sepideh.onlinemarket.main.favorit.FavoritFragment;
@@ -42,7 +40,7 @@ import com.sepideh.onlinemarket.utils.PublicMethods;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements MainContract.MyView, BaseFragment.OpenLogin, View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements MainContract.MyView, View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
 
     MainContract.MyPresentr myPresenter;
     CoordinatorLayout coordinatorLayout;
@@ -197,7 +195,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.MyVi
     }
 
 
-    @Override
+
     public void openLoginButtomsheet() {
         bottomSheetDialog = new BottomSheetDialog(this);
         view1 = getLayoutInflater().inflate(R.layout.login_layout, null);
