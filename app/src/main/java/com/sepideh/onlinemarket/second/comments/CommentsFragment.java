@@ -1,16 +1,23 @@
 package com.sepideh.onlinemarket.second.comments;
 
 import androidx.fragment.app.FragmentManager;
+
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.orhanobut.hawk.Hawk;
@@ -21,6 +28,7 @@ import com.sepideh.onlinemarket.second.compose.ComposeFragment;
 import com.sepideh.onlinemarket.data.Comment;
 import com.sepideh.onlinemarket.data.ProductInfo;
 import com.sepideh.onlinemarket.data.UserInfo;
+import com.sepideh.onlinemarket.third.activity.ThirdActivity;
 import com.sepideh.onlinemarket.utils.PublicMethods;
 
 import java.util.List;
@@ -29,11 +37,14 @@ import java.util.List;
  * Created by pc on 4/26/2019.
  */
 
-public class CommentsFragment extends BaseFragment implements CommentsContract.MyView,View.OnClickListener {
-
-    CoordinatorLayout coordinatorLayout;
+public class CommentsFragment extends BaseFragment implements CommentsContract.MyView, View.OnClickListener {
 
     CommentsContract.MyPresenter myPresenter;
+
+    CoordinatorLayout coordinatorLayout;
+    RelativeLayout sabad;
+    TextView badgeNotif;
+
     RecyclerView recyclerView;
     FloatingActionButton fab;
     ImageView back;
@@ -46,15 +57,15 @@ public class CommentsFragment extends BaseFragment implements CommentsContract.M
     CommentsDetailAdapter commentsAdapter;
 
 
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         myPresenter = new CommentsPresenter(new CommentsModel());
 
-        selectedProduct=Hawk.get(getString(R.string.Hawk_selected_product));
+        selectedProduct = Hawk.get(getString(R.string.Hawk_selected_product));
         productId = selectedProduct.getId();
         userInfo = Hawk.get(getString(R.string.loginUserInfoTag));
+
 
     }
 
@@ -65,9 +76,14 @@ public class CommentsFragment extends BaseFragment implements CommentsContract.M
 
         coordinatorLayout = rootView.findViewById(R.id.cor_comments_main);
 
-        back=rootView.findViewById(R.id.img_toolbar_back);
+        sabad = rootView.findViewById(R.id.rel_toolbar_sabad);
+        sabad.setOnClickListener(this);
+        badgeNotif = rootView.findViewById(R.id.badge_notif);
+        PublicMethods.setBadgeNotif(getViewContext(), badgeNotif);
+
+        back = rootView.findViewById(R.id.img_toolbar_back);
         back.setOnClickListener(this);
-        toolbarTitle=rootView.findViewById(R.id.txv_toolbar_title);
+        toolbarTitle = rootView.findViewById(R.id.txv_toolbar_title);
         toolbarTitle.setText(getString(R.string.comments));
         recyclerView = rootView.findViewById(R.id.rec_comments_all);
         recyclerView.setLayoutManager(new LinearLayoutManager(getViewContext(), RecyclerView.VERTICAL, false));
@@ -76,16 +92,16 @@ public class CommentsFragment extends BaseFragment implements CommentsContract.M
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(PublicMethods.checkLogin()){
-                Bundle bundle = new Bundle();
-                bundle.putString(getString(R.string.productIdTag), productId);
-                ComposeFragment composeFragment = new ComposeFragment();
-                composeFragment.setArguments(bundle);
-                PublicMethods.goNewFragment(getViewContext(),R.id.cor_main,composeFragment);
-               }
-                else {
+                if (PublicMethods.checkLogin()) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString(getString(R.string.productIdTag), productId);
+                    ComposeFragment composeFragment = new ComposeFragment();
+                    composeFragment.setArguments(bundle);
+                    PublicMethods.goNewFragment(getViewContext(), R.id.frame_second_container, composeFragment);
+                } else {
 
-                  openLogin.openLoginButtomsheet();}
+                    openLogin.openLoginButtomsheet();
+                }
 
             }
         });
@@ -95,7 +111,6 @@ public class CommentsFragment extends BaseFragment implements CommentsContract.M
     public int getLayout() {
         return R.layout.fragment_comments;
     }
-
 
 
     @Override
@@ -120,8 +135,9 @@ public class CommentsFragment extends BaseFragment implements CommentsContract.M
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        openLogin=(OpenLogin)context;
+        openLogin = (OpenLogin) context;
     }
+
 
     @Override
     public void showAllComments(List<Comment> comments) {
@@ -151,15 +167,15 @@ public class CommentsFragment extends BaseFragment implements CommentsContract.M
 
     @Override
     public void onClick(View view) {
-        if(view.getId()==back.getId()){
+        if (view.getId() == back.getId()) {
             FragmentManager fm = getFragmentManager();
             if (fm.getBackStackEntryCount() > 0) {
-                Log.i("ggg", "popping backstack");
                 fm.popBackStack();
-            } else {
-                Log.i("ggg", "nothing on backstack, calling super");
-                // super.onBackPressed();
             }
+
+        } if (view.getId() == sabad.getId()) {
+            Intent intent = new Intent(getActivity(), ThirdActivity.class);
+            startActivity(intent);
         }
 
     }

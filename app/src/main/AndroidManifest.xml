@@ -58,9 +58,32 @@
         </activity>
         <activity android:name=".Main2Activity" />
         <activity android:name=".register.RegisterActivity" />
-        <activity android:name=".second.activity.SecondActivity" />
+        <activity android:name=".second.activity.SecondActivity">
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:scheme="http"
+                    android:host="spidstore.ir" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:scheme="https"
+                    android:host="spidstore.ir" />
+            </intent-filter>
+        </activity>
         <activity android:name=".children.ChildrenActivity" />
         <activity android:name=".third.activity.ThirdActivity" />
+
+
     </application>
 
 </manifest>

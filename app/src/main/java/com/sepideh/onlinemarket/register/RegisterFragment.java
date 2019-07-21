@@ -2,11 +2,16 @@ package com.sepideh.onlinemarket.register;
 
 import android.content.Context;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
+
 import com.google.android.material.textfield.TextInputLayout;
+
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -37,6 +42,7 @@ public class RegisterFragment extends BaseFragment implements RegisterContract.M
     Button button;
     boolean isNotEmptyB;
     String usernameV, phoneNumberV, passwordV;
+    TextInputLayout errorInputLayout;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -73,6 +79,8 @@ public class RegisterFragment extends BaseFragment implements RegisterContract.M
         button = rootView.findViewById(R.id.btn_register_send);
         button.setOnClickListener(this);
 
+        errorInputLayout = usernameInput;
+
     }
 
     @Override
@@ -88,15 +96,19 @@ public class RegisterFragment extends BaseFragment implements RegisterContract.M
 
         if (view.getId() == R.id.btn_register_send) {
 
+            usernameV = userName.getText().toString();
+            phoneNumberV = phoneNumber.getText().toString();
+            passwordV = password.getText().toString();
+
             ArrayList<EditText> editTexts = new ArrayList<>();
             editTexts.add(userName);
             editTexts.add(phoneNumber);
             editTexts.add(password);
-            isNotEmptyB = checkFields(editTexts);
-            if (isNotEmptyB)
+
+            if (checkEmptyness(editTexts) && checkValidation())
                 sendRequest();
             else
-                setError(editTexts);
+                setError();
 
 
         }
@@ -104,12 +116,8 @@ public class RegisterFragment extends BaseFragment implements RegisterContract.M
 
     }
 
+    private boolean checkEmptyness(ArrayList<EditText> editTexts) {
 
-    private boolean checkFields(ArrayList<EditText> editTexts) {
-
-        usernameV = userName.getText().toString();
-        phoneNumberV = phoneNumber.getText().toString();
-        passwordV = password.getText().toString();
         for (EditText editText : editTexts) {
             if (editText.getText().length() <= 0) {
 
@@ -119,6 +127,20 @@ public class RegisterFragment extends BaseFragment implements RegisterContract.M
         }
 
         return true;
+
+    }
+
+
+    private boolean checkValidation() {
+
+
+        if (!phoneNumberV.matches("(\\+98|0)?9\\d{9}")) {
+            phoneInput.setError(getString(R.string.validNumberError));
+            return false;
+        }
+        return true;
+
+
     }
 
     private void sendRequest() {
@@ -128,45 +150,27 @@ public class RegisterFragment extends BaseFragment implements RegisterContract.M
         myPresentr.sendCode(Constant.TEMPLATE, phoneNumberV, generatedCode);
     }
 
-    private void setError(ArrayList<EditText> editTexts) {
-        for (EditText editText : editTexts) {
-            if (editText.getText().toString().equals("")) {
-                switch (editText.getId()) {
-                    case (R.id.edt_register_userName):
-                        usernameInput.setError(getString(R.string.usernameError));
-                        break;
+    private void setError() {
 
-                    case (R.id.edt_register_phoneNumber):
-                        phoneInput.setError(getString(R.string.phoneNumberError));
-                        break;
+        if (userName.getText().length() <= 0) {
 
-                    case (R.id.edt_register_password):
-                        passworInput.setError(getString(R.string.passwordError));
-                        break;
-                }
-
-            } else {
-                switch (editText.getId()) {
-                    case (R.id.edt_register_userName):
-                        usernameInput.setError("");
-                        break;
-
-                    case (R.id.edt_register_phoneNumber):
-                        if(!phoneNumberV.matches("(\\+98|0)?9\\d{9}"))
-                            phoneInput.setError(getString(R.string.validNumberError));
-                        else
-                        phoneInput.setError("");
-                        break;
-
-                    case (R.id.edt_register_password):
-                        passworInput.setError("");
-                        break;
-
-                }
-
-            }
+            usernameInput.setError(getString(R.string.usernameError));
+        } else if (phoneNumber.getText().length() <= 0) {
+            removeInputError(errorInputLayout);
+            phoneInput.setError(getString(R.string.phoneNumberError));
+            errorInputLayout = phoneInput;
+        } else if (checkValidation() && (password.getText().length() <= 0)) {
+            removeInputError(errorInputLayout);
+            passworInput.setError(getString(R.string.passwordError));
+            removeInputError(errorInputLayout);
 
         }
+
+
+    }
+
+    private void removeInputError(TextInputLayout textInputLayout) {
+        textInputLayout.setError("");
     }
 
     @Override

@@ -35,7 +35,7 @@ public class UserInfoActivity extends AppCompatActivity implements UserInfoContr
     TextInputLayout nameInput, familyInput, tellInput, mobileInput;
     EditText name, family, tell, mobile;
     RadioGroup jensiatGroup;
-    RadioButton manRadio,womanRadio;
+    RadioButton manRadio, womanRadio;
     TextView errorJensiat;
     Button sendInfo;
 
@@ -52,7 +52,7 @@ public class UserInfoActivity extends AppCompatActivity implements UserInfoContr
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_info);
-        myPresenter=new UserInfoPresenter(new UserInfoModel() );
+        myPresenter = new UserInfoPresenter(new UserInfoModel());
         setUpViews();
         setSavedInfo();
 
@@ -73,15 +73,15 @@ public class UserInfoActivity extends AppCompatActivity implements UserInfoContr
     @Override
     public void setUpViews() {
 
-        coordinatorLayout=findViewById(R.id.coor_updateUserInfo);
+        coordinatorLayout = findViewById(R.id.coor_updateUserInfo);
 
-        sabad=findViewById(R.id.rel_toolbar_sabad);
+        sabad = findViewById(R.id.rel_toolbar_sabad);
         sabad.setVisibility(View.GONE);
 
-        back=findViewById(R.id.img_toolbar_back);
+        back = findViewById(R.id.img_toolbar_back);
         back.setOnClickListener(this);
 
-        toolbartitle=findViewById(R.id.txv_toolbar_title);
+        toolbartitle = findViewById(R.id.txv_toolbar_title);
         toolbartitle.setText(getString(R.string.title_usernfo));
 
         name = findViewById(R.id.edt_info_name);
@@ -119,8 +119,8 @@ public class UserInfoActivity extends AppCompatActivity implements UserInfoContr
             }
         });
 
-        manRadio=findViewById(R.id.radio_info_man);
-        womanRadio=findViewById(R.id.radio_info_woman);
+        manRadio = findViewById(R.id.radio_info_man);
+        womanRadio = findViewById(R.id.radio_info_woman);
         errorJensiat = findViewById(R.id.txv_error_jensiat);
 
         sendInfo = findViewById(R.id.btn_buttom);
@@ -147,37 +147,16 @@ public class UserInfoActivity extends AppCompatActivity implements UserInfoContr
     public void onClick(View v) {
 
         if (v.getId() == R.id.btn_buttom) {
-            if (checkInfoLength()) {
+            if (checkEmptyness()) {
                 if (checkValidation() && checkRadioValidation())
                     myPresenter.updateUserInfo(logedinUserInfo);
             } else {
-                //checkEditTextEmptyness();
 
-                if (name.getText().length() <= 0) {
-                    nameInput.setError(getString(R.string.error_info_name));
-
-                } else if (family.getText().length() <= 0) {
-                    removeInputError(errorInputLayout);
-                    familyInput.setError(getString(R.string.error_info_family));
-                    errorInputLayout = familyInput;
-
-                } else if (tell.getText().length() <= 0) {
-                    removeInputError(errorInputLayout);
-                    tellInput.setError(getString(R.string.error_info_tell));
-                    errorInputLayout = tellInput;
-
-                } else if (mobile.getText().length() <= 0) {
-                    removeInputError(errorInputLayout);
-                    mobileInput.setError(getString(R.string.error_info_mobile));
-                    errorInputLayout = mobileInput;
-                }
-
-
+                setError();
             }
 
 
-        }
-        else if(v.getId()==back.getId())
+        } else if (v.getId() == back.getId())
             onBackPressed();
 
 
@@ -187,7 +166,7 @@ public class UserInfoActivity extends AppCompatActivity implements UserInfoContr
         textInputLayout.setError("");
     }
 
-    private boolean checkInfoLength() {
+    private boolean checkEmptyness() {
 
         for (EditText editText : editTexts) {
             if (editText.getText().length() <= 0) {
@@ -199,34 +178,17 @@ public class UserInfoActivity extends AppCompatActivity implements UserInfoContr
 
         logedinUserInfo.setName(name.getText().toString()).setFamily(family.getText().toString());
 
+        removeInputError(errorInputLayout);
         return true;
 
     }
 
     private boolean checkValidation() {
 
-        if (tell.getText().length() == 8) {
-            logedinUserInfo.setTell(tell.getText().toString());
-            tellInput.setError("");
-            tellB = true;
-        } else tellInput.setError("طول شماره تلفن ثابت نباید کمتر از هشت رقم باشد .");
+        if (checkTellValidation() && checkMobileValidation())
+            return true;
 
-        String mobileV = mobile.getText().toString();
-
-        if (tellB) {
-            if (!mobileV.matches("(\\+98|0)?9\\d{9}"))
-                mobileInput.setError(getString(R.string.validNumberError));
-            else {
-
-                mobileInput.setError("");
-                logedinUserInfo.setPhoneNumber(mobileV);
-                mobileB = true;
-            }
-        }
-
-        validationB = tellB & mobileB;
-
-        return validationB;
+        return false;
     }
 
     private boolean checkRadioValidation() {
@@ -240,61 +202,63 @@ public class UserInfoActivity extends AppCompatActivity implements UserInfoContr
         return true;
     }
 
-//    private void checkEditTextEmptyness() {
-//
-//
-//        for (EditText editText : editTexts) {
-//
-//            if (editText.getText().toString().equals("")) {
-//                switch (editText.getId()) {
-//                    case R.id.edt_info_name:
-//                        nameInput.setError(getString(R.string.error_info_name));
-//                        break;
-//                    case R.id.edt_info_family:
-//                        familyInput.setError(getString(R.string.error_info_family));
-//                        break;
-//                    case R.id.edt_info_tell:
-//                        tellInput.setError(getString(R.string.error_info_tell));
-//                        break;
-//                    case R.id.edt_info_mobile:
-//                        mobileInput.setError(getString(R.string.error_info_mobile));
-//                        break;
-//
-//                }
-//
-//
-//            } else {
-//                switch (editText.getId()) {
-//                    case R.id.edt_info_name:
-//                        nameInput.setError("");
-//                        logedinUserInfo.setName(name.getText().toString());
-//                        break;
-//                    case R.id.edt_info_family:
-//                        nameInput.setError("");
-//                        logedinUserInfo.setFamily(family.getText().toString());
-//                        break;
-//                    case R.id.edt_info_tell:
-//                        nameInput.setError("");
-//                        logedinUserInfo.setTell(tell.getText().toString());
-//                        break;
-//                    case R.id.edt_info_mobile:
-//                        mobileInput.setError("");
-//                        break;
-//                }
-//            }
-//        }
-//    }
+    private boolean checkTellValidation() {
+        if (tell.getText().length() == 8) {
+            logedinUserInfo.setTell(tell.getText().toString());
+            tellInput.setError("");
+            return true;
+        }
+        tellInput.setError("طول شماره تلفن ثابت نباید کمتر از هشت رقم باشد .");
+        return false;
+    }
 
-    private void setSavedInfo(){
-        logedinUserInfo= Hawk.get(getString(R.string.loginUserInfoTag));
+    private boolean checkMobileValidation() {
+        String mobileV = mobile.getText().toString();
+        if (mobileV.matches("(\\+98|0)?9\\d{9}")) {
+            mobileInput.setError("");
+            logedinUserInfo.setPhoneNumber(mobileV);
+            return true;
+        } else {
+
+            mobileInput.setError(getString(R.string.validNumberError));
+            return false;
+
+        }
+    }
+
+    private void setError() {
+
+        if (name.getText().toString().equals("")) {
+            nameInput.setError(getString(R.string.error_info_name));
+
+        } else if (family.getText().length() <= 0) {
+            removeInputError(errorInputLayout);
+            familyInput.setError(getString(R.string.error_info_family));
+            errorInputLayout = familyInput;
+
+        } else if (tell.getText().length() <= 0) {
+            removeInputError(errorInputLayout);
+            tellInput.setError(getString(R.string.error_info_tell));
+            errorInputLayout = tellInput;
+
+        } else if (checkTellValidation() && (mobile.getText().length() <= 0)) {
+            removeInputError(errorInputLayout);
+            mobileInput.setError(getString(R.string.error_info_mobile));
+            errorInputLayout = mobileInput;
+        }
+
+    }
+
+    private void setSavedInfo() {
+        logedinUserInfo = Hawk.get(getString(R.string.loginUserInfoTag));
         mobile.setText(logedinUserInfo.getPhoneNumber());
         name.setText(logedinUserInfo.getName());
         family.setText(logedinUserInfo.getFamily());
         tell.setText(logedinUserInfo.getTell());
-        String jensiatV=logedinUserInfo.getJensiat();
-        if(jensiatV.equals("0"))
+        String jensiatV = logedinUserInfo.getJensiat();
+        if (jensiatV.equals("0"))
             manRadio.setChecked(true);
-        else if(jensiatV.equals("1"))
+        else if (jensiatV.equals("1"))
             womanRadio.setChecked(true);
 
 
@@ -303,7 +267,7 @@ public class UserInfoActivity extends AppCompatActivity implements UserInfoContr
 
     @Override
     public void userInfoUpdated(UserInfo refreshedUserInfo) {
-        Hawk.put(getString(R.string.loginUserInfoTag),refreshedUserInfo);
-        PublicMethods.setSnackbar(coordinatorLayout,getString(R.string.snack_update_info),getResources().getColor(R.color.green));
+        Hawk.put(getString(R.string.loginUserInfoTag), refreshedUserInfo);
+        PublicMethods.setSnackbar(coordinatorLayout, getString(R.string.snack_update_info), getResources().getColor(R.color.green));
     }
 }

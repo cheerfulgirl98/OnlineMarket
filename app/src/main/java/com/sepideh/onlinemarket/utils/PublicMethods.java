@@ -73,6 +73,15 @@ public class PublicMethods {
         fragmentTransaction.commit();
     }
 
+    public static void setBadgeNotif(Context mContext,TextView badgeNotif) {
+        int sabadsize = Hawk.get(mContext.getString(R.string.Hawk_sabad_size), 0);
+        if (sabadsize > 0) {
+            badgeNotif.setVisibility(View.VISIBLE);
+            badgeNotif.setText(String.valueOf(sabadsize));
+        } else badgeNotif.setVisibility(View.GONE);
+    }
+
+
 
 
 

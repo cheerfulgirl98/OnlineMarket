@@ -96,10 +96,11 @@ public class BasketFragment extends BaseFragment implements SabadContract.MyView
 
         if (view.getId() == buy.getId()) {
             if (!PublicMethods.checkLogin()) {
+
+                openLogin.openLoginButtomsheet();
+            } else
                 PublicMethods.goNewFragment(getViewContext(),R.id.frame_third_container,new OrderFormFragment());
 
-            } else
-                openLogin.openLoginButtomsheet();
         } else if (view.getId() == back.getId()) {
             getActivity().onBackPressed();
         }
@@ -161,7 +162,6 @@ public class BasketFragment extends BaseFragment implements SabadContract.MyView
         myPresenter.plusClicked(sabad);
 
         int proFinalPrice = Integer.parseInt(sabad.getDiscount());
-        Log.d("jam", "plusClicked: "+ proFinalPrice + "  " +finalCost);
         finalCost = finalCost + proFinalPrice;
         totalCost.setText(String.valueOf(finalCost));
     }

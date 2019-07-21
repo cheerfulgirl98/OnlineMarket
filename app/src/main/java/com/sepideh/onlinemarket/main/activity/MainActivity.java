@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.MyVi
     BottomSheetDialog bottomSheetDialog;
     View view1;
     EditText phoneNumber, password;
-    TextView phoneNumberError, passwordError,forgetPassword;
+    TextView phoneNumberError, passwordError, forgetPassword;
     String phoneNumberV, passwordV;
     ImageView closeLogin;
     Context mContext = this;
@@ -196,14 +196,6 @@ public class MainActivity extends AppCompatActivity implements MainContract.MyVi
         passwordError.setText("رمز عبور وارد شده صحیح نمی باشد.");
     }
 
-    public void setBadgeNotif() {
-        int sabadsize = Hawk.get(getString(R.string.Hawk_sabad_size), 0);
-        if (sabadsize > 0) {
-            badgeNotif.setVisibility(View.VISIBLE);
-            badgeNotif.setText(String.valueOf(sabadsize));
-        } else badgeNotif.setVisibility(View.GONE);
-    }
-
 
     @Override
     public void openLoginButtomsheet() {
@@ -214,7 +206,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.MyVi
         password = view1.findViewById(R.id.edt_login_password);
         phoneNumberError = view1.findViewById(R.id.txv_login_phoneNumberError);
         passwordError = view1.findViewById(R.id.txv_login_passwordError);
-        forgetPassword=view1.findViewById(R.id.txv_login_forgot);
+        forgetPassword = view1.findViewById(R.id.txv_login_forgot);
         forgetPassword.setPaintFlags(forgetPassword.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
         closeLogin = view1.findViewById(R.id.img_login_close);
@@ -248,7 +240,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.MyVi
                 editTexts.add(phoneNumber);
                 editTexts.add(password);
 
-                if (checkFields(editTexts) & checkValidation(editTexts)) {
+                if (checkEmptyness(editTexts) & checkValidation()) {
                     sendLoginRequest();
 
                 } else setError(editTexts);
@@ -256,7 +248,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.MyVi
         });
     }
 
-    private boolean checkFields(ArrayList<EditText> editTexts) {
+    private boolean checkEmptyness(ArrayList<EditText> editTexts) {
 
         for (EditText editText : editTexts) {
             if (editText.getText().length() <= 0) {
@@ -264,10 +256,8 @@ public class MainActivity extends AppCompatActivity implements MainContract.MyVi
 
             } else {
                 switch (editText.getId()) {
-                    case R.id.edt_login_phoneNumber:
-                        phoneNumberError.setText("");
                     case R.id.edt_login_password:
-                        passwordError.setText("");
+                        passwordError.setVisibility(View.GONE);
                 }
             }
         }
@@ -277,11 +267,14 @@ public class MainActivity extends AppCompatActivity implements MainContract.MyVi
     }
 
 
-    private boolean checkValidation(ArrayList<EditText> editTexts) {
+    private boolean checkValidation() {
         if (!phoneNumberV.matches("(\\+98|0)?9\\d{9}")) {
+            phoneNumberError.setVisibility(View.VISIBLE);
             phoneNumberError.setText(getString(R.string.validNumberError));
             return false;
         }
+
+        phoneNumberError.setVisibility(View.GONE);
         return true;
     }
 
@@ -330,7 +323,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.MyVi
     @Override
     protected void onResume() {
         super.onResume();
-        setBadgeNotif();
+        PublicMethods.setBadgeNotif(this,badgeNotif);
     }
 
 

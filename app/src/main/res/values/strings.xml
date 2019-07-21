@@ -54,7 +54,7 @@
 
     <string name="writeComment">ثبت نظر</string>
     <string name="addComment">افزودن نظر</string>
-    <string name="plz_write_comment">لطفا نظر خود را بنویسید</string>
+    <string name="plz_write_comment">لطفا نظر خود را بنویسید .</string>
     <string name="successful_compose">نظر شما با موفقیت ثبت شد .</string>
     <string name="commented_before">شما قبلا برای این محصول نظر داده اید .</string>
     <string name="men">مردانه</string>
