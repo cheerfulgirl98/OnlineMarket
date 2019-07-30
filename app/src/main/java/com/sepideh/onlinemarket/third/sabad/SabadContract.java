@@ -1,7 +1,7 @@
 package com.sepideh.onlinemarket.third.sabad;
 
 import com.sepideh.onlinemarket.base.BasePresenter;
-import com.sepideh.onlinemarket.base.BaseView;
+import com.sepideh.onlinemarket.base.BaseFragmentView;
 import com.sepideh.onlinemarket.data.Sabad;
 
 import java.util.List;
@@ -12,13 +12,13 @@ import java.util.List;
 
 public interface SabadContract {
 
-    interface MyView extends BaseView{
+    interface MyFragmentView extends BaseFragmentView {
         void showSabadList(List<Sabad> sabads);
         void proIsDeleted();
 
 
     }
-    interface MyPresenter extends BasePresenter<MyView>{
+    interface MyPresenter extends BasePresenter<MyFragmentView>{
         void getSabadList();
         void plusClicked(Sabad sabad);
         void minusClicked(Sabad sabad);

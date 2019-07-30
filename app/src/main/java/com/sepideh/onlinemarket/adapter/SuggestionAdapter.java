@@ -50,8 +50,6 @@ public class SuggestionAdapter extends RecyclerView.Adapter<SuggestionAdapter.My
 
         if (!suggestedProductList.get(i).getBrand().equals("")) {
             myViewHolder.proBrand.setText(suggestedProductList.get(i).getBrand());
-        } else {
-            myViewHolder.proBrand.setText("مدل" + suggestedProductList.get(i).getModel());
         }
         myViewHolder.proName.setText(suggestedProductList.get(i).getName());
 

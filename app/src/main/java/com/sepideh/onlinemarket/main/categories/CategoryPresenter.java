@@ -1,9 +1,8 @@
 package com.sepideh.onlinemarket.main.categories;
 
-import android.util.Log;
-
 import com.sepideh.onlinemarket.data.Category;
 
+import java.io.IOException;
 import java.util.List;
 
 import io.reactivex.SingleObserver;
@@ -11,23 +10,27 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.ResponseBody;
+import retrofit2.HttpException;
 
 /**
  * Created by pc on 5/18/2019.
  */
 
 public class CategoryPresenter implements CategoryContract.MyPresenter {
-    CategoryContract.MyView myView;
+    CategoryContract.MyFragmentView myView;
     CategoryContract.MyModel myModel;
 
     CompositeDisposable compositeDisposable=new CompositeDisposable();
+
+    String errorText;
 
     public CategoryPresenter(CategoryContract.MyModel myModel) {
         this.myModel = myModel;
     }
 
     @Override
-    public void attachView(CategoryContract.MyView view) {
+    public void attachView(CategoryContract.MyFragmentView view) {
 
         this.myView=view;
     }
@@ -61,7 +64,17 @@ public class CategoryPresenter implements CategoryContract.MyPresenter {
                     @Override
                     public void onError(Throwable e) {
 
-                        Log.d("myyy", "onError: "+ e.getMessage());
+                        if (e instanceof HttpException) {
+
+                            ResponseBody responseBody = ((HttpException) e).response().errorBody();
+                            try {
+                                errorText = responseBody.string();
+                            } catch (IOException e1) {
+                                e1.printStackTrace();
+                            }
+
+                        } else if (e instanceof IOException)
+                            myView.noServerConnection();
                     }
                 });
     }

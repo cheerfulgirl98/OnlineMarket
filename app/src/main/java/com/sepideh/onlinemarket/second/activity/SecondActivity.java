@@ -8,9 +8,10 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,28 +21,23 @@ import android.widget.TextView;
 import com.orhanobut.hawk.Hawk;
 import com.sepideh.onlinemarket.R;
 import com.sepideh.onlinemarket.base.BaseFragment;
+import com.sepideh.onlinemarket.base.TheBaseActivity;
 import com.sepideh.onlinemarket.data.ProductInfo;
 import com.sepideh.onlinemarket.data.UserInfo;
-import com.sepideh.onlinemarket.second.comments.CommentsFragment;
+import com.sepideh.onlinemarket.networkerror.MyReceiver;
 import com.sepideh.onlinemarket.second.compose.ComposeFragment;
 import com.sepideh.onlinemarket.second.detail.DetailFragment;
 import com.sepideh.onlinemarket.register.RegisterActivity;
+import com.sepideh.onlinemarket.third.sabad.BasketFragment;
 import com.sepideh.onlinemarket.utils.PublicMethods;
 
-public class SecondActivity extends AppCompatActivity implements SecondContract.MyView, BaseFragment.OpenLogin {
+public class SecondActivity extends TheBaseActivity implements SecondContract.MyView, BaseFragment.OpenLogin {
 
     CoordinatorLayout coordinatorLayout;
     SecondContract.MyPresentr myPresenter;
     FragmentTransaction fragmentTransaction;
     ProductInfo selectedProduct;
 
-
-    public BottomSheetDialog bottomSheetDialog;
-    public View view1;
-    public EditText phoneNumber, password;
-    public TextView phoneNumberError, passwordError;
-    public String phoneNumberV, passwordV;
-    public ImageView closeLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,51 +70,8 @@ public class SecondActivity extends AppCompatActivity implements SecondContract.
 
 
     @Override
-    public void openLoginButtomsheet() {
-        bottomSheetDialog = new BottomSheetDialog(this);
-        view1 = getLayoutInflater().inflate(R.layout.login_layout, null);
-        bottomSheetDialog.setContentView(view1);
-        phoneNumber = view1.findViewById(R.id.edt_login_phoneNumber);
-        password = view1.findViewById(R.id.edt_login_password);
-        phoneNumberError = view1.findViewById(R.id.txv_login_phoneNumberError);
-        passwordError = view1.findViewById(R.id.txv_login_passwordError);
-        closeLogin = view1.findViewById(R.id.img_login_close);
-        closeLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                bottomSheetDialog.dismiss();
-            }
-        });
-
-        bottomSheetDialog.show();
-
-        Button register = view1.findViewById(R.id.btn_login_goRegister);
-        register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                bottomSheetDialog.dismiss();
-                Intent intent = new Intent(SecondActivity.this, RegisterActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        Button login = view1.findViewById(R.id.btn_login_send);
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                phoneNumberV = phoneNumber.getText().toString();
-                passwordV = password.getText().toString();
-                if (phoneNumberV.equals(""))
-                    phoneNumberError.setVisibility(View.VISIBLE);
-                if (passwordV.equals(""))
-                    passwordError.setVisibility(View.VISIBLE);
-                else {
-                    phoneNumberError.setVisibility(View.GONE);
-                    passwordError.setVisibility(View.GONE);
-                    myPresenter.loginToApp(phoneNumberV, passwordV);
-                }
-            }
-        });
+    public void infoActivityToOpenLogin() {
+       openButtomsheetLogin();
     }
 
     @Override
@@ -140,12 +93,30 @@ public class SecondActivity extends AppCompatActivity implements SecondContract.
 
     }
 
+    @Override
+    public void noNetworkConnection() {
+        PublicMethods.setSnackbar(findViewById(R.id.cor_second),getString(R.string.error_network_conection),getResources().getColor(R.color.red),"تلاش مجدد",getResources().getColor(R.color.white));
+    }
+
+    @Override
+    public void noServerConnection() {
+        PublicMethods.setSnackbar(findViewById(R.id.cor_second),getString(R.string.error_server_conection),getResources().getColor(R.color.red),"تلاش مجدد",getResources().getColor(R.color.white));
+
+    }
+
+    @Override
+    public void sendLoginRequest() {
+        myPresenter.loginToApp(phoneNumberV, passwordV);
+    }
+
 
     @Override
     protected void onStart() {
         super.onStart();
         myPresenter.attachView(this);
+
     }
+
 
     @Override
     protected void onStop() {
@@ -153,5 +124,20 @@ public class SecondActivity extends AppCompatActivity implements SecondContract.
         myPresenter.detachView();
     }
 
+    @Override
+    public void onActionConnection() {
+        sendLoginRequest();
+    }
 
+    @Override
+    public void onActionNoConnection() {
+
+        noNetworkConnection();
+    }
+
+
+//    @Override
+//    public void onActionConnection() {
+//
+//    }
 }

@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
  * Created by pc on 4/6/2019.
  */
 
-public interface BaseView {
-Context getViewContext();
+public interface BaseFragmentView {
+
+    void noServerConnection();
 }

@@ -12,5 +12,8 @@ public interface BaseActivity {
     void userNotFound();
     void passwordIsWrong();
 
+    void noServerConnection();
+
+
 
 }

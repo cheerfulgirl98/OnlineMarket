@@ -17,13 +17,14 @@ import android.widget.TextView;
 import com.google.android.material.textfield.TextInputLayout;
 import com.orhanobut.hawk.Hawk;
 import com.sepideh.onlinemarket.R;
+import com.sepideh.onlinemarket.base.TheBaseActivity;
 import com.sepideh.onlinemarket.data.UserInfo;
 import com.sepideh.onlinemarket.utils.PublicMethods;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserInfoActivity extends AppCompatActivity implements UserInfoContract.MyView, View.OnClickListener {
+public class UserInfoActivity extends TheBaseActivity implements UserInfoContract.MyView, View.OnClickListener {
 
     CoordinatorLayout coordinatorLayout;
     UserInfoContract.MyPresenter myPresenter;
@@ -51,11 +52,15 @@ public class UserInfoActivity extends AppCompatActivity implements UserInfoContr
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_info);
-        myPresenter = new UserInfoPresenter(new UserInfoModel());
         setUpViews();
         setSavedInfo();
 
     }
+
+//    @Override
+//    public void onActionConnection() {
+//        sendupdateUserInfoRequest();
+//    }
 
     @Override
     protected void onStart() {
@@ -72,7 +77,8 @@ public class UserInfoActivity extends AppCompatActivity implements UserInfoContr
     @Override
     public void setUpViews() {
 
-        coordinatorLayout = findViewById(R.id.coor_updateUserInfo);
+        myPresenter = new UserInfoPresenter(new UserInfoModel());
+        coordinatorLayout = findViewById(R.id.cor_updateUserInfo);
 
         sabad = findViewById(R.id.rel_toolbar_sabad);
         sabad.setVisibility(View.GONE);
@@ -143,12 +149,33 @@ public class UserInfoActivity extends AppCompatActivity implements UserInfoContr
     }
 
     @Override
+    public void noNetworkConnection() {
+
+
+        PublicMethods.setSnackbar(findViewById(R.id.cor_updateUserInfo), getString(R.string.error_network_conection), getResources().getColor(R.color.red), "تلاش مجدد", getResources().getColor(R.color.white));
+
+    }
+
+    @Override
+    public void sendLoginRequest() {
+
+    }
+
+    @Override
+    public void noServerConnection() {
+        PublicMethods.setSnackbar(findViewById(R.id.cor_updateUserInfo), getString(R.string.error_server_conection), getResources().getColor(R.color.red), "تلاش مجدد", getResources().getColor(R.color.white));
+
+    }
+
+    @Override
     public void onClick(View v) {
 
         if (v.getId() == R.id.btn_buttom) {
             if (checkEmptyness()) {
                 if (checkValidation() && checkRadioValidation())
-                    myPresenter.updateUserInfo(logedinUserInfo);
+                    if (PublicMethods.checkNetworkConnection())
+                        sendserverRequest();
+                    else noNetworkConnection();
             } else {
 
                 setError();
@@ -159,6 +186,14 @@ public class UserInfoActivity extends AppCompatActivity implements UserInfoContr
             onBackPressed();
 
 
+    }
+
+    private void sendupdateUserInfoRequest() {
+        myPresenter.updateUserInfo(logedinUserInfo);
+    }
+
+    private void sendserverRequest() {
+        sendupdateUserInfoRequest();
     }
 
     private void removeInputError(TextInputLayout textInputLayout) {
@@ -268,5 +303,17 @@ public class UserInfoActivity extends AppCompatActivity implements UserInfoContr
     public void userInfoUpdated(UserInfo refreshedUserInfo) {
         Hawk.put(getString(R.string.loginUserInfoTag), refreshedUserInfo);
         PublicMethods.setSnackbar(coordinatorLayout, getString(R.string.snack_update_info), getResources().getColor(R.color.green));
+    }
+
+    @Override
+    public void onActionConnection() {
+
+        sendupdateUserInfoRequest();
+    }
+
+    @Override
+    public void onActionNoConnection() {
+
+        noNetworkConnection();
     }
 }

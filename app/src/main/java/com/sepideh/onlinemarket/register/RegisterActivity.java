@@ -5,8 +5,10 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.sepideh.onlinemarket.R;
+import com.sepideh.onlinemarket.base.BaseFragment;
+import com.sepideh.onlinemarket.utils.PublicMethods;
 
-public class RegisterActivity extends AppCompatActivity{
+public class RegisterActivity extends AppCompatActivity  {
 
     FragmentTransaction fragmentTransaction;
 

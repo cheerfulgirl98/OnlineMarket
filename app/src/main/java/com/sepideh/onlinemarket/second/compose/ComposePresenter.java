@@ -16,7 +16,7 @@ import retrofit2.HttpException;
 
 public class ComposePresenter implements ComposeContract.MyPresenter {
 
-    ComposeContract.MyView myView;
+    ComposeContract.MyFragmentView myView;
     ComposeContract.MyModel myModel;
 
     String errorText;
@@ -28,7 +28,7 @@ public class ComposePresenter implements ComposeContract.MyPresenter {
     }
 
     @Override
-    public void attachView(ComposeContract.MyView view)
+    public void attachView(ComposeContract.MyFragmentView view)
     {
         this.myView = view;
     }
@@ -73,6 +73,9 @@ public class ComposePresenter implements ComposeContract.MyPresenter {
                                 myView.commentedBefore();
                             }
                         }
+                        else if (e instanceof IOException)
+
+                            myView.noServerConnection();
                     }
                 });
 

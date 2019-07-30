@@ -13,6 +13,7 @@ import com.sepideh.onlinemarket.adapter.FavoritAdapter;
 import com.sepideh.onlinemarket.base.BaseFragment;
 import com.sepideh.onlinemarket.sqlite.Favorit;
 import com.sepideh.onlinemarket.sqlite.SqliteHelper;
+import com.sepideh.onlinemarket.utils.PublicMethods;
 
 import java.util.List;
 
@@ -20,7 +21,7 @@ import java.util.List;
  * Created by pc on 5/18/2019.
  */
 
-public class FavoritFragment extends BaseFragment implements FavoritContract.MyView,FavoritAdapter.DeleteInterface {
+public class FavoritFragment extends BaseFragment implements FavoritContract.MyFragmentView,FavoritAdapter.DeleteInterface {
 
     FavoritContract.MyPresenter myPresenter;
     RecyclerView recyclerView;
@@ -45,6 +46,17 @@ public class FavoritFragment extends BaseFragment implements FavoritContract.MyV
     }
 
     @Override
+    public void sendServerRequest() {
+
+    }
+
+    @Override
+    public void noNetworkConnection() {
+
+    }
+
+
+    @Override
     public void onStop() {
         super.onStop();
         myPresenter.detachView();
@@ -56,7 +68,7 @@ public class FavoritFragment extends BaseFragment implements FavoritContract.MyV
         emptyFavorit=rootView.findViewById(R.id.txv_sabad_emptyText);
         sqliteHelper=new SqliteHelper(getViewContext());
         recyclerView = rootView.findViewById(R.id.rec_favorit);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getViewContext(), LinearLayoutManager.VERTICAL, false));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getViewContext(), RecyclerView.VERTICAL, false));
 
     }
 
@@ -69,6 +81,13 @@ public class FavoritFragment extends BaseFragment implements FavoritContract.MyV
     public Context getViewContext() {
         return getContext();
     }
+
+    @Override
+    public void noServerConnection() {
+
+
+    }
+
 
 
     @Override
@@ -99,5 +118,15 @@ public class FavoritFragment extends BaseFragment implements FavoritContract.MyV
     @Override
     public void deleteClicked(Favorit favorit) {
         myPresenter.deleteClicked(sqliteHelper,favorit);
+    }
+
+    @Override
+    public void onActionConnection() {
+
+    }
+
+    @Override
+    public void onActionNoConnection() {
+        noNetworkConnection();
     }
 }

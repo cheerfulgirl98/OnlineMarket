@@ -4,31 +4,20 @@ package com.sepideh.onlinemarket.utils;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Paint;
 import android.os.Build;
 
-import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.snackbar.Snackbar;
 
 import androidx.fragment.app.Fragment;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.orhanobut.hawk.Hawk;
 import com.sepideh.onlinemarket.R;
 import com.sepideh.onlinemarket.data.UserInfo;
-import com.sepideh.onlinemarket.main.activity.MainActivity;
-import com.sepideh.onlinemarket.register.RegisterActivity;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by pc on 4/27/2019.
@@ -37,19 +26,15 @@ import java.util.List;
 public class PublicMethods {
 
 
-    public static String changeToPersianNumber(String number) {
-        String tmp = "";
-        for (char mChar : number.toCharArray()) {
+    private static SnackManage snackManage;
 
-            if (mChar >= '0' && mChar <= '9') {
-                tmp += new String(Character.toChars(mChar + 0x06f1 - 49));
-            } else {
-                tmp += mChar;
-            }
-        }
+    public interface SnackManage {
+        void onActionConnection();
+        void onActionNoConnection();
+    }
 
-        return tmp;
-
+    public static void setSnackManage(SnackManage snackManage) {
+        PublicMethods.snackManage = snackManage;
     }
 
     public static void setSnackbar(View viewId, String msg, int colorId) {
@@ -68,6 +53,57 @@ public class PublicMethods {
 
     }
 
+
+    public static String changeToPersianNumber(String number) {
+        String tmp = "";
+        for (char mChar : number.toCharArray()) {
+
+            if (mChar >= '0' && mChar <= '9') {
+                tmp += new String(Character.toChars(mChar + 0x06f1 - 49));
+            } else {
+                tmp += mChar;
+            }
+        }
+
+        return tmp;
+
+    }
+
+    public static void setSnackbar(View viewId, String msg, int colorId, String actionV, int actionColor) {
+        final Snackbar snackbar = Snackbar.make(viewId, msg, Snackbar.LENGTH_INDEFINITE);
+
+        View snackView = snackbar.getView();
+        snackView.setBackgroundColor(colorId);
+
+        final TextView snackMesage = snackView.findViewById(R.id.snackbar_text);
+        snackMesage.setTextSize(12);
+        TextView snackAction = snackView.findViewById(R.id.snackbar_action);
+        snackAction.setTextSize(10);
+
+        snackMesage.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
+        snackAction.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_END);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            View snack = snackbar.getView();
+            snack.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        }
+
+
+        snackbar.setAction(actionV, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String network = Hawk.get("network_status_H");
+                if (!network.equals("No internet is available")) {
+                    snackManage.onActionConnection();
+
+                } else
+                    snackManage.onActionNoConnection();
+
+            }
+        }).setActionTextColor(actionColor).show();
+
+
+    }
 
     public static boolean checkLogin() {
 
@@ -91,7 +127,7 @@ public class PublicMethods {
         FragmentTransaction fragmentTransaction;
         fragmentTransaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(viewId, fragment, fragmentTag);
-        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.addToBackStack(fragmentTag);
         fragmentTransaction.commit();
     }
 
@@ -101,9 +137,21 @@ public class PublicMethods {
             badgeNotif.setVisibility(View.VISIBLE);
             badgeNotif.setText(String.valueOf(sabadsize));
 
-        }else
-        badgeNotif.setVisibility(View.GONE);
+        } else
+            badgeNotif.setVisibility(View.GONE);
 
+    }
+
+    public static boolean checkNetworkConnection() {
+        String connectionStatus = Hawk.get("network_status_H");
+        if (connectionStatus != null) {
+            if (connectionStatus.equals("No internet is available")) {
+
+                return false;
+            }
+
+        }
+        return true;
     }
 
 

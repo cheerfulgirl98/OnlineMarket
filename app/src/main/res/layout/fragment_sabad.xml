@@ -6,31 +6,28 @@
     android:background="@color/gray200"
     android:layoutDirection="rtl">
 
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:layout_marginBottom="45dp">
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rec_sbad"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="12dp"
-            android:visibility="invisible"/>
+            android:visibility="invisible" />
 
 
-    </LinearLayout>
         <TextView
+            android:id="@+id/txv_sabad_emptyText"
+            style="@style/title_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/txv_sabad_emptyText"
-            android:text="@string/empty_sabad_alarm"
             android:layout_centerInParent="true"
-            style="@style/title_textView"
-            />
+            android:text="@string/empty_sabad_alarm" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -60,16 +57,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="8dp"
                     android:layout_marginTop="10dp"
+                    android:layout_marginRight="8dp"
                     android:text="جمع کل خرید :"
                     android:textColor="@color/green"
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/txv_sabad_totalCost"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/txv_sabad_totalCost"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="8dp"
@@ -80,24 +77,22 @@
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_centerHorizontal="true"
                 android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
                 android:background="@drawable/buttom_circle"
-                app:srcCompat="@drawable/ic_up_arrow"
-                />
+                app:srcCompat="@drawable/ic_up_arrow" />
 
 
         </RelativeLayout>
 
         <TextView
+            android:id="@+id/txv_sabad_buy"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:id="@+id/txv_sabad_buy"
             android:layout_below="@id/rel_sabad_cost"
             android:background="@color/greenButton"
             android:gravity="center"
             android:text="تکمیل فرایند خرید"
             android:textColor="@color/white" />
     </RelativeLayout>
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

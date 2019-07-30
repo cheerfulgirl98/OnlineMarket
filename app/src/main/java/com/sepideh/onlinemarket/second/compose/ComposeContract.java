@@ -1,7 +1,7 @@
 package com.sepideh.onlinemarket.second.compose;
 
 import com.sepideh.onlinemarket.base.BasePresenter;
-import com.sepideh.onlinemarket.base.BaseView;
+import com.sepideh.onlinemarket.base.BaseFragmentView;
 
 import io.reactivex.Completable;
 
@@ -11,12 +11,12 @@ import io.reactivex.Completable;
 
 public interface ComposeContract {
 
-    interface MyView extends BaseView{
+    interface MyFragmentView extends BaseFragmentView {
         void successfulCompose();
         void commentedBefore();
     }
 
-    interface MyPresenter extends BasePresenter<MyView>{
+    interface MyPresenter extends BasePresenter<MyFragmentView>{
         void sendComment(String productId,String userId,String star,String description);
     }
     interface MyModel{

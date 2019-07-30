@@ -9,7 +9,7 @@ import java.util.List;
  */
 
 public class SabadPresenter implements SabadContract.MyPresenter {
-    SabadContract.MyView myView;
+    SabadContract.MyFragmentView myView;
     SabadContract.MyModel myModel;
 
 
@@ -19,7 +19,7 @@ public class SabadPresenter implements SabadContract.MyPresenter {
 
 
     @Override
-    public void attachView(SabadContract.MyView myView) {
+    public void attachView(SabadContract.MyFragmentView myView) {
         this.myView = myView;
 
     }

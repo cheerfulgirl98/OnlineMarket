@@ -5,6 +5,7 @@ import android.util.Log;
 import com.sepideh.onlinemarket.data.ProductInfo;
 import com.sepideh.onlinemarket.data.Slider;
 
+import java.io.IOException;
 import java.util.List;
 
 import io.reactivex.SingleObserver;
@@ -12,16 +13,19 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.ResponseBody;
+import retrofit2.HttpException;
 
 /**
  * Created by pc on 4/6/2019.
  */
 
 public class HomePresenter implements HomeContract.MyPresenter {
-    HomeContract.MyView myView;
+    HomeContract.MyFragmentView myView;
     HomeContract.MyModel myModel;
     CompositeDisposable compositeDisposable = new CompositeDisposable();
 
+    String errorText;
 
 
     public HomePresenter(HomeContract.MyModel myModel) {
@@ -47,7 +51,7 @@ public class HomePresenter implements HomeContract.MyPresenter {
 
             @Override
             public void onError(Throwable e) {
-                myView.showError();
+                myView.noServerConnection();
 
             }
         });
@@ -65,15 +69,25 @@ public class HomePresenter implements HomeContract.MyPresenter {
 
                     @Override
                     public void onSuccess(List<ProductInfo> suggestedProductList) {
-                        Log.d("gav", "onSuccess: "+suggestedProductList.toString());
+                        Log.d("gav", "onSuccess: " + suggestedProductList.toString());
                         myView.showSuggestionList(suggestedProductList);
 
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.d("gav", "onError: ");
-                        myView.showError();
+                        if (e instanceof HttpException) {
+
+                            ResponseBody responseBody = ((HttpException) e).response().errorBody();
+                            try {
+                                errorText = responseBody.string();
+                            } catch (IOException e1) {
+                                e1.printStackTrace();
+                            }
+
+                        } else if (e instanceof IOException)
+
+                            myView.noServerConnection();
 
                     }
                 });
@@ -98,6 +112,7 @@ public class HomePresenter implements HomeContract.MyPresenter {
 
                     @Override
                     public void onError(Throwable e) {
+
 
                     }
                 });
@@ -124,18 +139,16 @@ public class HomePresenter implements HomeContract.MyPresenter {
                     @Override
                     public void onError(Throwable e) {
 
+
                     }
                 });
     }
 
 
     @Override
-    public void attachView(HomeContract.MyView myView) {
+    public void attachView(HomeContract.MyFragmentView myView) {
         this.myView = myView;
-        getSliderList();
-        getSuggestionList();
-        getBestList();
-        getNewList();
+
     }
 
     @Override

@@ -35,5 +35,4 @@ public class HomeModel implements HomeContract.MyModel {
         return Constant.apiService.getNewList();
     }
 
-
 }

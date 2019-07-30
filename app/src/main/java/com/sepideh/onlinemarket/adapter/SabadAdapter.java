@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,9 +77,13 @@ public class SabadAdapter extends RecyclerView.Adapter<SabadAdapter.MyViewHolder
         myViewHolder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                clickInstance.deleteClicked(sabads.get(position).getPro_id());
+                int proCost=(sabads.get(position).getNum() * (Integer.parseInt(sabads.get(position).getDiscount())));
+                Log.d("deel", "onClick: "+proCost);
+                clickInstance.deleteClicked(sabads.get(position).getPro_id(),proCost);
                 sabads.remove(position);
                 notifyItemRemoved(position);
+                notifyItemRangeChanged(position,sabads.size());
+
 
 
             }
@@ -111,12 +116,12 @@ public class SabadAdapter extends RecyclerView.Adapter<SabadAdapter.MyViewHolder
             @Override
             public void onClick(View view) {
 
-                Sabad selectedFavorit = sabads.get(position);
+                Sabad selectedProduct = sabads.get(position);
                 ProductInfo productInfo = new ProductInfo();
-                String proid = String.valueOf(selectedFavorit.getId());
-                productInfo.setId(proid).setName(selectedFavorit.getName())
-                        .setBrand(selectedFavorit.getBrand()).setPrice(selectedFavorit.getPrice())
-                        .setDiscount(selectedFavorit.getDiscount());
+                String proid = String.valueOf(selectedProduct.getPro_id());
+                productInfo.setId(proid).setName(selectedProduct.getName())
+                        .setBrand(selectedProduct.getBrand()).setModel(selectedProduct.getModel()).setPrice(selectedProduct.getPrice())
+                        .setDiscount(selectedProduct.getDiscount());
 
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("selected_product", productInfo);
@@ -170,6 +175,6 @@ public class SabadAdapter extends RecyclerView.Adapter<SabadAdapter.MyViewHolder
 
         void minusClicked(Sabad sabad);
 
-        void deleteClicked(String pro_id);
+        void deleteClicked(String pro_id,int proCost);
     }
 }

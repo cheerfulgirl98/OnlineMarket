@@ -49,8 +49,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
 
         if (!suggestedProductList.get(i).getBrand().equals("")) {
             myViewHolder.proBrand.setText(suggestedProductList.get(i).getBrand());
-        } else {
-            myViewHolder.proBrand.setText("مدل" + suggestedProductList.get(i).getModel());
         }
         myViewHolder.proName.setText(suggestedProductList.get(i).getName());
 

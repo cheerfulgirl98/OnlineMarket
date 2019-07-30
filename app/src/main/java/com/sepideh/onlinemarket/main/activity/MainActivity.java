@@ -2,24 +2,22 @@ package com.sepideh.onlinemarket.main.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Paint;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.AppCompatActivity;
 
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -27,20 +25,19 @@ import android.widget.TextView;
 import com.google.android.material.navigation.NavigationView;
 import com.orhanobut.hawk.Hawk;
 import com.sepideh.onlinemarket.R;
+import com.sepideh.onlinemarket.base.BaseFragment;
+import com.sepideh.onlinemarket.base.TheBaseActivity;
 import com.sepideh.onlinemarket.data.UserInfo;
 import com.sepideh.onlinemarket.main.categories.CategoryFragment;
 import com.sepideh.onlinemarket.main.favorit.FavoritFragment;
 import com.sepideh.onlinemarket.main.home.HomeFragment;
 import com.sepideh.onlinemarket.navigationview.NavigationActivity;
 import com.sepideh.onlinemarket.navigationview.messages.MessageActivity;
-import com.sepideh.onlinemarket.register.RegisterActivity;
 import com.sepideh.onlinemarket.third.activity.ThirdActivity;
 import com.sepideh.onlinemarket.userInfo.UserInfoActivity;
 import com.sepideh.onlinemarket.utils.PublicMethods;
 
-import java.util.ArrayList;
-
-public class MainActivity extends AppCompatActivity implements MainContract.MyView, View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends TheBaseActivity implements MainContract.MyView, View.OnClickListener, NavigationView.OnNavigationItemSelectedListener, BaseFragment.OpenLogin {
 
     MainContract.MyPresentr myPresenter;
     CoordinatorLayout coordinatorLayout;
@@ -52,15 +49,9 @@ public class MainActivity extends AppCompatActivity implements MainContract.MyVi
     BottomNavigationView bottomNavigationView;
     FragmentTransaction fragmentTransaction;
 
-    BottomSheetDialog bottomSheetDialog;
-    View view1;
-    EditText phoneNumber, password;
-    TextView phoneNumberError, passwordError, forgetPassword;
-    String phoneNumberV, passwordV;
-    ImageView closeLogin;
     Context mContext = this;
-
     Intent intent;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,12 +63,13 @@ public class MainActivity extends AppCompatActivity implements MainContract.MyVi
         if (intent != null) {
             String registered = intent.getStringExtra("newregistered");
             if (registered != null && registered.equals("yes")) {
-                PublicMethods.setSnackbar(coordinatorLayout, "به آنلاین مارکت خوش آمدید.", getResources().getColor(R.color.green));
+                PublicMethods.setSnackbar(coordinatorLayout, "به آنلاین مارکت خوش آمدید.", R.color.green);
             }
 
         }
 
     }
+
 
     @Override
     protected void onStart() {
@@ -86,11 +78,13 @@ public class MainActivity extends AppCompatActivity implements MainContract.MyVi
 
     }
 
+
     @Override
     protected void onStop() {
         super.onStop();
         myPresenter.detachView();
     }
+
 
     @Override
     public void setUpViews() {
@@ -118,6 +112,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.MyVi
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.frame_main_container, new HomeFragment());
         fragmentTransaction.commit();
+
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -162,7 +157,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.MyVi
         } else if (view.getId() == burgerMenu.getId()) {
             if (view.getId() == burgerMenu.getId()) {
                 if (!PublicMethods.checkLogin())
-                    openLoginButtomsheet();
+                    openButtomsheetLogin();
 
                 else {
                     if (!drawerLayout.isDrawerOpen(Gravity.RIGHT)) {
@@ -178,7 +173,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.MyVi
     public void successfulLogin(UserInfo userInfo) {
 
         Hawk.put(getString(R.string.loginUserInfoTag), userInfo);
-        bottomSheetDialog.dismiss();
+        super.bottomSheetDialog.dismiss();
         drawerLayout.openDrawer(Gravity.RIGHT);
     }
 
@@ -194,113 +189,24 @@ public class MainActivity extends AppCompatActivity implements MainContract.MyVi
         passwordError.setText("رمز عبور وارد شده صحیح نمی باشد.");
     }
 
-
-
-    public void openLoginButtomsheet() {
-        bottomSheetDialog = new BottomSheetDialog(this);
-        view1 = getLayoutInflater().inflate(R.layout.login_layout, null);
-        bottomSheetDialog.setContentView(view1);
-        phoneNumber = view1.findViewById(R.id.edt_login_phoneNumber);
-        password = view1.findViewById(R.id.edt_login_password);
-        phoneNumberError = view1.findViewById(R.id.txv_login_phoneNumberError);
-        passwordError = view1.findViewById(R.id.txv_login_passwordError);
-        forgetPassword = view1.findViewById(R.id.txv_login_forgot);
-        forgetPassword.setPaintFlags(forgetPassword.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-
-        closeLogin = view1.findViewById(R.id.img_login_close);
-        closeLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                bottomSheetDialog.dismiss();
-            }
-        });
-
-        bottomSheetDialog.show();
-
-        Button register = view1.findViewById(R.id.btn_login_goRegister);
-        register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                bottomSheetDialog.dismiss();
-                Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        Button login = view1.findViewById(R.id.btn_login_send);
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                phoneNumberV = phoneNumber.getText().toString();
-                passwordV = password.getText().toString();
-                ArrayList<EditText> editTexts = new ArrayList<>();
-                editTexts.add(phoneNumber);
-                editTexts.add(password);
-
-                if (checkEmptyness(editTexts) & checkValidation()) {
-                    sendLoginRequest();
-
-                } else setError(editTexts);
-            }
-        });
+    @Override
+    public void noNetworkConnection() {
+        PublicMethods.setSnackbar(findViewById(R.id.cor_login), getString(R.string.error_network_conection), getResources().getColor(R.color.red), "تلاش مجدد", getResources().getColor(R.color.white));
     }
 
-    private boolean checkEmptyness(ArrayList<EditText> editTexts) {
-
-        for (EditText editText : editTexts) {
-            if (editText.getText().length() <= 0) {
-                return false;
-
-            } else {
-                switch (editText.getId()) {
-                    case R.id.edt_login_password:
-                        passwordError.setVisibility(View.GONE);
-                }
-            }
-        }
-
-        return true;
+    @Override
+    public void noServerConnection() {
+        bottomSheetDialog.dismiss();
+        PublicMethods.setSnackbar(findViewById(R.id.cor_main), getString(R.string.error_server_conection), getResources().getColor(R.color.red), "تلاش مجدد", getResources().getColor(R.color.white));
 
     }
 
-
-    private boolean checkValidation() {
-        if (!phoneNumberV.matches("(\\+98|0)?9\\d{9}")) {
-            phoneNumberError.setVisibility(View.VISIBLE);
-            phoneNumberError.setText(getString(R.string.validNumberError));
-            return false;
-        }
-
-        phoneNumberError.setVisibility(View.GONE);
-        return true;
-    }
-
-    private void setError(ArrayList<EditText> editTexts) {
-        for (EditText editText : editTexts) {
-            if (editText.getText().toString().equals("")) {
-                switch (editText.getId()) {
-                    case R.id.edt_login_phoneNumber:
-                        phoneNumberError.setVisibility(View.VISIBLE);
-                        phoneNumberError.setText(getString(R.string.phoneNumberError));
-                        break;
-                    case R.id.edt_login_password:
-                        passwordError.setVisibility(View.VISIBLE);
-                        passwordError.setText(getString(R.string.passwordError));
-                        break;
-                }
-            }
-        }
-
-    }
-
-    private void sendLoginRequest() {
-        phoneNumberError.setVisibility(View.GONE);
-        passwordError.setVisibility(View.GONE);
+    @Override
+    public void sendLoginRequest() {
 
         myPresenter.loginToApp(phoneNumberV, passwordV);
-
     }
+
 
     @Override
     public void onBackPressed() {
@@ -321,7 +227,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.MyVi
     @Override
     protected void onResume() {
         super.onResume();
-        PublicMethods.setBadgeNotif(this,badgeNotif);
+        PublicMethods.setBadgeNotif(this, badgeNotif);
     }
 
 
@@ -352,10 +258,20 @@ public class MainActivity extends AppCompatActivity implements MainContract.MyVi
         return false;
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
 
+    @Override
+    public void onActionConnection() {
+
+            sendLoginRequest();
     }
 
+    @Override
+    public void onActionNoConnection() {
+        noNetworkConnection();
+    }
+
+    @Override
+    public void infoActivityToOpenLogin() {
+        openButtomsheetLogin();
+    }
 }

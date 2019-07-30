@@ -1,7 +1,7 @@
 package com.sepideh.onlinemarket.main.favorit;
 
 import com.sepideh.onlinemarket.base.BasePresenter;
-import com.sepideh.onlinemarket.base.BaseView;
+import com.sepideh.onlinemarket.base.BaseFragmentView;
 import com.sepideh.onlinemarket.sqlite.Favorit;
 import com.sepideh.onlinemarket.sqlite.SqliteHelper;
 
@@ -13,14 +13,14 @@ import java.util.List;
 
 public interface FavoritContract {
 
-    interface MyView extends BaseView {
+    interface MyFragmentView extends BaseFragmentView {
 
         void showFavoritProducts(List<Favorit> favorits);
         void listIsEmpty();
         void allFavoritDeleted();
     }
 
-    interface MyPresenter extends BasePresenter<MyView> {
+    interface MyPresenter extends BasePresenter<MyFragmentView> {
         void getFavoritProducts(SqliteHelper sqliteHelper);
         void deleteClicked(SqliteHelper sqliteHelper, Favorit favorit);
     }

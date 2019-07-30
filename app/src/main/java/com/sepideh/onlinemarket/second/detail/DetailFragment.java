@@ -5,12 +5,14 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -40,13 +42,13 @@ import java.util.List;
  * Created by pc on 4/11/2019.
  */
 
-public class DetailFragment extends BaseFragment implements DetailContract.MyView, BaseSliderView.OnSliderClickListener, View.OnClickListener {
+public class DetailFragment extends BaseFragment implements DetailContract.MyFragmentView, BaseSliderView.OnSliderClickListener, View.OnClickListener, PublicMethods.SnackManage {
     DetailContract.MyPresenter myPresenter;
     CoordinatorLayout coordinatorLayout;
     RelativeLayout sabad;
     ProductInfo selectedProduct;
     SliderLayout sliderLayout;
-    TextView name, brand, size, material, price, disount, commentT, allComents, compose, badgeNotif, toolbarTitle;
+    TextView name, brand, model, size, material, price, disount, commentT, allComents, compose, badgeNotif, toolbarTitle;
     SimpleRatingBar ratingBar;
     RecyclerView recyclerView;
     RelativeLayout commentBox, noCommentBox;
@@ -54,12 +56,13 @@ public class DetailFragment extends BaseFragment implements DetailContract.MyVie
     Button addSabad;
 
     int star = 0;
-    FragmentTransaction fragmentTransaction;
 
     String productId;
     SqliteHelper sqliteHelper;
 
     int sabadSizeV;
+
+    boolean connectionIsOkToSendRequest;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -77,7 +80,6 @@ public class DetailFragment extends BaseFragment implements DetailContract.MyVie
         super.onStart();
         myPresenter.attachView(this);
 
-        myPresenter.getProductDetails(productId);
 
 //        //after setupview
 //        Cursor cursor = sqliteHelper.getAllFavorit();
@@ -87,12 +89,28 @@ public class DetailFragment extends BaseFragment implements DetailContract.MyVie
 //                favoritIcon.setColorFilter(Color.argb(255, 255, 213, 79));
 //        }
 
-        List<Favorit> favorits=sqliteHelper.getAllFavorit();
-        for(Favorit theFavorit:favorits){
-            String pro_id=theFavorit.getProduct_id();
-            if(pro_id.equals(productId))
+        List<Favorit> favorits = sqliteHelper.getAllFavorit();
+        for (Favorit theFavorit : favorits) {
+            String pro_id = theFavorit.getProduct_id();
+            if (pro_id.equals(productId))
                 favoritIcon.setColorFilter(Color.argb(255, 255, 213, 79));
         }
+
+    }
+
+    @Override
+    public void sendServerRequest() {
+        myPresenter.getProductDetails(productId);
+        connectionIsOkToSendRequest = true;
+    }
+
+
+    public void noNetworkConnection() {
+
+        material.setVisibility(View.GONE);
+        size.setVisibility(View.GONE);
+        PublicMethods.setSnackbar(rootView.findViewById(R.id.cor_detail_main), getString(R.string.error_network_conection), getResources().getColor(R.color.red), "تلاش مجدد", getResources().getColor(R.color.white));
+
 
     }
 
@@ -130,6 +148,7 @@ public class DetailFragment extends BaseFragment implements DetailContract.MyVie
         sliderLayout = rootView.findViewById(R.id.slider_detail);
         name = rootView.findViewById(R.id.txv_detail_name);
         brand = rootView.findViewById(R.id.txv_detail_brand);
+        model = rootView.findViewById(R.id.txv_detail_model);
         size = rootView.findViewById(R.id.txv_detail_size);
         material = rootView.findViewById(R.id.txv_detail_materail);
         price = rootView.findViewById(R.id.txv_detail_price);
@@ -150,6 +169,9 @@ public class DetailFragment extends BaseFragment implements DetailContract.MyVie
         addSabad.setText(R.string.btn_add_to_sabad);
         addSabad.setOnClickListener(this);
 
+        showElementaryInfo();
+
+
     }
 
     @Override
@@ -160,6 +182,33 @@ public class DetailFragment extends BaseFragment implements DetailContract.MyVie
     @Override
     public Context getViewContext() {
         return getContext();
+    }
+
+    @Override
+    public void noServerConnection() {
+
+        material.setVisibility(View.GONE);
+        size.setVisibility(View.GONE);
+        PublicMethods.setSnackbar(rootView.findViewById(R.id.cor_detail_main), getString(R.string.error_server_conection), getResources().getColor(R.color.red), "تلاش مجدد", getResources().getColor(R.color.white));
+
+    }
+
+
+    private void showElementaryInfo() {
+        name.setText(selectedProduct.getName());
+        brand.setText(selectedProduct.getBrand());
+        if (selectedProduct.getPrice() != 0) {
+
+            price.setText(PublicMethods.changeToPersianNumber(String.format("%,d %s", selectedProduct.getPrice(), getString(R.string.toman))));
+            price.setPaintFlags(price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        } else price.setText("");
+
+        if (selectedProduct.getDiscount() != null) {
+
+            int discount = Integer.parseInt(selectedProduct.getDiscount());
+            disount.setText(PublicMethods.changeToPersianNumber(String.format("%,d %s", discount, getString(R.string.toman))));
+
+        }
     }
 
     @Override
@@ -181,27 +230,21 @@ public class DetailFragment extends BaseFragment implements DetailContract.MyVie
             sliderLayout.addSlider(defaultSliderView);
         }
 
-        name.setText(selectedProduct.getName());
-        if (!selectedProduct.getBrand().equals(""))
-            brand.setText(selectedProduct.getBrand());
-        else brand.setText("مدل :" + selectedProduct.getModel());
+        if (!productDetails.getModel().equals("")) {
+            selectedProduct.setModel(productDetails.getModel());
+            model.setText(getString(R.string.model) + ""+productDetails.getModel());
+        } else {
+            selectedProduct.setModel("");
+            model.setVisibility(View.GONE);
+        }
         if (!productDetails.getSize().equals("")) {
             size.setVisibility(View.VISIBLE);
-            size.setText(productDetails.getSize());
+            size.setText(String.format("%s%s", getString(R.string.size), productDetails.getSize()));
         }
+
+        material.setVisibility(View.VISIBLE);
         material.setText(productDetails.getMaterial());
-        if (selectedProduct.getPrice() != 0) {
 
-            price.setText(PublicMethods.changeToPersianNumber(String.format("%,d %s", selectedProduct.getPrice(), getString(R.string.toman))));
-            price.setPaintFlags(price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-        } else price.setText("");
-
-        if (selectedProduct.getDiscount() != null) {
-
-            int discount = Integer.parseInt(selectedProduct.getDiscount());
-            disount.setText(PublicMethods.changeToPersianNumber(String.format("%,d %s", discount, getString(R.string.toman))));
-
-        }
 
         List<Comment> comments = productDetails.getComments();
         if (comments.size() > 0) {
@@ -228,11 +271,6 @@ public class DetailFragment extends BaseFragment implements DetailContract.MyVie
 
     }
 
-    @Override
-    public void showError() {
-
-    }
-
 
     private void manageSabad() {
         sabadSizeV = Hawk.get(getString(R.string.Hawk_sabad_size), -1);
@@ -242,10 +280,11 @@ public class DetailFragment extends BaseFragment implements DetailContract.MyVie
         } else if (sabadSizeV == 0) {
             //when come back from basketfragment and make sabad empty there.
             sabadIsEmpty();
-        } else{
+        } else {
             //for the first time that sabad is empty and hawk is null(-1)
             sabadSizeV = 0;
-            sabadIsEmpty();}
+            sabadIsEmpty();
+        }
 
     }
 
@@ -253,7 +292,7 @@ public class DetailFragment extends BaseFragment implements DetailContract.MyVie
     private void setSabadSizeOnBadge(int sabadSize) {
         badgeNotif.setVisibility(View.VISIBLE);
         badgeNotif.setText(String.valueOf(sabadSize));
-        Hawk.put(getString(R.string.Hawk_sabad_size), sabadSize);
+      //  Hawk.put(getString(R.string.Hawk_sabad_size), sabadSize);
     }
 
 
@@ -286,22 +325,26 @@ public class DetailFragment extends BaseFragment implements DetailContract.MyVie
             startActivity(Intent.createChooser(shareIntent, "Share link using"));
         } else if (view.getId() == favoritIcon.getId()) {
 
-            myPresenter.saveToFavorit(sqliteHelper, selectedProduct);
-            favoritIcon.setColorFilter(Color.argb(255, 255, 213, 79));
+            if (connectionIsOkToSendRequest) {
+                myPresenter.saveToFavorit(sqliteHelper, selectedProduct);
+                favoritIcon.setColorFilter(Color.argb(255, 255, 213, 79));
+            }
         } else if (view.getId() == R.id.txv_detail_allcomments) {
 
             PublicMethods.goNewFragment(getViewContext(), R.id.frame_second_container, new CommentsFragment());
 
         } else if (view.getId() == R.id.txv_detail_compose) {
             if (!PublicMethods.checkLogin()) {
-                openLogin.openLoginButtomsheet();
+                openLogin.infoActivityToOpenLogin();
 
             } else {
                 PublicMethods.goNewFragment(getViewContext(), R.id.frame_second_container, new ComposeFragment());
 
             }
         } else if (view.getId() == addSabad.getId()) {
-            myPresenter.addToSabadClicked(selectedProduct);
+            if (connectionIsOkToSendRequest) {
+                myPresenter.addToSabadClicked(selectedProduct);
+            }
         }
     }
 
@@ -316,21 +359,42 @@ public class DetailFragment extends BaseFragment implements DetailContract.MyVie
     public void proAddedToSabad() {
 
         PublicMethods.setSnackbar(coordinatorLayout, "محصول به سبد خرید شما افزوده شد", getViewContext().getResources().getColor(R.color.green));
-        sabadSizeV=sabadSizeV+1;
-        setSabadSizeOnBadge(sabadSizeV );
-        Hawk.put(getString(R.string.Hawk_sabad_size),sabadSizeV);
+        sabadSizeV = sabadSizeV + 1;
+        setSabadSizeOnBadge(sabadSizeV);
+        Hawk.put(getString(R.string.Hawk_sabad_size), sabadSizeV);
 
     }
 
 
     //    private OpenLogin openLogin;
 //    public interface OpenLogin{
-//        void openLoginButtomsheet();
+//        void infoActivityToOpenLogin();
 //    }
 //
+
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+    }
+
+    @Override
+    public void onActionConnection() {
+        sendServerRequest();
+
+    }
+
+    @Override
+    public void onActionNoConnection() {
+        noNetworkConnection();
+    }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        openLogin=(OpenLogin) context;
+        openLogin = (OpenLogin) context;
     }
+
+
 }

@@ -1,7 +1,5 @@
 package com.sepideh.onlinemarket.third.activity;
 
-import android.util.Log;
-
 import com.sepideh.onlinemarket.data.UserInfo;
 
 import java.io.IOException;
@@ -22,7 +20,7 @@ public class ThirdPresenter implements ThirdContract.MyPresentr {
 
     ThirdContract.MyView myView;
     ThirdContract.MyModel myModel;
-    CompositeDisposable compositeDisposable=new CompositeDisposable();
+    CompositeDisposable compositeDisposable = new CompositeDisposable();
     String errorText;
 
     public ThirdPresenter(ThirdContract.MyModel myModel) {
@@ -32,7 +30,7 @@ public class ThirdPresenter implements ThirdContract.MyPresentr {
 
     @Override
     public void attachView(ThirdContract.MyView myView) {
-        this.myView=myView;
+        this.myView = myView;
     }
 
     @Override
@@ -78,14 +76,13 @@ public class ThirdPresenter implements ThirdContract.MyPresentr {
                             else
                                 myView.passwordIsWrong();
                         } else if (e instanceof IOException)
-                            Log.d("mytag", "connectionError: ");
+                            myView.noServerConnection();
 
                     }
                 });
 
 
     }
-
 
 
 }

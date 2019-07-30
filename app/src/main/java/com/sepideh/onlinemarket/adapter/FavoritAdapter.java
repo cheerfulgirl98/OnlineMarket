@@ -74,6 +74,7 @@ public class FavoritAdapter extends RecyclerView.Adapter<FavoritAdapter.MyViewHo
                 deleteInterface.deleteClicked(favorits.get(i));
                 favorits.remove(i);
                 notifyItemRemoved(i);
+                notifyItemRangeChanged(i,favorits.size());
 
             }
         });

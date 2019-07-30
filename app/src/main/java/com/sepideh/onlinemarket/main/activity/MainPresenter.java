@@ -22,7 +22,7 @@ public class MainPresenter implements MainContract.MyPresentr {
 
     MainContract.MyView myView;
     MainContract.MyModel myModel;
-    CompositeDisposable compositeDisposable=new CompositeDisposable();
+    CompositeDisposable compositeDisposable = new CompositeDisposable();
     String errorText;
 
     public MainPresenter(MainContract.MyModel myModel) {
@@ -32,7 +32,7 @@ public class MainPresenter implements MainContract.MyPresentr {
 
     @Override
     public void attachView(MainContract.MyView myView) {
-        this.myView=myView;
+        this.myView = myView;
     }
 
     @Override
@@ -73,20 +73,18 @@ public class MainPresenter implements MainContract.MyPresentr {
                             } catch (IOException e1) {
                                 e1.printStackTrace();
                             }
-                            if (errorText.equals("user not found"))
+                            if (errorText.equals("user not found")) {
+                                Log.d("myrx", "onError: " + ((HttpException) e).code());
                                 myView.userNotFound();
-                            else
+                            } else
                                 myView.passwordIsWrong();
                         } else if (e instanceof IOException)
-                            Log.d("mytag", "connectionError: ");
-
+                            myView.noServerConnection();
                     }
                 });
 
 
     }
-
-
 
 
 }

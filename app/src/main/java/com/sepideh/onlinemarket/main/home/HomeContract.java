@@ -1,7 +1,7 @@
 package com.sepideh.onlinemarket.main.home;
 
 import com.sepideh.onlinemarket.base.BasePresenter;
-import com.sepideh.onlinemarket.base.BaseView;
+import com.sepideh.onlinemarket.base.BaseFragmentView;
 import com.sepideh.onlinemarket.data.ProductInfo;
 import com.sepideh.onlinemarket.data.Slider;
 
@@ -15,15 +15,15 @@ import io.reactivex.Single;
 
 public interface HomeContract {
 
-    interface MyView extends BaseView{
+    interface MyFragmentView extends BaseFragmentView {
         void showSlider(List<Slider> sliderList);
         void showSuggestionList(List<ProductInfo> suggestedProductList);
         void showBestList(List<ProductInfo> bestProductList);
         void showNewList(List<ProductInfo> newProductList);
-        void showError();
+
 
     }
-    interface MyPresenter extends BasePresenter<MyView>{
+    interface MyPresenter extends BasePresenter<MyFragmentView>{
         void getSliderList();
         void getSuggestionList();
         void getBestList();

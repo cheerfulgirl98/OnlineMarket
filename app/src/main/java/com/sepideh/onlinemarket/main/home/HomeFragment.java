@@ -2,14 +2,9 @@ package com.sepideh.onlinemarket.main.home;
 
 import android.content.Context;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.drawerlayout.widget.DrawerLayout;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.View;
-import android.widget.ImageView;
 
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
@@ -20,7 +15,7 @@ import com.sepideh.onlinemarket.adapter.SuggestionAdapter;
 import com.sepideh.onlinemarket.base.BaseFragment;
 import com.sepideh.onlinemarket.data.ProductInfo;
 import com.sepideh.onlinemarket.data.Slider;
-import com.sepideh.onlinemarket.data.UserInfo;
+import com.sepideh.onlinemarket.utils.PublicMethods;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,9 +24,7 @@ import java.util.List;
  * Created by pc on 4/6/2019.
  */
 
-public class HomeFragment extends BaseFragment implements HomeContract.MyView, BaseSliderView.OnSliderClickListener {
-
-
+public class HomeFragment extends BaseFragment implements HomeContract.MyFragmentView, BaseSliderView.OnSliderClickListener {
 
     HomeContract.MyPresenter myPresenter;
     SliderLayout sliderLayout;
@@ -41,19 +34,10 @@ public class HomeFragment extends BaseFragment implements HomeContract.MyView, B
     ProductAdapter productAdapter;
 
 
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-
-        super.onCreate(savedInstanceState);
-
-        myPresenter = new HomePresenter(new HomeModel());
-    }
-
-
     @Override
     public void setUpViews() {
 
+        myPresenter = new HomePresenter(new HomeModel());
 
         sliderLayout = rootView.findViewById(R.id.slider_home);
         sugRecycler = rootView.findViewById(R.id.rec_home_suggestions);
@@ -63,6 +47,35 @@ public class HomeFragment extends BaseFragment implements HomeContract.MyView, B
         newRecycler = rootView.findViewById(R.id.rec_home_new);
         newRecycler.setLayoutManager(new LinearLayoutManager(getViewContext(), LinearLayoutManager.HORIZONTAL, false));
 
+
+    }
+
+
+    @Override
+    public void onStart() {
+        myPresenter.attachView(this);
+        super.onStart();
+
+    }
+
+
+    public void sendServerRequest() {
+        myPresenter.getSliderList();
+        myPresenter.getSuggestionList();
+        myPresenter.getBestList();
+        myPresenter.getNewList();
+    }
+
+
+    public void noNetworkConnection() {
+        PublicMethods.setSnackbar(rootView.findViewById(R.id.cor_home), getString(R.string.error_network_conection), getResources().getColor(R.color.red), "تلاش مجدد", getResources().getColor(R.color.white));
+
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        openLogin = (OpenLogin) context;
     }
 
     @Override
@@ -70,24 +83,24 @@ public class HomeFragment extends BaseFragment implements HomeContract.MyView, B
         return R.layout.fragment_home;
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        myPresenter.attachView(this);
-        Log.d("fff", "onStart: home");
-    }
 
     @Override
     public void onStop() {
-        Log.d("fff", "onStop: home");
         super.onStop();
         myPresenter.detachView();
     }
+
 
     @Override
     public Context getViewContext() {
         return getContext();
     }
+
+    @Override
+    public void noServerConnection() {
+        PublicMethods.setSnackbar(rootView.findViewById(R.id.cor_home), getString(R.string.error_server_conection), getResources().getColor(R.color.red), "تلاش مجدد", getResources().getColor(R.color.white));
+    }
+
 
     @Override
     public void showSlider(List<Slider> sliderList) {
@@ -129,10 +142,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.MyView, B
         fillList(newRecycler, newProductList);
     }
 
-    @Override
-    public void showError() {
 
-    }
 
     void fillSuggestionList(RecyclerView view, List<ProductInfo> productInfos) {
         suggestionAdapter = new SuggestionAdapter(getViewContext(), productInfos);
@@ -153,4 +163,13 @@ public class HomeFragment extends BaseFragment implements HomeContract.MyView, B
     }
 
 
+    @Override
+    public void onActionConnection() {
+            sendServerRequest();
+    }
+
+    @Override
+    public void onActionNoConnection() {
+        noNetworkConnection();
+    }
 }

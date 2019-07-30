@@ -3,7 +3,9 @@ package com.sepideh.onlinemarket.main.categories;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
+
 import android.view.View;
 import android.widget.ExpandableListView;
 
@@ -12,6 +14,7 @@ import com.sepideh.onlinemarket.adapter.ExpandableCategoryAdapter;
 import com.sepideh.onlinemarket.base.BaseFragment;
 import com.sepideh.onlinemarket.children.ChildrenActivity;
 import com.sepideh.onlinemarket.data.Category;
+import com.sepideh.onlinemarket.utils.PublicMethods;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,7 +24,7 @@ import java.util.List;
  * Created by pc on 4/11/2019.
  */
 
-public class CategoryFragment extends BaseFragment implements CategoryContract.MyView {
+public class CategoryFragment extends BaseFragment implements CategoryContract.MyFragmentView {
 
     private CategoryContract.MyPresenter myPresenter;
     private ExpandableListView listView;
@@ -41,21 +44,8 @@ public class CategoryFragment extends BaseFragment implements CategoryContract.M
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        myPresenter.attachView(this);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        myPresenter.detachView();
-    }
-
-    @Override
     public void setUpViews() {
 
-        prepareListData();
 
         listView = rootView.findViewById(R.id.lsv_category);
         listView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
@@ -92,7 +82,29 @@ public class CategoryFragment extends BaseFragment implements CategoryContract.M
                 previousItem = groupPosition;
             }
         });
+
+
     }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        myPresenter.attachView(this);
+        if (PublicMethods.checkNetworkConnection())
+            sendServerRequest();
+        else noNetworkConnection();
+    }
+
+
+
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        myPresenter.detachView();
+    }
+
 
     @Override
     public int getLayout() {
@@ -116,6 +128,25 @@ public class CategoryFragment extends BaseFragment implements CategoryContract.M
     public Context getViewContext() {
         return getContext();
     }
+
+    @Override
+    public void sendServerRequest() {
+        prepareListData();
+    }
+
+    @Override
+    public void noNetworkConnection() {
+        PublicMethods.setSnackbar(rootView.findViewById(R.id.cor_category_fragment), getString(R.string.error_network_conection), getResources().getColor(R.color.red), "تلاش مجدد", getResources().getColor(R.color.white));
+
+    }
+
+
+    @Override
+    public void noServerConnection() {
+        PublicMethods.setSnackbar(rootView.findViewById(R.id.cor_category_fragment), getString(R.string.error_server_conection), getResources().getColor(R.color.red), "تلاش مجدد", getResources().getColor(R.color.white));
+
+    }
+
 
     @Override
     public void childrenAreReady(List<Category> childern) {
@@ -155,5 +186,15 @@ public class CategoryFragment extends BaseFragment implements CategoryContract.M
         adapter = new ExpandableCategoryAdapter(getViewContext(), categoryHeaders, categoryChildren);
         listView.setAdapter(adapter);
 
+    }
+
+    @Override
+    public void onActionConnection() {
+        sendServerRequest();
+    }
+
+    @Override
+    public void onActionNoConnection() {
+        noNetworkConnection();
     }
 }

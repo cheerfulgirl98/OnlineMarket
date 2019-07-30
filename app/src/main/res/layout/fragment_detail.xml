@@ -84,35 +84,26 @@
                         style="@style/normal"
                         android:textStyle="bold"
                         />
-
-
                     <TextView
-                        android:id="@+id/txv_detail_materialT"
-                        style="@style/normal"
+                        android:id="@+id/txv_detail_model"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/txv_detail_brand"
-                        android:layout_marginTop="4dp"
-                        android:text="جنس : " />
+                        android:layout_marginTop="8dp"
+                        style="@style/normal"
+                        android:textStyle="bold"
+                        />
+
 
                     <TextView
                         android:id="@+id/txv_detail_materail"
                         style="@style/normal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/txv_detail_brand"
+                        android:layout_below="@id/txv_detail_model"
                         android:layout_marginTop="4dp"
-                        android:layout_toLeftOf="@id/txv_detail_materialT" />
+                       />
 
-
-                    <TextView
-                        android:id="@+id/txv_detail_sizeT"
-                        style="@style/normal"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/txv_detail_materail"
-                        android:layout_marginTop="4dp"
-                        android:text="سایز : " />
 
 
                     <TextView
@@ -124,7 +115,7 @@
                         android:layout_below="@id/txv_detail_materail"
                         android:layout_marginRight="4dp"
                         android:layout_marginTop="4dp"
-                        android:layout_toLeftOf="@id/txv_detail_sizeT" />
+                        />
 
 
                     <TextView

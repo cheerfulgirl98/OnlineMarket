@@ -6,22 +6,25 @@ import com.sepideh.onlinemarket.data.ProductInfo;
 import com.sepideh.onlinemarket.data.Sabad;
 import com.sepideh.onlinemarket.sqlite.SqliteHelper;
 
-import java.util.List;
+import java.io.IOException;
 
 import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.ResponseBody;
+import retrofit2.HttpException;
 
 /**
  * Created by pc on 4/13/2019.
  */
 
 public class DetailPresenter implements DetailContract.MyPresenter {
-    DetailContract.MyView myView;
+    DetailContract.MyFragmentView myView;
     DetailContract.MyModel myModel;
     CompositeDisposable compositeDisposable = new CompositeDisposable();
+    String errorText;
 
 
     public DetailPresenter(DetailContract.MyModel myModel) {
@@ -29,7 +32,7 @@ public class DetailPresenter implements DetailContract.MyPresenter {
     }
 
     @Override
-    public void attachView(DetailContract.MyView view) {
+    public void attachView(DetailContract.MyFragmentView view) {
 
         this.myView = view;
 
@@ -67,9 +70,22 @@ public class DetailPresenter implements DetailContract.MyPresenter {
 
                     @Override
                     public void onError(Throwable e) {
-                        myView.showError();
+
+                        if (e instanceof HttpException) {
+
+                            ResponseBody responseBody = ((HttpException) e).response().errorBody();
+                            try {
+                                errorText = responseBody.string();
+                            } catch (IOException e1) {
+                                e1.printStackTrace();
+                            }
+
+                        } else if (e instanceof IOException)
+                            Log.d("ffff", "onError: ");
 
                     }
+
+
                 });
     }
 
@@ -82,7 +98,6 @@ public class DetailPresenter implements DetailContract.MyPresenter {
     public void addToSabadClicked(ProductInfo productInfo) {
         Sabad existedSabad = myModel.searchInSabad(productInfo);
         if (existedSabad != null) {
-            Log.d("rrr", "addToSabadClicked: ");
             myModel.updatedSabad(existedSabad);
             myView.sabadUpdated();
         } else {

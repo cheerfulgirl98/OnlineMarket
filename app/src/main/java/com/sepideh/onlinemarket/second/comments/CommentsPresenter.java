@@ -1,6 +1,7 @@
 package com.sepideh.onlinemarket.second.comments;
 
 import com.sepideh.onlinemarket.data.Comment;
+import com.sepideh.onlinemarket.utils.PublicMethods;
 
 import java.io.IOException;
 import java.util.List;
@@ -18,13 +19,13 @@ import retrofit2.HttpException;
  * Created by pc on 4/26/2019.
  */
 
-public class CommentsPresenter implements CommentsContract.MyPresenter{
-    CommentsContract.MyView myView;
+public class CommentsPresenter implements CommentsContract.MyPresenter {
+    CommentsContract.MyFragmentView myView;
     CommentsContract.MyModel myModel;
 
     CommentsContract.MyRowView myRowView;
 
-    CompositeDisposable compositeDisposable=new CompositeDisposable();
+    CompositeDisposable compositeDisposable = new CompositeDisposable();
     String errorText;
 
     public CommentsPresenter(CommentsContract.MyModel myModel) {
@@ -33,10 +34,10 @@ public class CommentsPresenter implements CommentsContract.MyPresenter{
 
 
     @Override
-    public void attachView(CommentsContract.MyView view) {
+    public void attachView(CommentsContract.MyFragmentView view) {
 
 
-        this.myView=view;
+        this.myView = view;
 
 
     }
@@ -44,7 +45,7 @@ public class CommentsPresenter implements CommentsContract.MyPresenter{
     @Override
     public void detachView() {
 
-        this.myView=null;
+        this.myView = null;
         if (compositeDisposable != null && compositeDisposable.size() > 0) {
             compositeDisposable.clear();
         }
@@ -68,61 +69,62 @@ public class CommentsPresenter implements CommentsContract.MyPresenter{
                     }
 
                     @Override
-                    public void onError(Throwable e)
-                    {
+                    public void onError(Throwable e) {
 
+                        myView.noServerConnection();
 
                     }
                 });
     }
 
     @Override
-    public void vote(String voteTag,String commentId,String userId) {
-      if(userId!=null) {
-          myModel.vote(voteTag, commentId, userId).subscribeOn(Schedulers.newThread())
-                  .observeOn(AndroidSchedulers.mainThread())
-                  .subscribe(new CompletableObserver() {
-                      @Override
-                      public void onSubscribe(Disposable d) {
-                          compositeDisposable.add(d);
-                      }
+    public void vote(String voteTag, String commentId, String userId) {
+        if (userId != null) {
 
-                      @Override
-                      public void onComplete() {
+            myModel.vote(voteTag, commentId, userId).subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new CompletableObserver() {
+                        @Override
+                        public void onSubscribe(Disposable d) {
+                            compositeDisposable.add(d);
+                        }
 
-
-                          myRowView.successfulVote();
-                      }
-
-                      @Override
-                      public void onError(Throwable e) {
-
-                          if (e instanceof HttpException) {
-                              ResponseBody responseBody = ((HttpException) e).response().errorBody();
-
-                              try {
-                                  errorText = responseBody.string();
-                              } catch (IOException e1) {
-                                  e1.printStackTrace();
-                              }
+                        @Override
+                        public void onComplete() {
 
 
-                              if (errorText.equals("you vote before"))
-                                  myView.voteBefore();
+                            myRowView.successfulVote();
+                        }
 
-                          } else if (e instanceof IOException) {
+                        @Override
+                        public void onError(Throwable e) {
 
-                              myView.conectionError();
-                          }
-                      }
-                  });
+                            if (e instanceof HttpException) {
+                                ResponseBody responseBody = ((HttpException) e).response().errorBody();
 
-      }else myView.userNotLogin();
+                                try {
+                                    errorText = responseBody.string();
+                                } catch (IOException e1) {
+                                    e1.printStackTrace();
+                                }
+
+
+                                if (errorText.equals("you vote before"))
+                                    myView.voteBefore();
+
+                            } else if (e instanceof IOException) {
+
+                                myView.noServerConnection();
+                            }
+                        }
+                    });
+
+        } else myView.userNotLogin();
 
     }
 
     @Override
     public void attachRow(CommentsContract.MyRowView myRowView) {
-        this.myRowView=myRowView;
+        this.myRowView = myRowView;
     }
 }

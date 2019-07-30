@@ -1,12 +1,14 @@
 package com.sepideh.onlinemarket.third.sabad;
 
 import android.content.Context;
+
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -24,9 +26,8 @@ import java.util.List;
  * Created by pc on 5/27/2019.
  */
 
-public class BasketFragment extends BaseFragment implements SabadContract.MyView, View.OnClickListener, SabadAdapter.MyClicked {
+public class BasketFragment extends BaseFragment implements SabadContract.MyFragmentView, View.OnClickListener, SabadAdapter.MyClicked {
     private SabadContract.MyPresenter myPresenter;
-    private BottomSheetBehavior bottomSheetBehavior;
     private TextView buy, totalCost, emptyText;
     private RelativeLayout costBtmSheet;
 
@@ -34,7 +35,7 @@ public class BasketFragment extends BaseFragment implements SabadContract.MyView
     private SabadAdapter adapter;
 
     private int sabadSize;
-    private int finalCost;
+    private int  finalCost = 0;
 
     @Override
     public void setUpViews() {
@@ -42,7 +43,7 @@ public class BasketFragment extends BaseFragment implements SabadContract.MyView
         myPresenter = new SabadPresenter(new SabadModel());
 
         recyclerView = rootView.findViewById(R.id.rec_sbad);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getViewContext(), RecyclerView .VERTICAL, false));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getViewContext(), RecyclerView.VERTICAL, false));
 
         emptyText = rootView.findViewById(R.id.txv_sabad_emptyText);
 
@@ -61,22 +62,41 @@ public class BasketFragment extends BaseFragment implements SabadContract.MyView
         setSabadList();
 
 
+    }
+
+    @Override
+    public void sendServerRequest() {
 
     }
-    private void setSabadList(){
 
-        sabadSize=Hawk.get(getString(R.string.Hawk_sabad_size), 0);
-        if (sabadSize >0)
-        {
+    @Override
+    public void noNetworkConnection() {
+
+    }
+
+
+    private void setSabadList() {
+
+        sabadSize = Hawk.get(getString(R.string.Hawk_sabad_size), 0);
+        if (sabadSize > 0) {
             myPresenter.getSabadList();
             costBtmSheet.setVisibility(View.VISIBLE);
-        }else sabadIsEmpty();
+        } else sabadIsEmpty();
     }
 
-    private ManageSabadI manageSabadI;
-    public interface ManageSabadI{
-         void proDelete();
+    private ManageToolbarI manageToolbarI;
+
+    @Override
+    public void onActionConnection() {
+
     }
+
+    public interface ManageToolbarI {
+        void proDelete();
+
+    }
+
+
     @Override
     public void onStop() {
         super.onStop();
@@ -88,10 +108,11 @@ public class BasketFragment extends BaseFragment implements SabadContract.MyView
 
         if (view.getId() == buy.getId()) {
             if (!PublicMethods.checkLogin()) {
-                openLogin.openLoginButtomsheet();
-            } else
-                PublicMethods.goNewFragment(getViewContext(),R.id.frame_third_container,new OrderFormFragment(),getViewContext().getString(R.string.orderFormFragTag));
+                openLogin.infoActivityToOpenLogin();
+            } else {
+                PublicMethods.goNewFragment(getViewContext(), R.id.frame_third_container, new OrderFormFragment(), getViewContext().getString(R.string.orderFormFragTag));
 
+            }
         }
 
     }
@@ -101,6 +122,14 @@ public class BasketFragment extends BaseFragment implements SabadContract.MyView
     public Context getViewContext() {
         return getContext();
     }
+
+    @Override
+    public void noServerConnection() {
+
+
+    }
+
+
 
     @Override
     public void showSabadList(List<Sabad> sabads) {
@@ -114,24 +143,27 @@ public class BasketFragment extends BaseFragment implements SabadContract.MyView
 
     @Override
     public void proIsDeleted() {
-        sabadSize=sabadSize-1;
-        Hawk.put(getString(R.string.Hawk_sabad_size),sabadSize);
-        manageSabadI.proDelete();
+        sabadSize = sabadSize - 1;
+        Hawk.put(getString(R.string.Hawk_sabad_size), sabadSize);
+        manageToolbarI.proDelete();
 
+        if(sabadSize==0)
+            sabadIsEmpty();
 
     }
 
-    private void setFinalCost(List<Sabad> sabads){
-       finalCost=0;
-            for (Sabad sabad : sabads) {
+    private void setFinalCost(List<Sabad> sabads) {
 
-                int finalPrice = sabad.getNum()*(Integer.parseInt(sabad.getDiscount()));
-                finalCost = finalCost + finalPrice;
-            }
+        for (Sabad sabad : sabads) {
+
+            int finalPrice = sabad.getNum() * (Integer.parseInt(sabad.getDiscount()));
+            finalCost = finalCost + finalPrice;
+        }
         totalCost.setText(String.valueOf(finalCost));
 
 
     }
+
     private void sabadIsEmpty() {
 
         recyclerView.setVisibility(View.INVISIBLE);
@@ -165,16 +197,20 @@ public class BasketFragment extends BaseFragment implements SabadContract.MyView
     }
 
     @Override
-    public void deleteClicked(String pro_id) {
+    public void deleteClicked(String pro_id,int proCost) {
         myPresenter.delete(pro_id);
-
-
+       finalCost=finalCost-proCost;
+        totalCost.setText(String.valueOf(finalCost));
+    }
+    @Override
+    public void onActionNoConnection() {
+        noNetworkConnection();
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        openLogin=(OpenLogin)context;
-        manageSabadI=(ManageSabadI) context;
+        openLogin = (OpenLogin) context;
+        manageToolbarI = (ManageToolbarI) context;
     }
 }

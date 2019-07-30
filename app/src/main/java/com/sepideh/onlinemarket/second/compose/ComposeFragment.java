@@ -25,7 +25,7 @@ import com.sepideh.onlinemarket.utils.PublicMethods;
  * Created by pc on 5/9/2019.
  */
 
-public class ComposeFragment extends BaseFragment implements ComposeContract.MyView, View.OnClickListener {
+public class ComposeFragment extends BaseFragment implements ComposeContract.MyFragmentView, View.OnClickListener {
 
     ComposeContract.MyPresenter myPresenter;
     CoordinatorLayout coordinatorLayout;
@@ -40,6 +40,9 @@ public class ComposeFragment extends BaseFragment implements ComposeContract.MyV
     ProductInfo selectedProduct;
     String productId;
     UserInfo userInfo;
+
+    boolean connectionIsOkToSendRequest;
+    String comment;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,6 +62,18 @@ public class ComposeFragment extends BaseFragment implements ComposeContract.MyV
     public void onStart() {
         super.onStart();
         myPresenter.attachView(this);
+
+    }
+
+
+    public void sendServerRequest() {
+        connectionIsOkToSendRequest=true;
+    }
+
+
+    public void noNetworkConnection() {
+        PublicMethods.setSnackbar(rootView.findViewById(R.id.cor_compose_fragment), getString(R.string.error_network_conection), getResources().getColor(R.color.red), "تلاش مجدد", getResources().getColor(R.color.white));
+
     }
 
     @Override
@@ -71,7 +86,7 @@ public class ComposeFragment extends BaseFragment implements ComposeContract.MyV
     public void setUpViews() {
 
 
-        coordinatorLayout = rootView.findViewById(R.id.cor_compose);
+        coordinatorLayout = rootView.findViewById(R.id.cor_compose_fragment);
         back = rootView.findViewById(R.id.img_toolbar_back);
         back.setOnClickListener(this);
         basket = rootView.findViewById(R.id.img_toolbar_basket);
@@ -85,7 +100,10 @@ public class ComposeFragment extends BaseFragment implements ComposeContract.MyV
         button.setOnClickListener(this);
         sabadRel=rootView.findViewById(R.id.rel_toolbar_sabad);
         sabadRel.setVisibility(View.GONE);
+
+
     }
+
 
     @Override
     public int getLayout() {
@@ -107,10 +125,11 @@ public class ComposeFragment extends BaseFragment implements ComposeContract.MyV
             star = String.valueOf(simpleRatingBar.getRating());
 
         } else if (view.getId() == button.getId()) {
-            String comment = editText.getText().toString();
-            if (star != null && !comment.equals("")) {
+            comment = editText.getText().toString();
+            if (star != null && !comment.equals("") && connectionIsOkToSendRequest) {
 
-                myPresenter.sendComment(productId, userInfo.getId(), star, comment);
+                sendCommentRequest(comment);
+
 
             } else if (star == null)
                 PublicMethods.setSnackbar(coordinatorLayout, getString(R.string.nullStarError), getViewContext().getResources().getColor(R.color.red));
@@ -120,9 +139,18 @@ public class ComposeFragment extends BaseFragment implements ComposeContract.MyV
         }
     }
 
+    private void sendCommentRequest(String comment){
+        myPresenter.sendComment(productId, userInfo.getId(), star, comment);
+    }
     @Override
     public Context getViewContext() {
         return getContext();
+    }
+
+    @Override
+    public void noServerConnection() {
+        PublicMethods.setSnackbar(rootView.findViewById(R.id.cor_compose_fragment), getString(R.string.error_server_conection), getResources().getColor(R.color.red), "تلاش مجدد", getResources().getColor(R.color.white));
+
     }
 
     @Override
@@ -149,5 +177,15 @@ public class ComposeFragment extends BaseFragment implements ComposeContract.MyV
     public void onAttach(Context context) {
         super.onAttach(context);
         openLogin=(OpenLogin)context;
+    }
+
+    @Override
+    public void onActionConnection() {
+        sendCommentRequest(comment);
+    }
+
+    @Override
+    public void onActionNoConnection() {
+        noNetworkConnection();
     }
 }

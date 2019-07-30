@@ -2,8 +2,6 @@ package com.sepideh.onlinemarket.realm;
 
 import android.util.Log;
 
-import com.orhanobut.hawk.Hawk;
-import com.sepideh.onlinemarket.R;
 import com.sepideh.onlinemarket.data.ProductInfo;
 import com.sepideh.onlinemarket.data.Sabad;
 
@@ -11,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.Realm;
-import io.realm.RealmQuery;
 import io.realm.RealmResults;
 
 /**
@@ -74,7 +71,6 @@ public class RealmController {
     }
 
     public void delete(String pro_id){
-        Log.d("rrrr", "realm delete: ");
         realm.beginTransaction();
         RealmResults<Sabad> realmResults=realm.where(Sabad.class).equalTo("pro_id",pro_id).findAll();
         realmResults.deleteAllFromRealm();

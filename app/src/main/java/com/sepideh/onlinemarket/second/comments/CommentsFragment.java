@@ -14,7 +14,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -37,7 +36,7 @@ import java.util.List;
  * Created by pc on 4/26/2019.
  */
 
-public class CommentsFragment extends BaseFragment implements CommentsContract.MyView, View.OnClickListener {
+public class CommentsFragment extends BaseFragment implements CommentsContract.MyFragmentView, View.OnClickListener {
 
     CommentsContract.MyPresenter myPresenter;
 
@@ -74,7 +73,7 @@ public class CommentsFragment extends BaseFragment implements CommentsContract.M
     public void setUpViews() {
 
 
-        coordinatorLayout = rootView.findViewById(R.id.cor_comments_main);
+        coordinatorLayout = rootView.findViewById(R.id.cor_comments_fragment);
 
         sabad = rootView.findViewById(R.id.rel_toolbar_sabad);
         sabad.setOnClickListener(this);
@@ -100,12 +99,15 @@ public class CommentsFragment extends BaseFragment implements CommentsContract.M
                     PublicMethods.goNewFragment(getViewContext(), R.id.frame_second_container, composeFragment);
                 } else {
 
-                    openLogin.openLoginButtomsheet();
+                    openLogin.infoActivityToOpenLogin();
                 }
 
             }
         });
+
+
     }
+
 
     @Override
     public int getLayout() {
@@ -119,10 +121,31 @@ public class CommentsFragment extends BaseFragment implements CommentsContract.M
     }
 
     @Override
+    public void noServerConnection() {
+
+
+        PublicMethods.setSnackbar(rootView.findViewById(R.id.cor_comments_fragment),getString(R.string.error_server_conection),getResources().getColor(R.color.red),"تلاش مجدد",getResources().getColor(R.color.white));
+
+    }
+
+
+
+    @Override
     public void onStart() {
         super.onStart();
         myPresenter.attachView(this);
+
+
+    }
+
+    public void sendServerRequest() {
         myPresenter.getAllComments(productId);
+    }
+
+
+    public void noNetworkConnection() {
+        PublicMethods.setSnackbar(rootView.findViewById(R.id.cor_comments_fragment),getString(R.string.error_network_conection),getResources().getColor(R.color.red),"تلاش مجدد",getResources().getColor(R.color.white));
+
     }
 
 
@@ -132,11 +155,6 @@ public class CommentsFragment extends BaseFragment implements CommentsContract.M
         myPresenter.detachView();
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        openLogin = (OpenLogin) context;
-    }
 
 
     @Override
@@ -154,10 +172,6 @@ public class CommentsFragment extends BaseFragment implements CommentsContract.M
 
     }
 
-    @Override
-    public void conectionError() {
-        PublicMethods.setSnackbar(coordinatorLayout, getString(R.string.conectionError), getViewContext().getResources().getColor(R.color.red));
-    }
 
     @Override
     public void userNotLogin() {
@@ -180,15 +194,18 @@ public class CommentsFragment extends BaseFragment implements CommentsContract.M
 
     }
 
+    @Override
+    public void onActionConnection() {
 
-//    private OpenLogin openLogin;
-//    public interface OpenLogin{
-//        void openLoginButtomsheet();
-//    }
-//
-//    @Override
-//    public void onAttach(Context context) {
-//        super.onAttach(context);
-//        openLogin=(OpenLogin)context;
-//    }
+    }
+
+    @Override
+    public void onActionNoConnection() {
+        noNetworkConnection();
+    }
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        openLogin = (OpenLogin) context;
+    }
 }

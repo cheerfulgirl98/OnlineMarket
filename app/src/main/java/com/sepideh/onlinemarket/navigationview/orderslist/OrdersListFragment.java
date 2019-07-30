@@ -1,5 +1,6 @@
 package com.sepideh.onlinemarket.navigationview.orderslist;
 
+import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -31,8 +32,33 @@ public class OrdersListFragment extends BaseFragment implements View.OnClickList
     }
 
     @Override
+    public Context getViewContext() {
+        return getContext();
+    }
+
+    @Override
+    public void sendServerRequest() {
+
+    }
+
+    @Override
+    public void noNetworkConnection() {
+
+    }
+
+
+    @Override
     public void onClick(View v) {
         if(v.getId()==back.getId())
             getActivity().onBackPressed();
+    }
+
+    @Override
+    public void onActionConnection() {
+
+    }
+    @Override
+    public void onActionNoConnection() {
+        noNetworkConnection();
     }
 }

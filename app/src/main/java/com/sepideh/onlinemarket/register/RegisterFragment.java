@@ -11,7 +11,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,6 +22,7 @@ import com.sepideh.onlinemarket.base.BaseFragment;
 import com.sepideh.onlinemarket.data.RegisterUserInfo;
 import com.sepideh.onlinemarket.data.UserInfo;
 import com.sepideh.onlinemarket.utils.Constant;
+import com.sepideh.onlinemarket.utils.PublicMethods;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -31,36 +31,33 @@ import java.util.Random;
  * Created by pc on 5/2/2019.
  */
 
-public class RegisterFragment extends BaseFragment implements RegisterContract.MyView, View.OnClickListener {
+public class RegisterFragment extends BaseFragment implements RegisterContract.MyFragmentView, View.OnClickListener {
 
-    RegisterContract.MyPresentr myPresentr;
+    RegisterContract.MyPresentr myPresenter;
 
 
     ImageView close;
     TextInputLayout usernameInput, phoneInput, passworInput;
     EditText userName, phoneNumber, password;
     Button button;
-    boolean isNotEmptyB;
     String usernameV, phoneNumberV, passwordV;
     TextInputLayout errorInputLayout;
 
+    boolean connectionIsOkToSendRequest;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        myPresentr = new RegisterPresenter(new RegisterModel());
+        myPresenter = new RegisterPresenter(new RegisterModel());
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        myPresentr.attachView(this);
+        myPresenter.attachView(this);
+
+
     }
 
-    @Override
-    public void onStop() {
-        super.onStop();
-        myPresentr.detachView();
-    }
 
     @Override
     public void setUpViews() {
@@ -81,7 +78,27 @@ public class RegisterFragment extends BaseFragment implements RegisterContract.M
 
         errorInputLayout = usernameInput;
 
+
     }
+
+
+    public void sendServerRequest() {
+        connectionIsOkToSendRequest=true;
+    }
+
+
+    public void noNetworkConnection() {
+
+        PublicMethods.setSnackbar(rootView.findViewById(R.id.cor_register_fragment), getString(R.string.error_network_conection), getResources().getColor(R.color.red), "تلاش مجدد", getResources().getColor(R.color.white));
+
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        myPresenter.detachView();
+    }
+
 
     @Override
     public int getLayout() {
@@ -105,9 +122,10 @@ public class RegisterFragment extends BaseFragment implements RegisterContract.M
             editTexts.add(phoneNumber);
             editTexts.add(password);
 
-            if (checkEmptyness(editTexts) && checkValidation())
-                sendRequest();
-            else
+            if (checkEmptyness(editTexts) && checkValidation()) {
+                if (connectionIsOkToSendRequest)
+                    sendCodeRequest();
+            } else
                 setError();
 
 
@@ -143,11 +161,11 @@ public class RegisterFragment extends BaseFragment implements RegisterContract.M
 
     }
 
-    private void sendRequest() {
+    private void sendCodeRequest() {
         Random random = new Random();
         String generatedCode = String.valueOf(random.nextInt(10000));
         Hawk.put("generatedCode", generatedCode);
-        myPresentr.sendCode(Constant.TEMPLATE, phoneNumberV, generatedCode);
+        myPresenter.sendCode(Constant.TEMPLATE, phoneNumberV, generatedCode);
     }
 
     private void setError() {
@@ -179,6 +197,15 @@ public class RegisterFragment extends BaseFragment implements RegisterContract.M
     }
 
     @Override
+    public void noServerConnection() {
+
+        PublicMethods.setSnackbar(rootView.findViewById(R.id.cor_register_fragment), getString(R.string.error_server_conection), getResources().getColor(R.color.red), "تلاش مجدد", getResources().getColor(R.color.white));
+
+    }
+
+
+
+    @Override
     public void successfulSendingSms() {
         RegisterUserInfo userInfo = new RegisterUserInfo();
         userInfo.setUserName(usernameV).setPhoneNumber(phoneNumberV).setPassword(passwordV);
@@ -198,5 +225,15 @@ public class RegisterFragment extends BaseFragment implements RegisterContract.M
     @Override
     public void successfulRegistration(UserInfo userInfo) {
 
+    }
+
+    @Override
+    public void onActionConnection() {
+        sendCodeRequest();
+    }
+
+    @Override
+    public void onActionNoConnection() {
+        noNetworkConnection();
     }
 }

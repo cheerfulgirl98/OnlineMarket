@@ -1,7 +1,7 @@
 package com.sepideh.onlinemarket.main.categories;
 
 import com.sepideh.onlinemarket.base.BasePresenter;
-import com.sepideh.onlinemarket.base.BaseView;
+import com.sepideh.onlinemarket.base.BaseFragmentView;
 import com.sepideh.onlinemarket.data.Category;
 
 import java.util.List;
@@ -14,11 +14,12 @@ import io.reactivex.Single;
 
 public interface CategoryContract {
 
-    interface MyView extends BaseView{
+    interface MyFragmentView extends BaseFragmentView {
         void childrenAreReady(List<Category> childern);
+
     }
 
-    interface MyPresenter extends BasePresenter<MyView>{
+    interface MyPresenter extends BasePresenter<MyFragmentView>{
         void getChildern();
     }
 

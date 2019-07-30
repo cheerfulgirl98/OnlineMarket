@@ -10,7 +10,7 @@ import java.util.List;
  */
 
 public class FavoritPresenter implements FavoritContract.MyPresenter {
-    FavoritContract.MyView myView;
+    FavoritContract.MyFragmentView myView;
     FavoritContract.MyModel myModel;
 
     public FavoritPresenter(FavoritContract.MyModel myModel) {
@@ -18,7 +18,7 @@ public class FavoritPresenter implements FavoritContract.MyPresenter {
     }
 
     @Override
-    public void attachView(FavoritContract.MyView view) {
+    public void attachView(FavoritContract.MyFragmentView view) {
 
         this.myView = view;
     }

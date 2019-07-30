@@ -1,12 +1,10 @@
 package com.sepideh.onlinemarket.second.detail;
 
 import com.sepideh.onlinemarket.base.BasePresenter;
-import com.sepideh.onlinemarket.base.BaseView;
+import com.sepideh.onlinemarket.base.BaseFragmentView;
 import com.sepideh.onlinemarket.data.ProductInfo;
 import com.sepideh.onlinemarket.data.Sabad;
 import com.sepideh.onlinemarket.sqlite.SqliteHelper;
-
-import java.util.List;
 
 import io.reactivex.Single;
 
@@ -16,17 +14,18 @@ import io.reactivex.Single;
 
 public interface DetailContract {
 
-    interface MyView extends BaseView{
+    interface MyFragmentView extends BaseFragmentView {
         void showDetail(ProductInfo productDetailsList);
-        void showError();
+
         void sabadUpdated();
         void proAddedToSabad();
 
 
 
+
     }
 
-    interface MyPresenter extends BasePresenter<MyView>{
+    interface MyPresenter extends BasePresenter<MyFragmentView>{
 
         void getProductDetails(String id);
         void saveToFavorit(SqliteHelper sqliteHelper,ProductInfo selectedProduct);

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/gray200"
-    android:id="@+id/cor_compose"
+    android:id="@+id/cor_compose_fragment"
     android:layoutDirection="rtl">
 
     <RelativeLayout

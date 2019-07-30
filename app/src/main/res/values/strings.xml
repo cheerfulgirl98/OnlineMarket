@@ -74,6 +74,7 @@
     <string name="number">تعداد :</string>
     <string name="brand">برند : </string>
     <string name="model">مدل :</string>
+    <string name="size">سایز :</string>
     <string name="product_features">مشخصات محصول</string>
     <string name="empty_sabad_alarm">سبد خرید شما خالی است!</string>
     <string name="empty_orders_alarm">تاکنون سفارشی برای شما ثبت نشده است .</string>
@@ -99,6 +100,10 @@
     <string name="title_messages">پیام ها</string>
     <string name="orderFormFragTag">orderFormFragmentTag</string>
     <string name="basketfragTag">BasketFragmentTag</string>
+    <string name="error_network_conection">خطا در اتصال به اینترنت</string>
+    <string name="error_server_conection">خطا در برقراری ارتباط با سرور</string>
+
+
 
 
 </resources>

@@ -1,7 +1,6 @@
 package com.sepideh.onlinemarket.children;
 
-import com.sepideh.onlinemarket.base.BasePresenter;
-import com.sepideh.onlinemarket.base.BaseView;
+import com.sepideh.onlinemarket.base.BaseActivity;
 import com.sepideh.onlinemarket.data.ProductInfo;
 
 import java.util.List;
@@ -14,7 +13,7 @@ import io.reactivex.Single;
 
 public interface ChildrenContract {
 
-    interface MyView {
+    interface MyView extends BaseActivity {
 
        void showChildrenProducts(List<ProductInfo> productInfos);
     }

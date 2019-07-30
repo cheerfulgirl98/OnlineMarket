@@ -1,7 +1,5 @@
 package com.sepideh.onlinemarket.second.activity;
 
-import android.util.Log;
-
 import com.sepideh.onlinemarket.data.UserInfo;
 
 import java.io.IOException;
@@ -77,7 +75,7 @@ public class SecondPresenter implements SecondContract.MyPresentr {
                             else
                                 myView.passwordIsWrong();
                         } else if (e instanceof IOException)
-                            Log.d("mytag", "connectionError: ");
+                            myView.noServerConnection();
 
                     }
                 });

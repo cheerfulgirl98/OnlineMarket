@@ -5,6 +5,7 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import androidx.fragment.app.FragmentManager;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.view.View;
@@ -18,6 +19,7 @@ import com.sepideh.onlinemarket.R;
 import com.sepideh.onlinemarket.base.BaseFragment;
 import com.sepideh.onlinemarket.data.Customer;
 import com.sepideh.onlinemarket.map.MapsActivity;
+import com.sepideh.onlinemarket.third.sabad.BasketFragment;
 
 import java.util.ArrayList;
 
@@ -151,5 +153,48 @@ public class OrderFormFragment extends BaseFragment implements View.OnClickListe
         textInputLayout.setError("");
     }
 
+    private ManageToolbarI manageToolbarI;
 
+    @Override
+    public void onActionConnection() {
+
+        sendServerRequest();
+    }
+
+    public interface ManageToolbarI {
+        void setToolbarTitle();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        manageToolbarI.setToolbarTitle();
+    }
+
+    @Override
+    public Context getViewContext() {
+        return getContext();
+    }
+
+    @Override
+    public void sendServerRequest() {
+
+    }
+
+    @Override
+    public void noNetworkConnection() {
+
+    }
+
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        manageToolbarI=(ManageToolbarI)context;
+    }
+
+    @Override
+    public void onActionNoConnection() {
+        noNetworkConnection();
+    }
 }
