@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.crashlytics.android.Crashlytics;
 import com.sepideh.onlinemarket.R;
 import com.sepideh.onlinemarket.adapter.ChildProductAdapter;
 import com.sepideh.onlinemarket.base_activity.TheBaseActivity;
@@ -38,10 +39,11 @@ public class ChildrenActivity extends TheBaseActivity implements ChildrenContrac
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d("dsds", "onCreate: children");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_children);
         myPresenter = new ChildernPresenter(new ChildrenModel());
+
+        Crashlytics.getInstance().crash();
 
         Intent intent = getIntent();
         if (intent != null) {

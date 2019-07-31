@@ -15,7 +15,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
-import com.jakewharton.rxbinding3.view.RxView;
 import com.orhanobut.hawk.Hawk;
 import com.sepideh.onlinemarket.R;
 import com.sepideh.onlinemarket.data.UserInfo;
@@ -33,12 +32,15 @@ public abstract class TheBaseActivity extends AppCompatActivity implements BaseA
     BaseActivityContract.MyPresenter myPresenter;
     MyReceiver myReceiver = new MyReceiver();
 
+
     public BottomSheetDialog bottomSheetDialog;
     public View view1;
     EditText phoneNumber, password;
     public TextView phoneNumberError, passwordError, forgetPassword;
     public String phoneNumberV, passwordV;
     public ImageView closeLogin;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

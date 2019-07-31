@@ -19,8 +19,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".base_activity.TheBaseActivity"></activity>
-        <activity android:name=".networkerror.NetworkErrorActivity" />
+
         <activity android:name=".navigationview.messages.MessageActivity" />
         <activity android:name=".base.MyBaseActivity" />
 
