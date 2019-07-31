@@ -42,6 +42,8 @@ dependencies {
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'com.iarcuschin:simpleratingbar:0.1.5'
     implementation "com.orhanobut:hawk:2.0.1"
+    implementation 'com.github.ybq:Android-SpinKit:1.2.0'
+
 
     //slider
     implementation 'com.daimajia.slider:library:1.1.5@aar'

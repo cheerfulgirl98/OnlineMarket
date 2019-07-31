@@ -65,7 +65,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Main2Activity" />
         <activity android:name=".register.RegisterActivity" />
         <activity android:name=".second.activity.SecondActivity">
             <intent-filter android:autoVerify="true">

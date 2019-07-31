@@ -1,16 +1,20 @@
 package com.sepideh.onlinemarket.base_activity;
 
 import android.util.Log;
+import android.widget.Button;
 
+import com.jakewharton.rxbinding3.view.RxView;
 import com.sepideh.onlinemarket.data.UserInfo;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import kotlin.Unit;
 import okhttp3.ResponseBody;
 import retrofit2.HttpException;
 
@@ -24,6 +28,8 @@ public class BaseActivityPresenter implements BaseActivityContract.MyPresenter {
     BaseActivityContract.MyModel myModel;
     CompositeDisposable compositeDisposable = new CompositeDisposable();
     String errorText;
+
+    String phoneNumber, password;
 
     public BaseActivityPresenter(BaseActivityContract.MyModel myModel) {
         this.myModel = myModel;
@@ -46,7 +52,11 @@ public class BaseActivityPresenter implements BaseActivityContract.MyPresenter {
 
     @Override
     public void loginToApp(String phoneNumber, String password) {
+        Log.d("mmhm", "loginToApp:presenter ");
 
+//        RxView.clicks(button).debounce(3000, TimeUnit.MILLISECONDS).subscribe(this::sendReq);
+//        this.phoneNumber=phoneNumber;
+//        this.password=password;
         myModel.loginToApp(phoneNumber, password).subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<UserInfo>() {
@@ -58,7 +68,6 @@ public class BaseActivityPresenter implements BaseActivityContract.MyPresenter {
                     @Override
                     public void onSuccess(UserInfo userInfo) {
                         myView.successfulLogin(userInfo);
-
 
                     }
 
@@ -84,7 +93,9 @@ public class BaseActivityPresenter implements BaseActivityContract.MyPresenter {
                 });
 
 
+
     }
+
 
 
 }

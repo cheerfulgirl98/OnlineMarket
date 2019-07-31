@@ -3,6 +3,7 @@ package com.sepideh.onlinemarket.main.home;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -11,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
+import com.github.ybq.android.spinkit.sprite.Sprite;
+import com.github.ybq.android.spinkit.style.DoubleBounce;
 import com.sepideh.onlinemarket.R;
 import com.sepideh.onlinemarket.adapter.ProductAdapter;
 import com.sepideh.onlinemarket.adapter.SuggestionAdapter;
@@ -37,10 +40,14 @@ public class HomeFragment extends BaseFragment implements HomeContract.MyFragmen
 
     TextView suggestionL,bestL,newL;
 
+    ProgressBar progressBar ;
+
     @Override
     public void setUpViews() {
 
         myPresenter = new HomePresenter(new HomeModel());
+
+        progressBar = rootView.findViewById(R.id.progress_bar);
 
         sliderLayout = rootView.findViewById(R.id.slider_home);
         sugRecycler = rootView.findViewById(R.id.rec_home_suggestions);
@@ -53,7 +60,6 @@ public class HomeFragment extends BaseFragment implements HomeContract.MyFragmen
         suggestionL=rootView.findViewById(R.id.txv_suggestionsL);
         bestL=rootView.findViewById(R.id.txv_bestL);
         newL=rootView.findViewById(R.id.txv_newL);
-
 
 
     }
@@ -87,6 +93,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.MyFragmen
 
     @Override
     public void sendServerRequest() {
+        progressBar.setVisibility(View.VISIBLE);
         myPresenter.getSliderList();
         myPresenter.getSuggestionList();
         myPresenter.getBestList();
@@ -133,7 +140,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.MyFragmen
 
     @Override
     public void showSuggestionList(List<ProductInfo> suggestedProductList) {
-
+        progressBar.setVisibility(View.GONE);
         suggestionL.setVisibility(View.VISIBLE);
         fillSuggestionList(sugRecycler, suggestedProductList);
 

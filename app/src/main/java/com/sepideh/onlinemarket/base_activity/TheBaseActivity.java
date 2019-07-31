@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.jakewharton.rxbinding3.view.RxView;
 import com.orhanobut.hawk.Hawk;
 import com.sepideh.onlinemarket.R;
 import com.sepideh.onlinemarket.data.UserInfo;
@@ -39,6 +40,7 @@ public abstract class TheBaseActivity extends AppCompatActivity implements BaseA
     public TextView phoneNumberError, passwordError, forgetPassword;
     public String phoneNumberV, passwordV;
     public ImageView closeLogin;
+    Button login;
 
 
 
@@ -71,9 +73,11 @@ public abstract class TheBaseActivity extends AppCompatActivity implements BaseA
     }
 
     public void openButtomsheetLogin() {
+
         bottomSheetDialog = new BottomSheetDialog(this);
         view1 = getLayoutInflater().inflate(R.layout.login_layout, null);
         bottomSheetDialog.setContentView(view1);
+        bottomSheetDialog.show();
         phoneNumber = view1.findViewById(R.id.edt_login_phoneNumber);
         password = view1.findViewById(R.id.edt_login_password);
         phoneNumberError = view1.findViewById(R.id.txv_login_phoneNumberError);
@@ -89,44 +93,54 @@ public abstract class TheBaseActivity extends AppCompatActivity implements BaseA
             }
         });
 
-        bottomSheetDialog.show();
-
         Button register = view1.findViewById(R.id.btn_login_goRegister);
+        bottomSheetDialog.show();
         register.setOnClickListener(view -> {
             bottomSheetDialog.dismiss();
             Intent intent = new Intent(TheBaseActivity.this, RegisterActivity.class);
             startActivity(intent);
         });
 
-        final Button login = view1.findViewById(R.id.btn_login_send);
-        login.setOnClickListener(new View.OnClickListener() {
+
+        login = view1.findViewById(R.id.btn_login_send);
+        RxView.clicks(login).debounce(3000, TimeUnit.MILLISECONDS).subscribe(this::manageLoginRequest);
+
+    }
+
+    private void manageLoginRequest(Unit unit) {
+
+        phoneNumberV = phoneNumber.getText().toString();
+        passwordV = password.getText().toString();
+        ArrayList<EditText> editTexts = new ArrayList<>();
+        editTexts.add(phoneNumber);
+        editTexts.add(password);
+        runOnUiThread(new Runnable() {
             @Override
-            public void onClick(View view) {
-
-                phoneNumberV = phoneNumber.getText().toString();
-                passwordV = password.getText().toString();
-                ArrayList<EditText> editTexts = new ArrayList<>();
-                editTexts.add(phoneNumber);
-                editTexts.add(password);
-
+            public void run() {
                 if (checkEmptyness(editTexts) & checkValidation()) {
                     if (PublicMethods.checkNetworkConnection()) {
+                        Log.d("mmhm", "onClick: activity");
                         phoneNumberError.setVisibility(View.GONE);
                         passwordError.setVisibility(View.GONE);
                         sendLoginRequest();
+
+
                     } else
                         noNetworkConnection();
 
 
                 } else setError(editTexts);
             }
-
-
         });
+
+
+
+
     }
 
-    private void sendLoginRequest() {
-        myPresenter.loginToApp(phoneNumberV, passwordV);
+    private void sendLoginRequest(){
+
+        myPresenter.loginToApp(phoneNumberV,passwordV);
     }
 
     private boolean checkEmptyness(ArrayList<EditText> editTexts) {
@@ -149,6 +163,7 @@ public abstract class TheBaseActivity extends AppCompatActivity implements BaseA
 
 
     private boolean checkValidation() {
+        Log.d("mmhm", "checkValidation: ");
         if (!phoneNumberV.matches("(\\+98|0)?9\\d{9}")) {
             phoneNumberError.setVisibility(View.VISIBLE);
             phoneNumberError.setText(getString(R.string.validNumberError));
@@ -220,7 +235,7 @@ public abstract class TheBaseActivity extends AppCompatActivity implements BaseA
 
     @Override
     public void onActionConnection() {
-        sendLoginRequest();
+        myPresenter.loginToApp(phoneNumberV, passwordV);
     }
 
     @Override

@@ -1,5 +1,7 @@
 package com.sepideh.onlinemarket.base_activity;
 
+import android.widget.Button;
+
 import com.sepideh.onlinemarket.base.BaseActivity;
 import com.sepideh.onlinemarket.data.ProductInfo;
 import com.sepideh.onlinemarket.data.UserInfo;
@@ -21,7 +23,7 @@ public interface BaseActivityContract {
     interface MyPresenter {
         void attachView(BaseActivityContract.MyView myView);
         void detachView();
-        void loginToApp(String phoneNumber, String password);
+        void loginToApp( String phoneNumber, String password);
 
     }
     interface MyModel{
