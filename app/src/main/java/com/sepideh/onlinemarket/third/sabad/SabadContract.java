@@ -18,7 +18,7 @@ public interface SabadContract {
 
 
     }
-    interface MyPresenter extends BasePresenter<MyFragmentView>{
+    interface MyPresenter extends BasePresenter<MyFragmentView> {
         void getSabadList();
         void plusClicked(Sabad sabad);
         void minusClicked(Sabad sabad);

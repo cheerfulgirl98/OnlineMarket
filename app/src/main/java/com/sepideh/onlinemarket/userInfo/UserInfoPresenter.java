@@ -57,19 +57,7 @@ public class UserInfoPresenter implements UserInfoContract.MyPresenter {
                     @Override
                     public void onError(Throwable e) {
 
-                        if (e instanceof HttpException) {
-
-                            ResponseBody responseBody = ((HttpException) e).response().errorBody();
-                            try {
-                                errorText = responseBody.string();
-                            } catch (IOException e1) {
-                                e1.printStackTrace();
-                            }
-                            if (errorText.equals("user not found"))
-                                myView.userNotFound();
-                            else
-                                myView.passwordIsWrong();
-                        } else if (e instanceof IOException)
+                      if (e instanceof IOException)
                             myView.noServerConnection();
 
                     }

@@ -23,7 +23,7 @@
 
 
             <TextView
-                android:id="@+id/txv_suggestions"
+                android:id="@+id/txv_suggestionsL"
                 style="@style/normal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -40,6 +40,7 @@
 
             <TextView
                 style="@style/normal"
+                android:id="@+id/txv_bestL"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="12dp"
@@ -53,6 +54,7 @@
 
             <TextView
                 style="@style/normal"
+                android:id="@+id/txv_newL"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="12dp"

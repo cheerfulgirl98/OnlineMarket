@@ -7,10 +7,6 @@ import com.sepideh.onlinemarket.data.UserInfo;
  */
 
 public interface BaseActivity {
-    void setUpViews();
-    void successfulLogin(UserInfo userInfo);
-    void userNotFound();
-    void passwordIsWrong();
 
     void noServerConnection();
 

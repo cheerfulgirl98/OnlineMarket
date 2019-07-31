@@ -23,7 +23,7 @@ public interface HomeContract {
 
 
     }
-    interface MyPresenter extends BasePresenter<MyFragmentView>{
+    interface MyPresenter extends BasePresenter<MyFragmentView> {
         void getSliderList();
         void getSuggestionList();
         void getBestList();

@@ -4,7 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layoutDirection="rtl"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/cor_order_form"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"

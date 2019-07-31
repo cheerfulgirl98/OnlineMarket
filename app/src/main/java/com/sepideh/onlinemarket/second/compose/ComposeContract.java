@@ -16,7 +16,7 @@ public interface ComposeContract {
         void commentedBefore();
     }
 
-    interface MyPresenter extends BasePresenter<MyFragmentView>{
+    interface MyPresenter extends BasePresenter<MyFragmentView> {
         void sendComment(String productId,String userId,String star,String description);
     }
     interface MyModel{

@@ -44,6 +44,7 @@ public class RegisterFragment extends BaseFragment implements RegisterContract.M
     TextInputLayout errorInputLayout;
 
     boolean connectionIsOkToSendRequest;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,15 +84,9 @@ public class RegisterFragment extends BaseFragment implements RegisterContract.M
 
 
     public void sendServerRequest() {
-        connectionIsOkToSendRequest=true;
+        connectionIsOkToSendRequest = true;
     }
 
-
-    public void noNetworkConnection() {
-
-        PublicMethods.setSnackbar(rootView.findViewById(R.id.cor_register_fragment), getString(R.string.error_network_conection), getResources().getColor(R.color.red), "تلاش مجدد", getResources().getColor(R.color.white));
-
-    }
 
     @Override
     public void onStop() {
@@ -196,14 +191,6 @@ public class RegisterFragment extends BaseFragment implements RegisterContract.M
         return getContext();
     }
 
-    @Override
-    public void noServerConnection() {
-
-        PublicMethods.setSnackbar(rootView.findViewById(R.id.cor_register_fragment), getString(R.string.error_server_conection), getResources().getColor(R.color.red), "تلاش مجدد", getResources().getColor(R.color.white));
-
-    }
-
-
 
     @Override
     public void successfulSendingSms() {
@@ -224,6 +211,19 @@ public class RegisterFragment extends BaseFragment implements RegisterContract.M
 
     @Override
     public void successfulRegistration(UserInfo userInfo) {
+
+    }
+
+    @Override
+    public void noNetworkConnection() {
+        PublicMethods.setSnackbar(rootView.findViewById(R.id.cor_register_fragment), getString(R.string.error_network_conection), getResources().getColor(R.color.red), "تلاش مجدد", getResources().getColor(R.color.white));
+
+    }
+
+    @Override
+    public void noServerConnection() {
+
+        PublicMethods.setSnackbar(rootView.findViewById(R.id.cor_register_fragment), getString(R.string.error_server_conection), getResources().getColor(R.color.red), "تلاش مجدد", getResources().getColor(R.color.white));
 
     }
 

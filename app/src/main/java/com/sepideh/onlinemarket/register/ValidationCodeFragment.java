@@ -73,14 +73,6 @@ public class ValidationCodeFragment extends BaseFragment implements RegisterCont
         return null;
     }
 
-    @Override
-    public void noServerConnection() {
-        PublicMethods.setSnackbar(rootView.findViewById(R.id.cor_register_fragment), getString(R.string.error_server_conection), getResources().getColor(R.color.red), "تلاش مجدد", getResources().getColor(R.color.white));
-
-
-    }
-
-
 
     @Override
     public void successfulSendingSms() {
@@ -135,11 +127,20 @@ public class ValidationCodeFragment extends BaseFragment implements RegisterCont
     }
 
 
+    @Override
     public void noNetworkConnection() {
         PublicMethods.setSnackbar(rootView.findViewById(R.id.cor_register_fragment), getString(R.string.error_network_conection), getResources().getColor(R.color.red), "تلاش مجدد", getResources().getColor(R.color.white));
 
+    }
+
+    @Override
+    public void noServerConnection() {
+        PublicMethods.setSnackbar(rootView.findViewById(R.id.cor_register_fragment), getString(R.string.error_server_conection), getResources().getColor(R.color.red), "تلاش مجدد", getResources().getColor(R.color.white));
+
 
     }
+
+
 
     @Override
     public void onStop() {

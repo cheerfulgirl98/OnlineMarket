@@ -64,15 +64,7 @@ public class BasketFragment extends BaseFragment implements SabadContract.MyFrag
 
     }
 
-    @Override
-    public void sendServerRequest() {
 
-    }
-
-    @Override
-    public void noNetworkConnection() {
-
-    }
 
 
     private void setSabadList() {
@@ -86,10 +78,7 @@ public class BasketFragment extends BaseFragment implements SabadContract.MyFrag
 
     private ManageToolbarI manageToolbarI;
 
-    @Override
-    public void onActionConnection() {
 
-    }
 
     public interface ManageToolbarI {
         void proDelete();
@@ -122,13 +111,6 @@ public class BasketFragment extends BaseFragment implements SabadContract.MyFrag
     public Context getViewContext() {
         return getContext();
     }
-
-    @Override
-    public void noServerConnection() {
-
-
-    }
-
 
 
     @Override
@@ -202,15 +184,37 @@ public class BasketFragment extends BaseFragment implements SabadContract.MyFrag
        finalCost=finalCost-proCost;
         totalCost.setText(String.valueOf(finalCost));
     }
-    @Override
-    public void onActionNoConnection() {
-        noNetworkConnection();
-    }
+
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         openLogin = (OpenLogin) context;
         manageToolbarI = (ManageToolbarI) context;
+    }
+
+    @Override
+    public void noServerConnection() {
+
+
+    }
+    @Override
+    public void sendServerRequest() {
+
+    }
+
+    @Override
+    public void noNetworkConnection() {
+
+    }
+
+    @Override
+    public void onActionConnection() {
+
+    }
+
+    @Override
+    public void onActionNoConnection() {
+
     }
 }

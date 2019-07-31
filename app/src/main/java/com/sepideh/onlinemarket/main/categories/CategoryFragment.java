@@ -91,9 +91,6 @@ public class CategoryFragment extends BaseFragment implements CategoryContract.M
     public void onStart() {
         super.onStart();
         myPresenter.attachView(this);
-        if (PublicMethods.checkNetworkConnection())
-            sendServerRequest();
-        else noNetworkConnection();
     }
 
 

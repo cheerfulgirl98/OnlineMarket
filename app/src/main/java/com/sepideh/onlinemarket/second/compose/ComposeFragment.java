@@ -71,10 +71,7 @@ public class ComposeFragment extends BaseFragment implements ComposeContract.MyF
     }
 
 
-    public void noNetworkConnection() {
-        PublicMethods.setSnackbar(rootView.findViewById(R.id.cor_compose_fragment), getString(R.string.error_network_conection), getResources().getColor(R.color.red), "تلاش مجدد", getResources().getColor(R.color.white));
 
-    }
 
     @Override
     public void onStop() {
@@ -102,6 +99,10 @@ public class ComposeFragment extends BaseFragment implements ComposeContract.MyF
         sabadRel.setVisibility(View.GONE);
 
 
+    }
+    @Override
+    public Context getViewContext() {
+        return getContext();
     }
 
 
@@ -142,9 +143,12 @@ public class ComposeFragment extends BaseFragment implements ComposeContract.MyF
     private void sendCommentRequest(String comment){
         myPresenter.sendComment(productId, userInfo.getId(), star, comment);
     }
+
+
     @Override
-    public Context getViewContext() {
-        return getContext();
+    public void noNetworkConnection() {
+        PublicMethods.setSnackbar(rootView.findViewById(R.id.cor_compose_fragment), getString(R.string.error_network_conection), getResources().getColor(R.color.red), "تلاش مجدد", getResources().getColor(R.color.white));
+
     }
 
     @Override

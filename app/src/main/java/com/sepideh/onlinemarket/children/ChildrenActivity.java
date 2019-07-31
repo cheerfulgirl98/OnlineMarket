@@ -2,22 +2,20 @@ package com.sepideh.onlinemarket.children;
 
 import android.content.Intent;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.orhanobut.hawk.Hawk;
 import com.sepideh.onlinemarket.R;
 import com.sepideh.onlinemarket.adapter.ChildProductAdapter;
-import com.sepideh.onlinemarket.base.TheBaseActivity;
+import com.sepideh.onlinemarket.base_activity.TheBaseActivity;
 import com.sepideh.onlinemarket.data.ProductInfo;
 import com.sepideh.onlinemarket.data.UserInfo;
 import com.sepideh.onlinemarket.third.activity.ThirdActivity;
@@ -40,6 +38,7 @@ public class ChildrenActivity extends TheBaseActivity implements ChildrenContrac
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d("dsds", "onCreate: children");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_children);
         myPresenter = new ChildernPresenter(new ChildrenModel());
@@ -70,12 +69,17 @@ public class ChildrenActivity extends TheBaseActivity implements ChildrenContrac
 
     @Override
     public void onStart() {
+
         super.onStart();
+
         myPresenter.attachView(this);
         if (PublicMethods.checkNetworkConnection()) {
+
             sendServerRequest();
 
-        } else noNetworkConnection();
+        } else{
+
+            noNetworkConnection();}
     }
 
     private void sendServerRequest() {
@@ -93,6 +97,7 @@ public class ChildrenActivity extends TheBaseActivity implements ChildrenContrac
         super.onStop();
         myPresenter.detachView();
     }
+
 
 
     public void setUpViews() {
@@ -113,33 +118,6 @@ public class ChildrenActivity extends TheBaseActivity implements ChildrenContrac
 
     }
 
-    @Override
-    public void userNotFound() {
-
-    }
-
-    @Override
-    public void passwordIsWrong() {
-
-    }
-
-    @Override
-    public void noNetworkConnection() {
-
-        PublicMethods.setSnackbar(findViewById(R.id.cor_children), getString(R.string.error_network_conection), getResources().getColor(R.color.red), "تلاش مجدد", getResources().getColor(R.color.white));
-
-    }
-
-    @Override
-    public void noServerConnection() {
-        PublicMethods.setSnackbar(findViewById(R.id.cor_children), getString(R.string.error_server_conection), getResources().getColor(R.color.red), "تلاش مجدد", getResources().getColor(R.color.white));
-
-    }
-
-    @Override
-    public void sendLoginRequest() {
-
-    }
 
     @Override
     public void showChildrenProducts(List<ProductInfo> productInfos) {
@@ -163,10 +141,26 @@ public class ChildrenActivity extends TheBaseActivity implements ChildrenContrac
     public void onActionConnection() {
 
         sendServerRequest();
+
     }
 
     @Override
     public void onActionNoConnection() {
-        noNetworkConnection();
+
+      noNetworkConnection();
     }
+
+    @Override
+    public void noNetworkConnection() {
+        PublicMethods.setSnackbar(findViewById(R.id.cor_children), getString(R.string.error_network_conection), getResources().getColor(R.color.red), "تلاش مجدد", getResources().getColor(R.color.white));
+
+    }
+
+
+    @Override
+    public void noServerConnection() {
+        PublicMethods.setSnackbar(findViewById(R.id.cor_children), getString(R.string.error_server_conection), getResources().getColor(R.color.red), "تلاش مجدد", getResources().getColor(R.color.white));
+
+    }
+
 }

@@ -32,6 +32,7 @@
                 android:layout_alignParentBottom="true"
                 app:itemIconTint="@drawable/bottom_selector"
                 app:menu="@menu/bottom_nav_menu"
+                android:background="#F5F5F5"
               />
 
         </RelativeLayout>

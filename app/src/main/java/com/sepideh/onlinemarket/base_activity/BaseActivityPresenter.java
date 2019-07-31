@@ -1,4 +1,6 @@
-package com.sepideh.onlinemarket.third.activity;
+package com.sepideh.onlinemarket.base_activity;
+
+import android.util.Log;
 
 import com.sepideh.onlinemarket.data.UserInfo;
 
@@ -16,20 +18,20 @@ import retrofit2.HttpException;
  * Created by pc on 5/14/2019.
  */
 
-public class ThirdPresenter implements ThirdContract.MyPresentr {
+public class BaseActivityPresenter implements BaseActivityContract.MyPresenter {
 
-    ThirdContract.MyView myView;
-    ThirdContract.MyModel myModel;
+    BaseActivityContract.MyView myView;
+    BaseActivityContract.MyModel myModel;
     CompositeDisposable compositeDisposable = new CompositeDisposable();
     String errorText;
 
-    public ThirdPresenter(ThirdContract.MyModel myModel) {
+    public BaseActivityPresenter(BaseActivityContract.MyModel myModel) {
         this.myModel = myModel;
     }
 
 
     @Override
-    public void attachView(ThirdContract.MyView myView) {
+    public void attachView(BaseActivityContract.MyView myView) {
         this.myView = myView;
     }
 
@@ -71,13 +73,13 @@ public class ThirdPresenter implements ThirdContract.MyPresentr {
                             } catch (IOException e1) {
                                 e1.printStackTrace();
                             }
-                            if (errorText.equals("user not found"))
+                            if (errorText.equals("user not found")) {
+                                Log.d("myrx", "onError: " + ((HttpException) e).code());
                                 myView.userNotFound();
-                            else
+                            } else
                                 myView.passwordIsWrong();
                         } else if (e instanceof IOException)
                             myView.noServerConnection();
-
                     }
                 });
 

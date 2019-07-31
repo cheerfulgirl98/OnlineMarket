@@ -20,6 +20,7 @@ import com.sepideh.onlinemarket.base.BaseFragment;
 import com.sepideh.onlinemarket.data.Customer;
 import com.sepideh.onlinemarket.map.MapsActivity;
 import com.sepideh.onlinemarket.third.sabad.BasketFragment;
+import com.sepideh.onlinemarket.utils.PublicMethods;
 
 import java.util.ArrayList;
 
@@ -28,15 +29,17 @@ import java.util.ArrayList;
  */
 
 public class OrderFormFragment extends BaseFragment implements View.OnClickListener {
-    TextView  goToMap;
+    TextView goToMap;
 
-    TextInputLayout nameInput,familyInput, mobileInput, addressInput;
-    EditText name,family, mobile, address;
+    TextInputLayout nameInput, familyInput, mobileInput, addressInput;
+    EditText name, family, mobile, address;
     Button sendInfo;
 
-    ArrayList<EditText> editTexts=new ArrayList<>();
-    Customer customer=new Customer();
+    ArrayList<EditText> editTexts = new ArrayList<>();
+    Customer customer = new Customer();
     TextInputLayout errorInputLayout;
+
+    boolean connectionIsOkToSendRequest;
 
 
     @Override
@@ -60,7 +63,7 @@ public class OrderFormFragment extends BaseFragment implements View.OnClickListe
         address = rootView.findViewById(R.id.edt_form_address);
         editTexts.add(address);
 
-        errorInputLayout=nameInput;
+        errorInputLayout = nameInput;
 
         sendInfo = rootView.findViewById(R.id.btn_buttom);
         sendInfo.setText(R.string.btn_send_info);
@@ -74,14 +77,14 @@ public class OrderFormFragment extends BaseFragment implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-       if (view.getId() == R.id.btn_buttom) {
+        if (view.getId() == R.id.btn_buttom) {
             ArrayList<EditText> editTexts = new ArrayList<>();
             editTexts.add(name);
             editTexts.add(mobile);
             editTexts.add(address);
 
-            if (checkEmptyness() && checkMobileValidation())
-                sendRequest();
+            if (checkEmptyness() && checkMobileValidation() && connectionIsOkToSendRequest)
+                sendOrderRequest();
             else
                 setError();
 
@@ -91,6 +94,7 @@ public class OrderFormFragment extends BaseFragment implements View.OnClickListe
         }
 
     }
+
     private boolean checkEmptyness() {
 
         for (EditText editText : editTexts) {
@@ -122,9 +126,7 @@ public class OrderFormFragment extends BaseFragment implements View.OnClickListe
         }
     }
 
-       void sendRequest() {
 
-    }
 
     private void setError() {
 
@@ -155,11 +157,6 @@ public class OrderFormFragment extends BaseFragment implements View.OnClickListe
 
     private ManageToolbarI manageToolbarI;
 
-    @Override
-    public void onActionConnection() {
-
-        sendServerRequest();
-    }
 
     public interface ManageToolbarI {
         void setToolbarTitle();
@@ -176,21 +173,34 @@ public class OrderFormFragment extends BaseFragment implements View.OnClickListe
         return getContext();
     }
 
-    @Override
-    public void sendServerRequest() {
-
-    }
-
-    @Override
-    public void noNetworkConnection() {
-
-    }
-
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        manageToolbarI=(ManageToolbarI)context;
+        manageToolbarI = (ManageToolbarI) context;
+    }
+
+
+    @Override
+    public void noNetworkConnection() {
+        PublicMethods.setSnackbar(rootView.findViewById(R.id.cor_order_form), getString(R.string.error_network_conection), getResources().getColor(R.color.red), "تلاش مجدد", getResources().getColor(R.color.white));
+
+    }
+
+
+    @Override
+    public void sendServerRequest() {
+
+        connectionIsOkToSendRequest = true;
+    }
+
+    private void sendOrderRequest(){
+
+    }
+    @Override
+    public void onActionConnection() {
+
+        sendOrderRequest();
     }
 
     @Override

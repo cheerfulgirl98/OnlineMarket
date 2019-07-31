@@ -36,7 +36,7 @@ import java.util.List;
  * Created by pc on 4/26/2019.
  */
 
-public class CommentsFragment extends BaseFragment implements CommentsContract.MyFragmentView, View.OnClickListener {
+public class CommentsFragment extends BaseFragment implements CommentsContract.MyFragmentView, View.OnClickListener,CommentsDetailAdapter.ConnectionError {
 
     CommentsContract.MyPresenter myPresenter;
 
@@ -120,15 +120,6 @@ public class CommentsFragment extends BaseFragment implements CommentsContract.M
         return getContext();
     }
 
-    @Override
-    public void noServerConnection() {
-
-
-        PublicMethods.setSnackbar(rootView.findViewById(R.id.cor_comments_fragment),getString(R.string.error_server_conection),getResources().getColor(R.color.red),"تلاش مجدد",getResources().getColor(R.color.white));
-
-    }
-
-
 
     @Override
     public void onStart() {
@@ -138,33 +129,36 @@ public class CommentsFragment extends BaseFragment implements CommentsContract.M
 
     }
 
-    public void sendServerRequest() {
-        myPresenter.getAllComments(productId);
-    }
-
-
-    public void noNetworkConnection() {
-        PublicMethods.setSnackbar(rootView.findViewById(R.id.cor_comments_fragment),getString(R.string.error_network_conection),getResources().getColor(R.color.red),"تلاش مجدد",getResources().getColor(R.color.white));
-
-    }
-
-
     @Override
     public void onStop() {
         super.onStop();
         myPresenter.detachView();
     }
 
-
+    @Override
+    public void sendServerRequest() {
+        myPresenter.getAllComments(productId);
+    }
 
     @Override
     public void showAllComments(List<Comment> comments) {
 
         commentsAdapter = new CommentsDetailAdapter(myPresenter, comments, getViewContext());
-        //commentsAdapter.onClickInstance = this;
+        commentsAdapter.connectionError = this;
         recyclerView.setAdapter(commentsAdapter);
     }
 
+    public void noNetworkConnection() {
+        PublicMethods.setSnackbar(rootView.findViewById(R.id.cor_comments_fragment), getString(R.string.error_network_conection), getResources().getColor(R.color.red), "تلاش مجدد", getResources().getColor(R.color.white));
+
+    }
+
+    @Override
+    public void noServerConnection() {
+
+        PublicMethods.setSnackbar(rootView.findViewById(R.id.cor_comments_fragment), getString(R.string.error_server_conection), getResources().getColor(R.color.red), "تلاش مجدد", getResources().getColor(R.color.white));
+
+    }
 
     @Override
     public void voteBefore() {
@@ -187,25 +181,37 @@ public class CommentsFragment extends BaseFragment implements CommentsContract.M
                 fm.popBackStack();
             }
 
-        } if (view.getId() == sabad.getId()) {
+        }
+        if (view.getId() == sabad.getId()) {
             Intent intent = new Intent(getActivity(), ThirdActivity.class);
             startActivity(intent);
         }
 
     }
 
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        openLogin = (OpenLogin) context;
+    }
+
     @Override
     public void onActionConnection() {
-
+        sendServerRequest();
     }
 
     @Override
     public void onActionNoConnection() {
         noNetworkConnection();
     }
+
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        openLogin = (OpenLogin) context;
+    public void noNetworkConnectionForVote() {
+        PublicMethods.setSnackManage(this);
+        noNetworkConnection();
     }
+
+
+
 }

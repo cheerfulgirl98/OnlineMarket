@@ -17,7 +17,7 @@ public interface RegisterContract {
         void successfulRegistration(UserInfo userInfo);
     }
 
-    interface MyPresentr extends BasePresenter<MyFragmentView>{
+    interface MyPresentr extends BasePresenter<MyFragmentView> {
         void sendCode(String template,String phoneNumber,String code);
         void registerUser(String userName,String phoneNumber,String password);
     }

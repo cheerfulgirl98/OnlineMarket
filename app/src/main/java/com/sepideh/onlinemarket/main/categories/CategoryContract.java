@@ -19,7 +19,7 @@ public interface CategoryContract {
 
     }
 
-    interface MyPresenter extends BasePresenter<MyFragmentView>{
+    interface MyPresenter extends BasePresenter<MyFragmentView> {
         void getChildern();
     }
 

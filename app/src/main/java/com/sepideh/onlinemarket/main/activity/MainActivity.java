@@ -2,8 +2,6 @@ package com.sepideh.onlinemarket.main.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.net.ConnectivityManager;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,7 +12,6 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,7 +23,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.orhanobut.hawk.Hawk;
 import com.sepideh.onlinemarket.R;
 import com.sepideh.onlinemarket.base.BaseFragment;
-import com.sepideh.onlinemarket.base.TheBaseActivity;
+import com.sepideh.onlinemarket.base_activity.TheBaseActivity;
 import com.sepideh.onlinemarket.data.UserInfo;
 import com.sepideh.onlinemarket.main.categories.CategoryFragment;
 import com.sepideh.onlinemarket.main.favorit.FavoritFragment;
@@ -37,9 +34,8 @@ import com.sepideh.onlinemarket.third.activity.ThirdActivity;
 import com.sepideh.onlinemarket.userInfo.UserInfoActivity;
 import com.sepideh.onlinemarket.utils.PublicMethods;
 
-public class MainActivity extends TheBaseActivity implements MainContract.MyView, View.OnClickListener, NavigationView.OnNavigationItemSelectedListener, BaseFragment.OpenLogin {
+public class MainActivity extends TheBaseActivity implements  View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
 
-    MainContract.MyPresentr myPresenter;
     CoordinatorLayout coordinatorLayout;
     RelativeLayout sabad;
     DrawerLayout drawerLayout;
@@ -72,23 +68,7 @@ public class MainActivity extends TheBaseActivity implements MainContract.MyView
 
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        myPresenter.attachView(this);
-
-    }
-
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        myPresenter.detachView();
-    }
-
-
-    @Override
     public void setUpViews() {
-        myPresenter = new MainPresenter(new MainModel());
         coordinatorLayout = findViewById(R.id.cor_main);
         sabad = findViewById(R.id.rel_detail_sabad);
         sabad.setOnClickListener(this);
@@ -172,39 +152,8 @@ public class MainActivity extends TheBaseActivity implements MainContract.MyView
     @Override
     public void successfulLogin(UserInfo userInfo) {
 
-        Hawk.put(getString(R.string.loginUserInfoTag), userInfo);
-        super.bottomSheetDialog.dismiss();
+        super.successfulLogin(userInfo);
         drawerLayout.openDrawer(Gravity.RIGHT);
-    }
-
-    @Override
-    public void userNotFound() {
-        phoneNumberError.setVisibility(View.VISIBLE);
-        phoneNumberError.setText("شماره تلفن وارد شده ثبت نام نشده است.");
-    }
-
-    @Override
-    public void passwordIsWrong() {
-        passwordError.setVisibility(View.VISIBLE);
-        passwordError.setText("رمز عبور وارد شده صحیح نمی باشد.");
-    }
-
-    @Override
-    public void noNetworkConnection() {
-        PublicMethods.setSnackbar(findViewById(R.id.cor_login), getString(R.string.error_network_conection), getResources().getColor(R.color.red), "تلاش مجدد", getResources().getColor(R.color.white));
-    }
-
-    @Override
-    public void noServerConnection() {
-        bottomSheetDialog.dismiss();
-        PublicMethods.setSnackbar(findViewById(R.id.cor_main), getString(R.string.error_server_conection), getResources().getColor(R.color.red), "تلاش مجدد", getResources().getColor(R.color.white));
-
-    }
-
-    @Override
-    public void sendLoginRequest() {
-
-        myPresenter.loginToApp(phoneNumberV, passwordV);
     }
 
 
@@ -259,19 +208,6 @@ public class MainActivity extends TheBaseActivity implements MainContract.MyView
     }
 
 
-    @Override
-    public void onActionConnection() {
 
-            sendLoginRequest();
-    }
 
-    @Override
-    public void onActionNoConnection() {
-        noNetworkConnection();
-    }
-
-    @Override
-    public void infoActivityToOpenLogin() {
-        openButtomsheetLogin();
-    }
 }

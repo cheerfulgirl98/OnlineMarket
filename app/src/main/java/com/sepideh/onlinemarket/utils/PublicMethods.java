@@ -89,17 +89,14 @@ public class PublicMethods {
         }
 
 
-        snackbar.setAction(actionV, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String network = Hawk.get("network_status_H");
-                if (!network.equals("No internet is available")) {
-                    snackManage.onActionConnection();
+        snackbar.setAction(actionV, v -> {
+            String network = Hawk.get("network_status_H");
+            if (!network.equals("No internet is available")) {
+                snackManage.onActionConnection();
 
-                } else
-                    snackManage.onActionNoConnection();
+            } else
+                snackManage.onActionNoConnection();
 
-            }
         }).setActionTextColor(actionColor).show();
 
 

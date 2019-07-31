@@ -62,7 +62,6 @@ public class DetailFragment extends BaseFragment implements DetailContract.MyFra
 
     int sabadSizeV;
 
-    boolean connectionIsOkToSendRequest;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -99,26 +98,16 @@ public class DetailFragment extends BaseFragment implements DetailContract.MyFra
     }
 
     @Override
-    public void sendServerRequest() {
-        myPresenter.getProductDetails(productId);
-        connectionIsOkToSendRequest = true;
-    }
-
-
-    public void noNetworkConnection() {
-
-        material.setVisibility(View.GONE);
-        size.setVisibility(View.GONE);
-        PublicMethods.setSnackbar(rootView.findViewById(R.id.cor_detail_main), getString(R.string.error_network_conection), getResources().getColor(R.color.red), "تلاش مجدد", getResources().getColor(R.color.white));
-
-
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
         manageSabad();
 
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        openLogin = (OpenLogin) context;
     }
 
     @Override
@@ -184,15 +173,6 @@ public class DetailFragment extends BaseFragment implements DetailContract.MyFra
         return getContext();
     }
 
-    @Override
-    public void noServerConnection() {
-
-        material.setVisibility(View.GONE);
-        size.setVisibility(View.GONE);
-        PublicMethods.setSnackbar(rootView.findViewById(R.id.cor_detail_main), getString(R.string.error_server_conection), getResources().getColor(R.color.red), "تلاش مجدد", getResources().getColor(R.color.white));
-
-    }
-
 
     private void showElementaryInfo() {
         name.setText(selectedProduct.getName());
@@ -209,6 +189,62 @@ public class DetailFragment extends BaseFragment implements DetailContract.MyFra
             disount.setText(PublicMethods.changeToPersianNumber(String.format("%,d %s", discount, getString(R.string.toman))));
 
         }
+    }
+
+    private void manageSabad() {
+        sabadSizeV = Hawk.get(getString(R.string.Hawk_sabad_size), -1);
+        if (sabadSizeV > 0) {
+            //when come back from basketfragment and change sth there, set size from hawk
+            setSabadSizeOnBadge(sabadSizeV);
+        } else if (sabadSizeV == 0) {
+            //when come back from basketfragment and make sabad empty there.
+            sabadIsEmpty();
+        } else {
+            //for the first time that sabad is empty and hawk is null(-1)
+            sabadSizeV = 0;
+            sabadIsEmpty();
+        }
+
+    }
+
+
+    private void setSabadSizeOnBadge(int sabadSize) {
+        badgeNotif.setVisibility(View.VISIBLE);
+        badgeNotif.setText(String.valueOf(sabadSize));
+        //  Hawk.put(getString(R.string.Hawk_sabad_size), sabadSize);
+    }
+
+
+    private void sabadIsEmpty() {
+        badgeNotif.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void sabadUpdated() {
+
+
+    }
+
+
+    @Override
+    public void proAddedToSabad() {
+
+        PublicMethods.setSnackbar(coordinatorLayout, "محصول به سبد خرید شما افزوده شد", getViewContext().getResources().getColor(R.color.green));
+        sabadSizeV = sabadSizeV + 1;
+        setSabadSizeOnBadge(sabadSizeV);
+        Hawk.put(getString(R.string.Hawk_sabad_size), sabadSizeV);
+
+    }
+
+    @Override
+    public void onSliderClick(BaseSliderView slider) {
+
+    }
+
+    @Override
+    public void sendServerRequest() {
+        myPresenter.getProductDetails(productId);
+
     }
 
     @Override
@@ -232,7 +268,7 @@ public class DetailFragment extends BaseFragment implements DetailContract.MyFra
 
         if (!productDetails.getModel().equals("")) {
             selectedProduct.setModel(productDetails.getModel());
-            model.setText(getString(R.string.model) + ""+productDetails.getModel());
+            model.setText(getString(R.string.model) + "" + productDetails.getModel());
         } else {
             selectedProduct.setModel("");
             model.setVisibility(View.GONE);
@@ -272,40 +308,6 @@ public class DetailFragment extends BaseFragment implements DetailContract.MyFra
     }
 
 
-    private void manageSabad() {
-        sabadSizeV = Hawk.get(getString(R.string.Hawk_sabad_size), -1);
-        if (sabadSizeV > 0) {
-            //when come back from basketfragment and change sth there, set size from hawk
-            setSabadSizeOnBadge(sabadSizeV);
-        } else if (sabadSizeV == 0) {
-            //when come back from basketfragment and make sabad empty there.
-            sabadIsEmpty();
-        } else {
-            //for the first time that sabad is empty and hawk is null(-1)
-            sabadSizeV = 0;
-            sabadIsEmpty();
-        }
-
-    }
-
-
-    private void setSabadSizeOnBadge(int sabadSize) {
-        badgeNotif.setVisibility(View.VISIBLE);
-        badgeNotif.setText(String.valueOf(sabadSize));
-      //  Hawk.put(getString(R.string.Hawk_sabad_size), sabadSize);
-    }
-
-
-    private void sabadIsEmpty() {
-        badgeNotif.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void onSliderClick(BaseSliderView slider) {
-
-    }
-
-
     @Override
     public void onClick(View view) {
         if (view.getId() == sabad.getId()) {
@@ -325,10 +327,10 @@ public class DetailFragment extends BaseFragment implements DetailContract.MyFra
             startActivity(Intent.createChooser(shareIntent, "Share link using"));
         } else if (view.getId() == favoritIcon.getId()) {
 
-            if (connectionIsOkToSendRequest) {
+
                 myPresenter.saveToFavorit(sqliteHelper, selectedProduct);
                 favoritIcon.setColorFilter(Color.argb(255, 255, 213, 79));
-            }
+
         } else if (view.getId() == R.id.txv_detail_allcomments) {
 
             PublicMethods.goNewFragment(getViewContext(), R.id.frame_second_container, new CommentsFragment());
@@ -342,40 +344,26 @@ public class DetailFragment extends BaseFragment implements DetailContract.MyFra
 
             }
         } else if (view.getId() == addSabad.getId()) {
-            if (connectionIsOkToSendRequest) {
+
                 myPresenter.addToSabadClicked(selectedProduct);
-            }
+
         }
     }
 
 
-    @Override
-    public void sabadUpdated() {
+    public void noNetworkConnection() {
+
+        hideView();
+        PublicMethods.setSnackbar(rootView.findViewById(R.id.cor_detail_main), getString(R.string.error_network_conection), getResources().getColor(R.color.red), "تلاش مجدد", getResources().getColor(R.color.white));
 
 
     }
 
     @Override
-    public void proAddedToSabad() {
+    public void noServerConnection() {
 
-        PublicMethods.setSnackbar(coordinatorLayout, "محصول به سبد خرید شما افزوده شد", getViewContext().getResources().getColor(R.color.green));
-        sabadSizeV = sabadSizeV + 1;
-        setSabadSizeOnBadge(sabadSizeV);
-        Hawk.put(getString(R.string.Hawk_sabad_size), sabadSizeV);
-
-    }
-
-
-    //    private OpenLogin openLogin;
-//    public interface OpenLogin{
-//        void infoActivityToOpenLogin();
-//    }
-//
-
-
-    @Override
-    public void onPause() {
-        super.onPause();
+        hideView();
+        PublicMethods.setSnackbar(rootView.findViewById(R.id.cor_detail_main), getString(R.string.error_server_conection), getResources().getColor(R.color.red), "تلاش مجدد", getResources().getColor(R.color.white));
 
     }
 
@@ -390,10 +378,9 @@ public class DetailFragment extends BaseFragment implements DetailContract.MyFra
         noNetworkConnection();
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        openLogin = (OpenLogin) context;
+    private void hideView() {
+        material.setVisibility(View.GONE);
+        size.setVisibility(View.GONE);
     }
 
 

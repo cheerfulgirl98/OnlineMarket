@@ -16,6 +16,7 @@ import com.sepideh.onlinemarket.R;
 import com.sepideh.onlinemarket.data.UserInfo;
 import com.sepideh.onlinemarket.second.comments.CommentsContract;
 import com.sepideh.onlinemarket.data.Comment;
+import com.sepideh.onlinemarket.utils.PublicMethods;
 
 import java.util.List;
 
@@ -69,7 +70,10 @@ public class CommentsDetailAdapter extends RecyclerView.Adapter<CommentsDetailAd
                 clickedPosition=position;
                 String commentId=clickedComment.getId();
                 voteTag="like";
+                if (PublicMethods.checkNetworkConnection())
                 myPresenter.vote(voteTag,commentId,userId);
+                else
+                    connectionError.noNetworkConnectionForVote();
 //                int like= Integer.parseInt(comments.get(position).getLike())+1;
 //                comments.get(position).setLike(String.valueOf(like));
 //                notifyItemChanged(position);
@@ -84,9 +88,10 @@ public class CommentsDetailAdapter extends RecyclerView.Adapter<CommentsDetailAd
                 String commentId=clickedComment.getId();
 
                 voteTag="dislike";
-
-                myPresenter.vote(voteTag,commentId,userId);
-
+                if (PublicMethods.checkNetworkConnection())
+                    myPresenter.vote(voteTag,commentId,userId);
+                else
+                    connectionError.noNetworkConnectionForVote();
 
             }
         });
@@ -132,8 +137,8 @@ public class CommentsDetailAdapter extends RecyclerView.Adapter<CommentsDetailAd
         }
     }
 
-//    public onClick onClickInstance;
-//    public interface onClick{
-//         void onLikeClicked(String voteTag,String commentId);
-//    }
+    public ConnectionError connectionError;
+    public interface ConnectionError{
+         void noNetworkConnectionForVote();
+   }
 }

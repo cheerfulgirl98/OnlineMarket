@@ -1,6 +1,7 @@
-package com.sepideh.onlinemarket.second.activity;
+package com.sepideh.onlinemarket.base_activity;
 
 import com.sepideh.onlinemarket.base.BaseActivity;
+import com.sepideh.onlinemarket.data.ProductInfo;
 import com.sepideh.onlinemarket.data.UserInfo;
 
 import io.reactivex.Single;
@@ -9,19 +10,23 @@ import io.reactivex.Single;
  * Created by pc on 5/14/2019.
  */
 
-public interface SecondContract {
+public interface BaseActivityContract {
 
     interface MyView extends BaseActivity {
+        void successfulLogin(UserInfo userInfo);
+        void userNotFound();
+        void passwordIsWrong();
 
     }
-    interface MyPresentr{
-        void attachView(SecondContract.MyView myView);
+    interface MyPresenter {
+        void attachView(BaseActivityContract.MyView myView);
         void detachView();
         void loginToApp(String phoneNumber, String password);
 
     }
     interface MyModel{
         Single<UserInfo> loginToApp(String phoneNumber, String password);
+
 
     }
 }

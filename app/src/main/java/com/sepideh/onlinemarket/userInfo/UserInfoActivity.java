@@ -1,6 +1,5 @@
 package com.sepideh.onlinemarket.userInfo;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
 import android.os.Bundle;
@@ -17,7 +16,7 @@ import android.widget.TextView;
 import com.google.android.material.textfield.TextInputLayout;
 import com.orhanobut.hawk.Hawk;
 import com.sepideh.onlinemarket.R;
-import com.sepideh.onlinemarket.base.TheBaseActivity;
+import com.sepideh.onlinemarket.base_activity.TheBaseActivity;
 import com.sepideh.onlinemarket.data.UserInfo;
 import com.sepideh.onlinemarket.utils.PublicMethods;
 
@@ -133,39 +132,8 @@ public class UserInfoActivity extends TheBaseActivity implements UserInfoContrac
         sendInfo.setOnClickListener(this);
     }
 
-    @Override
-    public void successfulLogin(UserInfo userInfo) {
-
-    }
-
-    @Override
-    public void userNotFound() {
-
-    }
-
-    @Override
-    public void passwordIsWrong() {
-
-    }
-
-    @Override
-    public void noNetworkConnection() {
 
 
-        PublicMethods.setSnackbar(findViewById(R.id.cor_updateUserInfo), getString(R.string.error_network_conection), getResources().getColor(R.color.red), "تلاش مجدد", getResources().getColor(R.color.white));
-
-    }
-
-    @Override
-    public void sendLoginRequest() {
-
-    }
-
-    @Override
-    public void noServerConnection() {
-        PublicMethods.setSnackbar(findViewById(R.id.cor_updateUserInfo), getString(R.string.error_server_conection), getResources().getColor(R.color.red), "تلاش مجدد", getResources().getColor(R.color.white));
-
-    }
 
     @Override
     public void onClick(View v) {
@@ -316,4 +284,19 @@ public class UserInfoActivity extends TheBaseActivity implements UserInfoContrac
 
         noNetworkConnection();
     }
+
+    @Override
+    public void noNetworkConnection() {
+        PublicMethods.setSnackbar(findViewById(R.id.cor_updateUserInfo), getString(R.string.error_network_conection), getResources().getColor(R.color.red), "تلاش مجدد", getResources().getColor(R.color.white));
+
+    }
+
+    @Override
+    public void noServerConnection() {
+        bottomSheetDialog.dismiss();
+        PublicMethods.setSnackbar(findViewById(R.id.cor_updateUserInfo), getString(R.string.error_server_conection), getResources().getColor(R.color.red), "تلاش مجدد", getResources().getColor(R.color.white));
+
+
+    }
+
 }

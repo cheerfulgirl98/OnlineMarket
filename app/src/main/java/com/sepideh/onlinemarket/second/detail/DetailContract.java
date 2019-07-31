@@ -25,7 +25,7 @@ public interface DetailContract {
 
     }
 
-    interface MyPresenter extends BasePresenter<MyFragmentView>{
+    interface MyPresenter extends BasePresenter<MyFragmentView> {
 
         void getProductDetails(String id);
         void saveToFavorit(SqliteHelper sqliteHelper,ProductInfo selectedProduct);

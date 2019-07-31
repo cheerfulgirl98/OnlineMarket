@@ -2,6 +2,8 @@ package com.sepideh.onlinemarket.main.home;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -33,6 +35,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.MyFragmen
     SuggestionAdapter suggestionAdapter;
     ProductAdapter productAdapter;
 
+    TextView suggestionL,bestL,newL;
 
     @Override
     public void setUpViews() {
@@ -47,6 +50,11 @@ public class HomeFragment extends BaseFragment implements HomeContract.MyFragmen
         newRecycler = rootView.findViewById(R.id.rec_home_new);
         newRecycler.setLayoutManager(new LinearLayoutManager(getViewContext(), LinearLayoutManager.HORIZONTAL, false));
 
+        suggestionL=rootView.findViewById(R.id.txv_suggestionsL);
+        bestL=rootView.findViewById(R.id.txv_bestL);
+        newL=rootView.findViewById(R.id.txv_newL);
+
+
 
     }
 
@@ -58,25 +66,6 @@ public class HomeFragment extends BaseFragment implements HomeContract.MyFragmen
 
     }
 
-
-    public void sendServerRequest() {
-        myPresenter.getSliderList();
-        myPresenter.getSuggestionList();
-        myPresenter.getBestList();
-        myPresenter.getNewList();
-    }
-
-
-    public void noNetworkConnection() {
-        PublicMethods.setSnackbar(rootView.findViewById(R.id.cor_home), getString(R.string.error_network_conection), getResources().getColor(R.color.red), "تلاش مجدد", getResources().getColor(R.color.white));
-
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        openLogin = (OpenLogin) context;
-    }
 
     @Override
     public int getLayout() {
@@ -97,7 +86,27 @@ public class HomeFragment extends BaseFragment implements HomeContract.MyFragmen
     }
 
     @Override
+    public void sendServerRequest() {
+        myPresenter.getSliderList();
+        myPresenter.getSuggestionList();
+        myPresenter.getBestList();
+        myPresenter.getNewList();
+    }
+
+    public void noNetworkConnection() {
+        hideView();
+        PublicMethods.setSnackbar(rootView.findViewById(R.id.cor_home), getString(R.string.error_network_conection), getResources().getColor(R.color.red), "تلاش مجدد", getResources().getColor(R.color.white));
+
+    }
+    private void hideView(){
+        suggestionL.setVisibility(View.GONE);
+        bestL.setVisibility(View.GONE);
+        newL.setVisibility(View.GONE);
+    }
+
+    @Override
     public void noServerConnection() {
+        hideView();
         PublicMethods.setSnackbar(rootView.findViewById(R.id.cor_home), getString(R.string.error_server_conection), getResources().getColor(R.color.red), "تلاش مجدد", getResources().getColor(R.color.white));
     }
 
@@ -125,13 +134,14 @@ public class HomeFragment extends BaseFragment implements HomeContract.MyFragmen
     @Override
     public void showSuggestionList(List<ProductInfo> suggestedProductList) {
 
+        suggestionL.setVisibility(View.VISIBLE);
         fillSuggestionList(sugRecycler, suggestedProductList);
 
     }
 
     @Override
     public void showBestList(List<ProductInfo> bestProductList) {
-
+        bestL.setVisibility(View.VISIBLE);
         fillList(bestRecycler, bestProductList);
 
     }
@@ -139,6 +149,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.MyFragmen
     @Override
     public void showNewList(List<ProductInfo> newProductList) {
 
+        newL.setVisibility(View.VISIBLE);
         fillList(newRecycler, newProductList);
     }
 
