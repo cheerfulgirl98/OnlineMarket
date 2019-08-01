@@ -64,9 +64,12 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+
         </activity>
         <activity android:name=".register.RegisterActivity" />
         <activity android:name=".second.activity.SecondActivity">
+
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
 
@@ -74,18 +77,8 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="spidstore.ir"
-                    android:scheme="http" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data
-                    android:host="spidstore.ir"
-                    android:scheme="https" />
+                    android:scheme="http"
+                    android:host="www.spidstore.ir" />
             </intent-filter>
         </activity>
         <activity android:name=".children.ChildrenActivity" />

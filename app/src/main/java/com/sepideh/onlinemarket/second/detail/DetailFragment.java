@@ -268,7 +268,7 @@ public class DetailFragment extends BaseFragment implements DetailContract.MyFra
 
         if (!productDetails.getModel().equals("")) {
             selectedProduct.setModel(productDetails.getModel());
-            model.setText(getString(R.string.model) + "" + productDetails.getModel());
+            model.setText(String.format("%s%s", getString(R.string.model), productDetails.getModel()));
         } else {
             selectedProduct.setModel("");
             model.setVisibility(View.GONE);
@@ -279,7 +279,7 @@ public class DetailFragment extends BaseFragment implements DetailContract.MyFra
         }
 
         material.setVisibility(View.VISIBLE);
-        material.setText(productDetails.getMaterial());
+        material.setText(" جنس :"+" "+productDetails.getMaterial());
 
 
         List<Comment> comments = productDetails.getComments();
@@ -323,7 +323,7 @@ public class DetailFragment extends BaseFragment implements DetailContract.MyFra
         } else if (view.getId() == R.id.img_detail_share) {
             Intent shareIntent = new Intent(Intent.ACTION_SEND);
             shareIntent.setType("text/plain");
-            shareIntent.putExtra(Intent.EXTRA_TEXT, "https://www.digistyle.com/product/1349441-%DA%A9%DB%8C%D9%81-%D8%AF%D9%88%D8%B4%DB%8C-%D8%B1%D9%88%D8%B2%D9%85%D8%B1%D9%87-%D8%AF%D8%AE%D8%AA%D8%B1%D8%A7%D9%86%D9%87");
+            shareIntent.putExtra(Intent.EXTRA_TEXT, "http://www.spidstore.ir/");
             startActivity(Intent.createChooser(shareIntent, "Share link using"));
         } else if (view.getId() == favoritIcon.getId()) {
 

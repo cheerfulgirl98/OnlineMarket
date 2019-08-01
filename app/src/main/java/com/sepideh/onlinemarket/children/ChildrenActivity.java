@@ -43,8 +43,6 @@ public class ChildrenActivity extends TheBaseActivity implements ChildrenContrac
         setContentView(R.layout.activity_children);
         myPresenter = new ChildernPresenter(new ChildrenModel());
 
-        Crashlytics.getInstance().crash();
-
         Intent intent = getIntent();
         if (intent != null) {
             catChild = intent.getStringExtra("catChild");

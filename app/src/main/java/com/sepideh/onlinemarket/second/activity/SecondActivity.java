@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.orhanobut.hawk.Hawk;
 import com.sepideh.onlinemarket.R;
@@ -44,6 +45,9 @@ public class SecondActivity extends TheBaseActivity implements BaseFragment.Open
         Intent appLinkIntent = getIntent();
         String appLinkAction = appLinkIntent.getAction();
         Uri appLinkData = appLinkIntent.getData();
+        if(Intent.ACTION_VIEW.equals(appLinkAction) && appLinkData != null){}
+
+
     }
 
     @Override
