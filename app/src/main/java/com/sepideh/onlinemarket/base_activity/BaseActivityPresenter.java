@@ -29,8 +29,6 @@ public class BaseActivityPresenter implements BaseActivityContract.MyPresenter {
     CompositeDisposable compositeDisposable = new CompositeDisposable();
     String errorText;
 
-    String phoneNumber, password;
-
     public BaseActivityPresenter(BaseActivityContract.MyModel myModel) {
         this.myModel = myModel;
     }
@@ -52,7 +50,6 @@ public class BaseActivityPresenter implements BaseActivityContract.MyPresenter {
 
     @Override
     public void loginToApp(String phoneNumber, String password) {
-        Log.d("mmhm", "loginToApp:presenter ");
 
 //        RxView.clicks(button).debounce(3000, TimeUnit.MILLISECONDS).subscribe(this::sendReq);
 //        this.phoneNumber=phoneNumber;
@@ -67,6 +64,7 @@ public class BaseActivityPresenter implements BaseActivityContract.MyPresenter {
 
                     @Override
                     public void onSuccess(UserInfo userInfo) {
+                        Log.d("pppd", "onSuccess: "+ userInfo.toString());
                         myView.successfulLogin(userInfo);
 
                     }

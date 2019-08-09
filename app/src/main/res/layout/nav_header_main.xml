@@ -7,19 +7,18 @@
     android:layoutDirection="rtl"
     android:padding="12dp"
     xmlns:android="http://schemas.android.com/apk/res/android">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/txv_nav_name"
-        android:text="سپیده اکبری نژاد"
-        style="@style/normal"
-        android:textColor="@color/white"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/txv_nav_number"
-        android:layout_marginTop="4dp"
-        android:text="09123996430"
-        android:textColor="@color/white"/>
+  <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:id="@+id/txv_username_drawer"
+      android:layout_marginTop="4dp"
+      android:textColor="@color/white"/>
+  <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:id="@+id/txv_phonenumber_drawer"
+      android:layout_marginTop="4dp"
+      android:textColor="@color/white"/>
+
 
 </LinearLayout>

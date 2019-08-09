@@ -12,6 +12,7 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,6 +33,7 @@ import com.sepideh.onlinemarket.navigationview.NavigationActivity;
 import com.sepideh.onlinemarket.navigationview.messages.MessageActivity;
 import com.sepideh.onlinemarket.third.activity.ThirdActivity;
 import com.sepideh.onlinemarket.userInfo.UserInfoActivity;
+import com.sepideh.onlinemarket.utils.MyApplication;
 import com.sepideh.onlinemarket.utils.PublicMethods;
 
 public class MainActivity extends TheBaseActivity implements  View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
@@ -40,8 +42,9 @@ public class MainActivity extends TheBaseActivity implements  View.OnClickListen
     RelativeLayout sabad;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
+    View navHeader;
     ImageView burgerMenu, back;
-    TextView toolbarTitle, badgeNotif;
+    TextView toolbarTitle, badgeNotif,usernameDrwr,phonenumberDrawer;
     BottomNavigationView bottomNavigationView;
     FragmentTransaction fragmentTransaction;
 
@@ -85,6 +88,11 @@ public class MainActivity extends TheBaseActivity implements  View.OnClickListen
 
         navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        navHeader=navigationView.getHeaderView(0);
+
+        usernameDrwr=navHeader.findViewById(R.id.txv_username_drawer);
+        phonenumberDrawer=navHeader.findViewById(R.id.txv_phonenumber_drawer);
+
 
         bottomNavigationView = findViewById(R.id.bottm_main_navigate);
         bottomNavigationView.setSelectedItemId(R.id.bottom_home);
@@ -142,6 +150,11 @@ public class MainActivity extends TheBaseActivity implements  View.OnClickListen
                 else {
                     if (!drawerLayout.isDrawerOpen(Gravity.RIGHT)) {
                         drawerLayout.openDrawer(Gravity.RIGHT);
+                        UserInfo userInfoV=Hawk.get(getString(R.string.loginUserInfoTag));
+                        usernameDrwr.setText(userInfoV.getUserName());
+                        phonenumberDrawer.setText(userInfoV.getPhoneNumber());
+
+
                     }
                 }
             }
@@ -154,6 +167,9 @@ public class MainActivity extends TheBaseActivity implements  View.OnClickListen
 
         super.successfulLogin(userInfo);
         drawerLayout.openDrawer(Gravity.RIGHT);
+        usernameDrwr.setText(userInfo.getUserName());
+        phonenumberDrawer.setText(userInfo.getPhoneNumber());
+
     }
 
 
@@ -176,6 +192,7 @@ public class MainActivity extends TheBaseActivity implements  View.OnClickListen
     @Override
     protected void onResume() {
         super.onResume();
+        Log.d("pppd", "onResume: main");
         PublicMethods.setBadgeNotif(this, badgeNotif);
     }
 

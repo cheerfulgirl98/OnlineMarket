@@ -323,7 +323,7 @@ public class DetailFragment extends BaseFragment implements DetailContract.MyFra
         } else if (view.getId() == R.id.img_detail_share) {
             Intent shareIntent = new Intent(Intent.ACTION_SEND);
             shareIntent.setType("text/plain");
-            shareIntent.putExtra(Intent.EXTRA_TEXT, "http://www.spidstore.ir/");
+            shareIntent.putExtra(Intent.EXTRA_TEXT, selectedProduct.getName() + " را در آنلاین مارکت ببین . "+" "+"http://www.spidstore.ir/");
             startActivity(Intent.createChooser(shareIntent, "Share link using"));
         } else if (view.getId() == favoritIcon.getId()) {
 

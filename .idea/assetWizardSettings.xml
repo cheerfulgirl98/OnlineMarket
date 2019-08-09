@@ -74,10 +74,8 @@
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="backgroundLayerName" value="ic_launcher_background" />
-                                      <entry key="foregroundImage" value="C:\Users\sepideh\Downloads\float_compose.png" />
-                                      <entry key="foregroundLayerName" value="ic_float_compose" />
-                                      <entry key="outputName" value="float_compose" />
+                                      <entry key="foregroundImage" value="D:\programming\applogo.png" />
+                                      <entry key="foregroundLayerName" value="layer-logo" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -115,7 +113,7 @@
                                   <option name="values">
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
-                                      <entry key="imageAsset" value="D:\programming\online-market.jpg" />
+                                      <entry key="imageAsset" value="D:\programming\applogo.png" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -159,11 +157,6 @@
                                 </PersistentState>
                               </value>
                             </entry>
-                          </map>
-                        </option>
-                        <option name="values">
-                          <map>
-                            <entry key="outputIconType" value="LAUNCHER_LEGACY" />
                           </map>
                         </option>
                       </PersistentState>

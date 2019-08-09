@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+
     package="com.sepideh.onlinemarket">
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
@@ -20,7 +20,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".navigationview.messages.MessageActivity" />
+        <activity android:name=".navigationview.messages.MessageActivity"></activity>
         <activity android:name=".base.MyBaseActivity" />
 
         <service
@@ -68,7 +68,7 @@
 
         </activity>
         <activity android:name=".register.RegisterActivity" />
-        <activity android:name=".second.activity.SecondActivity">
+        <activity android:name=".second.activity.SecondActivity" android:launchMode="singleTask">
 
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />

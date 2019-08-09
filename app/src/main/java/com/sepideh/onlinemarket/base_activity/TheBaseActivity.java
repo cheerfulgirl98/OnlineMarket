@@ -56,22 +56,38 @@ public abstract class TheBaseActivity extends AppCompatActivity implements BaseA
 
     @Override
     protected void onStart() {
+        Log.d("pppd", "onStart: base");
         super.onStart();
         myPresenter.attachView(this);
-        broadcastIntent();
+
 
     }
 
+    @Override
+    protected void onResume() {
+        Log.d("pppd", "onResume: base");
+        broadcastIntent();
+        super.onResume();
+    }
+
     private void broadcastIntent() {
+        Log.d("pppd", "broadcastIntent: ");
         registerReceiver(myReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
     }
 
     @Override
     protected void onPause() {
+        Log.d("pppd", "onPause: base");
         super.onPause();
         unregisterReceiver(myReceiver);
     }
 
+    @Override
+    protected void onStop() {
+        Log.d("pppd", "onStop:base ");
+        super.onStop();
+        myPresenter.detachView();
+    }
     public void openButtomsheetLogin() {
 
         bottomSheetDialog = new BottomSheetDialog(this);
@@ -119,7 +135,6 @@ public abstract class TheBaseActivity extends AppCompatActivity implements BaseA
             public void run() {
                 if (checkEmptyness(editTexts) & checkValidation()) {
                     if (PublicMethods.checkNetworkConnection()) {
-                        Log.d("mmhm", "onClick: activity");
                         phoneNumberError.setVisibility(View.GONE);
                         passwordError.setVisibility(View.GONE);
                         sendLoginRequest();
@@ -132,8 +147,6 @@ public abstract class TheBaseActivity extends AppCompatActivity implements BaseA
                 } else setError(editTexts);
             }
         });
-
-
 
 
     }
@@ -163,7 +176,6 @@ public abstract class TheBaseActivity extends AppCompatActivity implements BaseA
 
 
     private boolean checkValidation() {
-        Log.d("mmhm", "checkValidation: ");
         if (!phoneNumberV.matches("(\\+98|0)?9\\d{9}")) {
             phoneNumberError.setVisibility(View.VISIBLE);
             phoneNumberError.setText(getString(R.string.validNumberError));
@@ -198,11 +210,7 @@ public abstract class TheBaseActivity extends AppCompatActivity implements BaseA
         bottomSheetDialog.dismiss();
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        myPresenter.detachView();
-    }
+
 
     @Override
     public void userNotFound() {
