@@ -123,6 +123,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.MyFragmen
 
         sliderLayout.setPresetTransformer(SliderLayout.Transformer.Default);
         sliderLayout.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+        sliderLayout.setDuration(4000);
         for (int i = 0; i < sliderList.size(); i++) {
             sliderArrayList.add(sliderList.get(i).getUrl());
         }

@@ -21,7 +21,7 @@
         android:theme="@style/AppTheme">
 
         <activity android:name=".navigationview.messages.MessageActivity"></activity>
-        <activity android:name=".base.MyBaseActivity" />
+        <activity android:name=".base.TheBroadcastInActivity" />
 
         <service
             android:name=".fcm.MyFirebaseMessagingService"
@@ -41,7 +41,6 @@
 
         <activity android:name=".navigationview.NavigationActivity" />
         <activity android:name=".userInfo.UserInfoActivity" />
-        <activity android:name=".testActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").

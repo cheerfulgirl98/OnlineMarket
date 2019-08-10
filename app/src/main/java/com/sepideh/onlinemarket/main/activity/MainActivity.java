@@ -192,7 +192,6 @@ public class MainActivity extends TheBaseActivity implements  View.OnClickListen
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d("pppd", "onResume: main");
         PublicMethods.setBadgeNotif(this, badgeNotif);
     }
 

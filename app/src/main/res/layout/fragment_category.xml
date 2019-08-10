@@ -21,7 +21,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/lsv_category"
         android:layout_margin="12dp"
-        android:childDivider="@color/white"/>
+        android:childDivider="@color/white"
+        />
 
 </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

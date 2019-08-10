@@ -7,7 +7,6 @@ import android.content.IntentFilter;
 import android.graphics.Paint;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,6 +17,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.jakewharton.rxbinding3.view.RxView;
 import com.orhanobut.hawk.Hawk;
 import com.sepideh.onlinemarket.R;
+import com.sepideh.onlinemarket.base.TheBroadcastInActivity;
 import com.sepideh.onlinemarket.data.UserInfo;
 import com.sepideh.onlinemarket.networkerror.MyReceiver;
 import com.sepideh.onlinemarket.register.RegisterActivity;
@@ -28,7 +28,7 @@ import java.util.concurrent.TimeUnit;
 
 import kotlin.Unit;
 
-public abstract class TheBaseActivity extends AppCompatActivity implements BaseActivityContract.MyView, PublicMethods.SnackManage {
+public abstract class TheBaseActivity extends TheBroadcastInActivity implements BaseActivityContract.MyView, PublicMethods.SnackManage {
 
     BaseActivityContract.MyPresenter myPresenter;
     MyReceiver myReceiver = new MyReceiver();
@@ -56,7 +56,6 @@ public abstract class TheBaseActivity extends AppCompatActivity implements BaseA
 
     @Override
     protected void onStart() {
-        Log.d("pppd", "onStart: base");
         super.onStart();
         myPresenter.attachView(this);
 
@@ -65,26 +64,22 @@ public abstract class TheBaseActivity extends AppCompatActivity implements BaseA
 
     @Override
     protected void onResume() {
-        Log.d("pppd", "onResume: base");
         broadcastIntent();
         super.onResume();
     }
 
     private void broadcastIntent() {
-        Log.d("pppd", "broadcastIntent: ");
         registerReceiver(myReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
     }
 
     @Override
     protected void onPause() {
-        Log.d("pppd", "onPause: base");
         super.onPause();
         unregisterReceiver(myReceiver);
     }
 
     @Override
     protected void onStop() {
-        Log.d("pppd", "onStop:base ");
         super.onStop();
         myPresenter.detachView();
     }
@@ -98,8 +93,8 @@ public abstract class TheBaseActivity extends AppCompatActivity implements BaseA
         password = view1.findViewById(R.id.edt_login_password);
         phoneNumberError = view1.findViewById(R.id.txv_login_phoneNumberError);
         passwordError = view1.findViewById(R.id.txv_login_passwordError);
-        forgetPassword = view1.findViewById(R.id.txv_login_forgot);
-        forgetPassword.setPaintFlags(forgetPassword.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+       // forgetPassword = view1.findViewById(R.id.txv_login_forgot);
+      //  forgetPassword.setPaintFlags(forgetPassword.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
         closeLogin = view1.findViewById(R.id.img_login_close);
         closeLogin.setOnClickListener(new View.OnClickListener() {
@@ -230,8 +225,6 @@ public abstract class TheBaseActivity extends AppCompatActivity implements BaseA
     public void noNetworkConnection() {
         PublicMethods.setSnackbar(view1.findViewById(R.id.cor_login), getString(R.string.error_network_conection), getResources().getColor(R.color.red), "تلاش مجدد", getResources().getColor(R.color.white));
     }
-
-
 
     @Override
     public void noServerConnection() {

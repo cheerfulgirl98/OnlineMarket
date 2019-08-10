@@ -3,11 +3,8 @@ package com.sepideh.onlinemarket.navigationview.messages;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.room.Room;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -16,7 +13,6 @@ import android.widget.TextView;
 import com.orhanobut.hawk.Hawk;
 import com.sepideh.onlinemarket.R;
 import com.sepideh.onlinemarket.adapter.MessagesAdapter;
-import com.sepideh.onlinemarket.base.MyBaseActivity;
 import com.sepideh.onlinemarket.data.NotifItem;
 import com.sepideh.onlinemarket.room.MyRoomDatabase;
 

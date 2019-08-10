@@ -9,6 +9,6 @@
         android:id="@+id/txv_category_header"
         android:padding="12dp"
         android:gravity="right"
-        style="@style/normal"/>
+        style="@style/blackBold"/>
 
 </LinearLayout>

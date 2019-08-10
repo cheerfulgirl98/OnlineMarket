@@ -41,13 +41,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         // Check if message contains a notification payload.
         if (remoteMessage.getNotification() != null) {
 
-            Log.d("mynotif", "onMessageReceived: notif ");
             handleNotification(remoteMessage);
         }
 
         // Check if message contains a data payload.
         if (remoteMessage.getData().size() > 0) {
-            Log.e("mynotif", "Data Payload: " + remoteMessage.getData().toString());
 
             try {
                 JSONObject json = new JSONObject(remoteMessage.getData().toString());
@@ -60,7 +58,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     }
 
     void handleNotification(RemoteMessage remoteMessage) {
-        Log.d("mynotif", "handleNotification: "+remoteMessage.getNotification().getBody());
 
         NotifItem notifItem=new NotifItem(remoteMessage.getNotification().getTitle(),remoteMessage.getNotification().getBody());
 
@@ -116,13 +113,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             String imageUrl = data.getString("image");
             String timestamp = data.getString("timestamp");
             JSONObject payload = data.getJSONObject("payload");
-
-            Log.e("mynotif", "title: " + title);
-            Log.e("mynotif", "message: " + message);
-            Log.e("mynotif", "isBackground: " + isBackground);
-            Log.e("mynotif", "payload: " + payload.toString());
-            Log.e("mynotif", "imageUrl: " + imageUrl);
-            Log.e("mynotif", "timestamp: " + timestamp);
 
 
             if (!NotificationUtils.isAppIsInBackground(getApplicationContext())) {
