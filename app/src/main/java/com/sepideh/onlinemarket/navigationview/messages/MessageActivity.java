@@ -54,9 +54,10 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
         roomDatabase=MyRoomDatabase.getAppDatabase(this);
 
         NotifItem notifItem= Hawk.get("remoteMessageH");
-        if( notifItem!=null ){
+        if( notifItem!=null  ){
             //it comes from push content tap
             roomDatabase.getItemDao().insert(notifItem);
+            Hawk.put("remoteMessageH",null);
         }
 
 
